@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <aside>
-      supportProposal 附议提案
+      提案草稿箱
     </aside>
   </div>
 </template>
@@ -11,7 +11,7 @@ import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 
 export default {
-  name: 'Supportroposal',
+  name: 'Draft',
   data() {
     return {
       driver: null

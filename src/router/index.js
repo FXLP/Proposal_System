@@ -186,7 +186,7 @@ export const asyncRoutes = [
   {
     path: '/proposal',
     component: Layout,
-    redirect: '/proposal/new',
+    redirect: '/proposal/support',
     meta: {
       title: 'Proposal',
       icon: 'edit',
@@ -204,6 +204,48 @@ export const asyncRoutes = [
         component: () => import('@/views/proposal/support'),
         name: 'SupportProposal',
         meta: { title: 'SupportProposal', roles: ['admin', 'editor'] }
+      },
+      {
+        path: 'draft',
+        component: () => import('@/views/proposal/draft'),
+        name: 'ProposalDraft',
+        meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
+      }
+    ]
+  },
+  {
+    path: '/implement',
+    component: Layout,
+    redirect: '/implement/index',
+    meta: {
+      title: 'Implement',
+      icon: 'tab',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/implement/index'),
+        name: 'Implement',
+        meta: { title: 'Implement', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/handle',
+    component: Layout,
+    redirect: '/handle/index',
+    meta: {
+      title: 'Handle',
+      icon: 'skill',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/handle/index'),
+        name: 'Handle',
+        meta: { title: 'Handle', roles: ['admin'] }
       }
     ]
   },
@@ -226,8 +268,8 @@ export const asyncRoutes = [
       {
         path: 'proposalGroup',
         component: () => import('@/views/review/proposalGroup'),
-        name: 'ProposalGroupReview',
-        meta: { title: 'ProposalGroupReview', roles: ['admin'] }
+        name: 'GroupReview',
+        meta: { title: 'GroupReview', roles: ['admin'] }
       }
     ]
   },
@@ -437,7 +479,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
+        path: 'https://www.ecust.edu.cn/',
         meta: { title: 'External Link', icon: 'link' }
       }
     ]

@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
     <aside>
-      supportProposal 附议提案
+    查看本部门需要实行的提案
+    选择办理人
+    收/发消息
+    会签意见
     </aside>
   </div>
 </template>
@@ -11,7 +14,7 @@ import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 
 export default {
-  name: 'Supportroposal',
+  name: 'Implement',
   data() {
     return {
       driver: null
@@ -21,6 +24,7 @@ export default {
     this.driver = new Driver()
   },
   methods: {
+    
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <aside>
-      supportProposal 附议提案
+      查看待办理提案 修改办理的提案的进度  完结提案
     </aside>
   </div>
 </template>
@@ -11,7 +11,7 @@ import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 
 export default {
-  name: 'Supportroposal',
+  name: 'Handle',
   data() {
     return {
       driver: null
@@ -21,6 +21,7 @@ export default {
     this.driver = new Driver()
   },
   methods: {
+    
   }
 }
 </script>

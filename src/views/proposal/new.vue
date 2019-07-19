@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <aside>
-      newproposal 撰写提案
+      NewProposal 新建提案
     </aside>
     <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
       Show Guide
@@ -15,7 +15,7 @@ import 'driver.js/dist/driver.min.css' // import driver.js css
 import steps from './steps'
 
 export default {
-  name: 'NewProposal',
+  name: 'Newtroposal',
   data() {
     return {
       driver: null

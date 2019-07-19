@@ -7,9 +7,12 @@
         </el-carousel-item>
       </el-carousel>
     </div>
+    
     <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
       Show Guide
     </el-button>
+  
+  
   </div>
 </template>
 
@@ -24,7 +27,6 @@ export default {
   data() {
     return {
       driver: null,
-      value: new Date(),
       carouselImages: [
         'https://wpimg.wallstcn.com/9679ffb0-9e0b-4451-9916-e21992218054.jpg',
         'https://wpimg.wallstcn.com/bcce3734-0837-4b9f-9261-351ef384f75a.jpg',
