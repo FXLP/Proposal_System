@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <aside>
-      提案草稿箱
+    选定实行部门
+    消息(收/发消息)
     </aside>
   </div>
 </template>
@@ -11,7 +12,7 @@ import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 
 export default {
-  name: 'Draft',
+  name: 'Assign',
   data() {
     return {
       driver: null
@@ -21,6 +22,7 @@ export default {
     this.driver = new Driver()
   },
   methods: {
+    
   }
 }
 </script>

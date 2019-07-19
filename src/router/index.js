@@ -186,7 +186,7 @@ export const asyncRoutes = [
   {
     path: '/proposal',
     component: Layout,
-    redirect: '/proposal/support',
+    redirect: '/proposal/create',
     meta: {
       title: 'Proposal',
       icon: 'edit',
@@ -194,8 +194,8 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'new',
-        component: () => import('@/views/proposal/new'),
+        path: 'create',
+        component: () => import('@/views/proposal/create'),
         name: 'NewProposal',
         meta: { title: 'NewProposal', roles: ['admin', 'editor'] }
       },
@@ -206,8 +206,8 @@ export const asyncRoutes = [
         meta: { title: 'SupportProposal', roles: ['admin', 'editor'] }
       },
       {
-        path: 'draft',
-        component: () => import('@/views/proposal/draft'),
+        path: 'list',
+        component: () => import('@/views/proposal/list'),
         name: 'ProposalDraft',
         meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
       }
@@ -238,20 +238,28 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/assign',
+    component: Layout,
+    redirect: '/assign/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/assign/index'),
+        name: 'Assign',
+        meta: { title: 'Assign', icon: 'list', roles: ['admin'] }
+      }
+    ]
+  },
+  {
     path: '/implement',
     component: Layout,
     redirect: '/implement/index',
-    meta: {
-      title: 'Implement',
-      icon: 'tab',
-      roles: ['admin', 'editor']
-    },
     children: [
       {
         path: 'index',
         component: () => import('@/views/implement/index'),
         name: 'Implement',
-        meta: { title: 'Implement', roles: ['admin'] }
+        meta: { title: 'Implement', icon: 'tab', roles: ['admin'] }
       }
     ]
   },
@@ -259,17 +267,12 @@ export const asyncRoutes = [
     path: '/handle',
     component: Layout,
     redirect: '/handle/index',
-    meta: {
-      title: 'Handle',
-      icon: 'skill',
-      roles: ['admin', 'editor']
-    },
     children: [
       {
         path: 'index',
         component: () => import('@/views/handle/index'),
         name: 'Handle',
-        meta: { title: 'Handle', roles: ['admin'] }
+        meta: { title: 'Handle', icon: 'skill', roles: ['admin'] }
       }
     ]
   },
