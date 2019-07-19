@@ -134,31 +134,6 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
-  },
-  {
-    path: '/message',
-    component: Layout,
-    name: 'Message',
-    meta: {
-      title: 'Message',
-      icon: 'message'
-      // roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    redirect: '/message/receive',
-    children: [
-      {
-        path: 'receive',
-        component: () => import('@/views/message/receive'),
-        name: 'Receive',
-        meta: { title: 'Receive', icon: 'message', noCache: true }
-      },
-      {
-        path: 'send',
-        component: () => import('@/views/message/send'),
-        name: 'Send',
-        meta: { title: 'Send', icon: 'message', noCache: true }
-      }
-    ]
   }
 ]
 
