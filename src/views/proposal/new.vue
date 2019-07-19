@@ -1,13 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div class="app-container">
-    <aside>
-      NewProposal 新建提案
-    </aside>
-    <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
-      Show Guide
-    </el-button>
-=======
   <div class="conter">
     <el-form ref="form" :model="form" label-width="100px">
       <el-form-item label="案件名称">
@@ -63,17 +54,12 @@
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
->>>>>>> d472ef4020913277a80dc67411f702b38fbcf5bd
   </div>
 
 </template>
 
 <script>
 export default {
-<<<<<<< HEAD
-  name: 'Newtroposal',
-=======
->>>>>>> d472ef4020913277a80dc67411f702b38fbcf5bd
   data() {
     return {
       form: {
