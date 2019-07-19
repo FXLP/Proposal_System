@@ -1,27 +1,27 @@
 <template>
   <div class="app-container documentation-container">
-    <!--
-      <a
-        class="document-btn"
-        target="_blank"
-        href="https://panjiachen.github.io/vue-element-admin-site/"
-      >Documentation</a>
-      <a
-        class="document-btn"
-        target="_blank"
-        href="https://github.com/PanJiaChen/vue-element-admin/"
-      >Github Repository</a>
-      <a
-        class="document-btn"
-        target="_blank"
-        href="https://panjiachen.gitee.io/vue-element-admin-site/zh/"
-      >国内文档</a>
-      <dropdown-menu :items="articleList" style="float:left;margin-left:50px;" title="系列文章" />
-    -->
-
     <div>
       <el-row :gutter="20">
         <h3>已通过的提案</h3>
+        <div class="filterbox">
+          <el-select v-model="dateop" placeholder="日期">
+            <el-option
+              v-for="item in dateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-select v-model="classop" placeholder="类型">
+            <el-option
+              v-for="item in classOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button type="primary" round>搜索</el-button>
+        </div>
       </el-row>
     </div>
 
@@ -88,7 +88,36 @@ export default {
         { name: '提案4', person: 'abc4', pdate: '2019-06', content: '这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，' },
         { name: '提案5', person: 'abc3', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' },
         { name: '提案6', person: 'abc4', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' }
-      ]
+      ],
+      dateOptions: [{
+        value: '选项1',
+        label: '近一周'
+      }, {
+        value: '选项2',
+        label: '近三周'
+      }, {
+        value: '选项3',
+        label: '近半年'
+      }, {
+        value: '选项4',
+        label: '半年前'
+      }],
+      classOptions: [{
+        value: '选项1',
+        label: '教务提案'
+      }, {
+        value: '选项2',
+        label: '团建提案'
+      }, {
+        value: '选项3',
+        label: '学生工作'
+      }, {
+        value: '选项4',
+        label: '其他'
+      }],
+      dateop: '',
+      classop: '',
+      input: ''
     }
   },
   methods: {
@@ -111,6 +140,10 @@ export default {
 
 .grid-content{
   margin-top:4%;
+}
+
+.filterbox{
+  margin-left:1%;
 }
 
 .documentation-container {
