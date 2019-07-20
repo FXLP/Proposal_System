@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'home',
         component: () => import('@/views/home/index'),
         name: 'Home',
-        meta: { title: 'Home', icon: 'international', affix: true }
+        meta: { title: '主页', icon: 'international', affix: true }
       }
     ]
   },
