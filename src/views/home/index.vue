@@ -14,7 +14,22 @@
 
     <el-row>
       <el-col :span="12">
-        <h3>其他展示内容</h3>
+        <h3>已通过提案类型分布</h3>
+        <el-row>
+        <el-col >
+        <div class="chart-wrapper">
+          <pie-chart />
+        </div>
+        </el-col>
+        </el-row>
+        <h3>每周办理情况</h3>
+        <el-row>
+        <el-col >
+          <div class="chart-wrapper">
+            <bar-chart />
+          </div>
+        </el-col>
+        </el-row>
       </el-col>
 
       <el-col :span="12">
@@ -84,10 +99,17 @@
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 import steps from './steps'
+import PieChart from './components/PieChart'
+import BarChart from './components/BarChart'
+
 const avatarPrefix = '?imageView2/1/w/80/h/80'
 const carouselPrefix = '?imageView2/2/h/440'
 export default {
   name: 'Home',
+  components: {
+    PieChart,
+    BarChart
+  },
   data() {
     return {
       driver: null,
