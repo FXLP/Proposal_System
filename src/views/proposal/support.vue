@@ -9,7 +9,7 @@
 
     <el-row>
       <el-col :span="12">
-        <h3>我的提案</h3>
+        <h3>我提出的提案</h3>
         <div class="mypro">
           <el-row :gutter="20">
             <el-col v-for="(item,i) in list" :key="item" :span="12">
@@ -26,29 +26,55 @@
                     <span>附议人数:{{ item.num }}</span>
                     <br>
                     <br>
-                    <el-button type="warning" icon="el-icon-circle-plus-outline" round>邀请附议</el-button>
+                    <el-button type="warning" icon="el-icon-circle-plus-outline" round @click="inviteForprop(i)">邀请附议
+                    </el-button>
                   </div>
                 </el-card>
               </div>
             </el-col>
             <el-dialog
-              title="提案详情"
+              title="邀请代表附议"
               :visible.sync="dialogVisible"
               width="30%"
               :before-close="handleClose"
             >
-              <span>{{ detail_con }}</span>
+              <h4>提案名称:{{ detail_con }}</h4>
+              <br>
+              <br>
+              <el-form :model="form">
+                <el-form-item label="代表名字:" :label-width="formLabelWidth">
+                  <div>
+                    <el-input v-model="form.name1" autocomplete="off" size="small" placeholder="姓名1" />
+                    <br><br>
+                    <el-input v-model="form.name2" autocomplete="off" size="small" placeholder="姓名2 选填" />
+                    <br><br>
+                    <el-input v-model="form.name3" autocomplete="off" size="small" placeholder="姓名3 选填 (一次最多邀请三名)" />
+                  </div>
+                </el-form-item>
+                <el-form-item label="选项:" :label-width="formLabelWidth">
+                  <el-select v-model="form.region" placeholder="请选择活动区域">
+                    <el-option label="区域一" value="shanghai" />
+                    <el-option label="区域二" value="beijing" />
+                  </el-select>
+                </el-form-item>
+                <div class="butt-group">
+                  <el-button type="success" round>确认邀请</el-button>
+                  <el-button type="info" round>清空列表</el-button>
+                </div>
+              </el-form>
+              <!--
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
               </span>
+              -->
             </el-dialog>
           </el-row>
         </div>
       </el-col>
 
       <el-col :span="12">
-        <h3>待附依的提案</h3>
+        <h3>已提交的提案</h3>
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -85,10 +111,18 @@
                 @click="handleEdit(scope.$index, scope.row)"
               >详情</el-button>
               <el-button
+                v-if="!tableData[scope.$index].checked"
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
+                @click="supportProp(scope.$index, scope.row)"
               >附议</el-button>
+              <el-button
+                v-if="tableData[scope.$index].checked"
+                disabled="true"
+                size="mini"
+                type="info"
+                @click="supportProp(scope.$index, scope.row)"
+              >已附议</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -112,41 +146,62 @@ export default {
         date: '2016-05-02',
         name: '冯伟横',
         proponame: '关于奉贤食堂会议',
-        proponum: '7'
+        proponum: '7',
+        checked: false
       }, {
         date: '2016-05-04',
         name: '王小虎',
         proponame: '关于徐汇住宿问题',
-        proponum: '6'
+        proponum: '6',
+        checked: true
       }, {
         date: '2016-05-01',
-        name: '冯伟横',
+        name: '冯伟狠',
         proponame: '垃圾分类注意',
-        proponum: '4'
+        proponum: '4',
+        checked: false
       }, {
         date: '2016-05-03',
         name: '王小虎',
         proponame: '教工调整',
-        proponum: '2'
+        proponum: '2',
+        checked: false
       },
       {
         date: '2016-05-01',
-        name: '冯伟横',
+        name: '冯伟很',
         proponame: '垃圾分类注意',
-        proponum: '4'
+        proponum: '4',
+        checked: true
       },
       {
         date: '2016-05-02',
         name: '王小虎',
         proponame: '关于奉贤食堂会议',
-        proponum: '7'
+        proponum: '7',
+        checked: false
       }],
       list: [
         { name: '提案1', progress: '审核中', pdate: '2019-06', num: '3' },
         { name: '提案2', progress: '已通过', pdate: '2019-06', num: '5' },
-        { name: '提案3', progress: '待附议', pdate: '2019-06', num: '2' },
-        { name: '提案4', progress: '待附议', pdate: '2019-06', num: '1' }
-      ]
+        { name: '提案3', progress: '已提交', pdate: '2019-06', num: '2' },
+        { name: '提案4', progress: '已提交', pdate: '2019-06', num: '1' }
+      ],
+      form: {
+        name1: '',
+        name2: '',
+        name3: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '80px',
+      dialogVisible: false,
+      detail_con: ''
     }
   },
   mounted() {
@@ -160,12 +215,22 @@ export default {
         return ''
       }
       return ''
+    },
+    inviteForprop(i) {
+      this.dialogVisible = true
+      this.detail_con = this.list[i].name
+    },
+    supportProp(index, row) {
+      alert(index)
     }
   }
 }
 </script>
 
 <style>
+  .butt-group{
+    margin-left:20%;
+  }
   .mypro{
     width:90%;
     margin-left:5%;
