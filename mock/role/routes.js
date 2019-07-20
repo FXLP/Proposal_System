@@ -35,13 +35,150 @@ export const constantRoutes = [
   {
     path: '',
     component: 'layout/Layout',
-    redirect: 'dashboard',
+    redirect: 'home',
     children: [
       {
-        path: 'dashboard',
-        component: 'views/dashboard/index',
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        path: 'home',
+        component: 'views/home/index',
+        name: 'Home',
+        meta: { title: 'Home', icon: 'international', affix: true }
+      }
+    ]
+  }
+]
+
+export const asyncRoutes = [
+  {
+    path: '/proposal',
+    component: 'layout/Layout',
+    redirect: '/proposal/create',
+    meta: {
+      title: 'Proposal',
+      icon: 'edit',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/proposal/create'),
+        name: 'NewProposal',
+        meta: { title: 'NewProposal', roles: ['admin', 'editor'] }
+      },
+      {
+        path: 'support',
+        component: () => import('@/views/proposal/support'),
+        name: 'SupportProposal',
+        meta: { title: 'SupportProposal', roles: ['admin', 'editor'] }
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/proposal/list'),
+        name: 'ProposalDraft',
+        meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
+      }
+    ]
+  },
+  {
+    path: '/review',
+    component: 'layout/Layout',
+    redirect: '/review/commander',
+    meta: {
+      title: 'Review',
+      icon: 'peoples',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'commander',
+        component: () => import('@/views/review/commander'),
+        name: 'CommanderReview',
+        meta: { title: 'CommanderReview', roles: ['admin'] }
+      },
+      {
+        path: 'proposalGroup',
+        component: () => import('@/views/review/proposalGroup'),
+        name: 'GroupReview',
+        meta: { title: 'GroupReview', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/assign',
+    component: 'layout/Layout',
+    redirect: '/assign/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/assign/index'),
+        name: 'Assign',
+        meta: { title: 'Assign', icon: 'list', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/implement',
+    component: 'layout/Layout',
+    redirect: '/implement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/implement/index'),
+        name: 'Implement',
+        meta: { title: 'Implement', icon: 'tab', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/handle',
+    component: 'layout/Layout',
+    redirect: '/handle/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/handle/index'),
+        name: 'Handle',
+        meta: { title: 'Handle', icon: 'skill', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    component: 'layout/Layout',
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: 'Permission',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
+        meta: {
+          title: 'Page Permission',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/permission/directive'),
+        name: 'DirectivePermission',
+        meta: {
+          title: 'Directive Permission'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: 'Role Permission',
+          roles: ['admin']
+        }
       }
     ]
   },
@@ -51,9 +188,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: 'views/documentation/index',
+        component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        meta: { title: 'Documentation', icon: 'documentation' }
       }
     ]
   },
@@ -64,55 +201,25 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: 'views/guide/index',
+        component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
-      }
-    ]
-  }
-]
-
-export const asyncRoutes = [
-  {
-    path: '/permission',
-    component: 'layout/Layout',
-    redirect: '/permission/index',
-    alwaysShow: true,
-    meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor']
-    },
-    children: [
-      {
-        path: 'page',
-        component: 'views/permission/page',
-        name: 'PagePermission',
-        meta: {
-          title: 'Page Permission',
-          roles: ['admin']
-        }
-      },
-      {
-        path: 'directive',
-        component: 'views/permission/directive',
-        name: 'DirectivePermission',
-        meta: {
-          title: 'Directive Permission'
-        }
-      },
-      {
-        path: 'role',
-        component: 'views/permission/role',
-        name: 'RolePermission',
-        meta: {
-          title: 'Role Permission',
-          roles: ['admin']
-        }
+        meta: { title: 'Guide', icon: 'guide', affix: true }
       }
     ]
   },
-
+  {
+    path: '/dashboard',
+    component: 'layout/Layout',
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
   {
     path: '/icon',
     component: 'layout/Layout',
@@ -497,18 +604,18 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/i18n',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        component: 'views/i18n-demo/index',
-        name: 'I18n',
-        meta: { title: 'I18n', icon: 'international' }
-      }
-    ]
-  },
+  // {
+  //   path: '/i18n',
+  //   component: 'layout/Layout',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: 'views/i18n-demo/index',
+  //       name: 'I18n',
+  //       meta: { title: 'I18n', icon: 'international' }
+  //     }
+  //   ]
+  // },
 
   {
     path: 'external-link',
