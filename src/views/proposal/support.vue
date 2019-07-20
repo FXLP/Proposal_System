@@ -17,13 +17,16 @@
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>标题:{{ item.name }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="showdialog(i)">详情/邀請</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="showdialog(i)">详情</el-button>
                   </div>
                   <div class="text item">
-                    <span>审批人:{{ item.person }}</span>
+                    <span>提案进度:{{ item.progress }}</span>
                     <br>
                     <br>
-                    <span>通过日期:{{ item.pdate }}</span>
+                    <span>附议人数:{{ item.num }}</span>
+                    <br>
+                    <br>
+                    <el-button type="warning" icon="el-icon-circle-plus-outline" round>邀请附议</el-button>
                   </div>
                 </el-card>
               </div>
@@ -54,25 +57,38 @@
           <el-table-column
             prop="date"
             label="日期"
-            width="180"
+            width="90"
           />
           <el-table-column
             prop="name"
             label="姓名"
-            width="180"
+            width="60"
           />
           <el-table-column
             prop="proponame"
             label="提案名"
+            width="180"
+          />
+          <el-table-column
+            prop="proponum"
+            label="已附议人数"
+            width="60"
           />
           <el-table-column
             fixed="right"
             label="操作"
-            width="100"
+            width="180"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-              <el-button type="text" size="small">附議</el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)"
+              >详情</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)"
+              >附议</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -94,26 +110,42 @@ export default {
       driver: null,
       tableData: [{
         date: '2016-05-02',
-        name: '王小虎',
-        proponame: '上海市普陀区'
+        name: '冯伟横',
+        proponame: '关于奉贤食堂会议',
+        proponum: '7'
       }, {
         date: '2016-05-04',
         name: '王小虎',
-        proponame: '阿薩颯颯'
+        proponame: '关于徐汇住宿问题',
+        proponum: '6'
       }, {
         date: '2016-05-01',
-        name: '王小虎',
-        proponame: '東方閃電髮貨'
+        name: '冯伟横',
+        proponame: '垃圾分类注意',
+        proponum: '4'
       }, {
         date: '2016-05-03',
         name: '王小虎',
-        proponame: '阿爾哈爾恨不得'
+        proponame: '教工调整',
+        proponum: '2'
+      },
+      {
+        date: '2016-05-01',
+        name: '冯伟横',
+        proponame: '垃圾分类注意',
+        proponum: '4'
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎',
+        proponame: '关于奉贤食堂会议',
+        proponum: '7'
       }],
       list: [
-        { name: '提案1', person: 'abc1', pdate: '2019-06', content: '这是提案1，这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1' },
-        { name: '提案2', person: 'abc2', pdate: '2019-06', content: '这是提案2，这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2' },
-        { name: '提案3', person: 'abc3', pdate: '2019-06', content: '这是提案3，这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3' },
-        { name: '提案4', person: 'abc4', pdate: '2019-06', content: '这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，' }
+        { name: '提案1', progress: '审核中', pdate: '2019-06', num: '3' },
+        { name: '提案2', progress: '已通过', pdate: '2019-06', num: '5' },
+        { name: '提案3', progress: '待附议', pdate: '2019-06', num: '2' },
+        { name: '提案4', progress: '待附议', pdate: '2019-06', num: '1' }
       ]
     }
   },
@@ -121,6 +153,14 @@ export default {
     this.driver = new Driver()
   },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      if (rowIndex % 2 === 0) {
+        return 'warning-row'
+      } else if (rowIndex % 2 === 1) {
+        return ''
+      }
+      return ''
+    }
   }
 }
 </script>
