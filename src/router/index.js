@@ -16,19 +16,19 @@ import nestedRouter from './modules/nested'
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * hidden: true                   当设置 true 的时候该路由不会再侧边栏出现
  * alwaysShow: true               if set true, will always show the root menu
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * redirect: noRedirect           当设置 noRedirect 的时候该路由在面包屑导航中不可被点击
+ * name:'router-name'             设定路由的名字，一定要填写不然使用<keep-alive>时会出现各种问题
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    roles: ['admin','editor']    设置该路由进入的权限，支持多个权限叠加
+    title: 'title'               设置该路由在侧边栏和面包屑中展示的名字
+    icon: 'svg-name'             设置该路由的图标
+    noCache: true                如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
+    affix: true                  当在声明路由是 添加了 Affix 属性，则当前tag会被固定在 tags-view中（不可被删除）。
+    breadcrumb: false           如果设置为false，则不会在breadcrumb面包屑中显示
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
@@ -180,6 +180,31 @@ export const asyncRoutes = [
           title: 'Role Permission',
           roles: ['admin']
         }
+      }
+    ]
+  },
+  {
+    path: '/message',
+    hidden: true,
+    component: Layout,
+    name: 'Message',
+    meta: {
+      title: 'Message'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    redirect: '/message/receive',
+    children: [
+      {
+        path: 'receive',
+        component: () => import('@/views/message/receive'),
+        name: 'Receive',
+        meta: { title: 'ReceiveMessage', icon: 'message', noCache: true }
+      },
+      {
+        path: 'send',
+        component: () => import('@/views/message/send'),
+        name: 'Send',
+        meta: { title: 'SendMessage', icon: 'message', noCache: true }
       }
     ]
   },
