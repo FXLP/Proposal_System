@@ -10,6 +10,12 @@
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
+        <el-badge class="right-menu-item">
+          <el-button size="small" @click="ToMessage">消息</el-button>
+        </el-badge>
+
+        <span class="countsum">{{ countsum }}</span>
+
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
@@ -63,6 +69,11 @@ export default {
     SizeSelect,
     Search
   },
+  data() {
+    return {
+      countsum: 5
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
@@ -77,6 +88,9 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    ToMessage() {
+      this.$router.push('/message')
     }
   }
 }
@@ -138,7 +152,20 @@ export default {
         }
       }
     }
-
+    .countsum {
+      position: fixed;
+      display:inline-block;
+     // botton: 50px;
+      right: 170px;//球的位置
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align:center;
+      border-radius: 50%;
+      font-size: 14px;
+      background: red;
+      color: #fff;
+    }
     .avatar-container {
       margin-right: 30px;
 
