@@ -104,7 +104,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  
+
   {
     path: '/message',
     hidden: true,
@@ -157,6 +157,12 @@ export const asyncRoutes = [
         component: () => import('@/views/proposal/list'),
         name: 'ProposalDraft',
         meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
+      },
+      {
+        path: 'propodetail/:id',
+        component: () => import('@/views/proposal/propodetail'),
+        name: 'propodetail',
+        meta: { title: 'proposalDetail', roles: ['admin', 'editor'] }
       }
     ]
   },
