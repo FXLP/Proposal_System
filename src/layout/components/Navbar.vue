@@ -14,7 +14,7 @@
           <el-button size="small" @click="ToMessage">消息</el-button>
         </el-badge>
 
-        <span class="countsum">{{ countsum }}</span>
+        <span v-if="countsum > 0 && isactive" class="countsum">{{ countsum }}</span>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
@@ -71,7 +71,8 @@ export default {
   },
   data() {
     return {
-      countsum: 5
+      countsum: 5,
+      isactive: 'true'
     }
   },
   computed: {
@@ -90,6 +91,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     ToMessage() {
+      this.isactive = false
       this.$router.push('/message')
     }
   }

@@ -1,12 +1,19 @@
 <template>
   <div class="title">
-    <div class="container_table">
+    <el-button icon="el-icon-edit-outline" class="btn" type="primary" @click="ToSendMessage">
+      发送消息
+    </el-button>
+    <div class="table">
       <el-table
         :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
         style="width: 100%"
         :default-sort="{prop: 'date', order: 'descending'}"
       >
+        <el-table-column
+          type="selection"
+          width="40"
+        />s
         <el-table-column
           prop="id"
           label="序号"
@@ -35,14 +42,14 @@
           <el-button type="danger" icon="el-icon-delete" circle />
         </el-table-column>
       </el-table>
-      <el-pagination
-        layout="prev, pager, next"
-        background
-        :total="total"
-        @current-change="current_change"
-      />
-      <el-button type="primary" @click="ToSendMessage">发送消息</el-button>
     </div>
+    <el-pagination
+      class="fly"
+      layout="prev, pager, next"
+      background
+      :total="total"
+      @current-change="current_change"
+    />
   </div>
 </template>
 
@@ -52,7 +59,7 @@ export default {
   data() {
     return {
       total: 1000, // 默认数据总数
-      pagesize: 9, // 每页的数据条数
+      pagesize: 8, // 每页的数据条数
       currentPage: 1, // 默认开始页面
       tableData: [
         {
@@ -190,3 +197,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .title {
+    margin: 10px;
+  }
+  .table {
+    margin-top: 10px
+  }
+  .fly {
+    margin-top: 10px;
+    float: right;
+  }
+</style>
