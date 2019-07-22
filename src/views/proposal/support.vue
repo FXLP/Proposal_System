@@ -17,7 +17,7 @@
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>标题:{{ item.name }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="showdialog(i)">详情</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(i)">详情</el-button>
                   </div>
                   <div class="text item">
                     <span>提案进度:{{ item.progress }}</span>
@@ -59,7 +59,7 @@
                 </el-form-item>
                 <div class="butt-group">
                   <el-button type="success" round>确认邀请</el-button>
-                  <el-button type="info" round>清空列表</el-button>
+                  <el-button type="info" round @click="clearall()">清空列表</el-button>
                 </div>
               </el-form>
               <!--
@@ -129,6 +129,7 @@
       </el-col>
 
     </el-row>
+    <el-row class="support-footer" />
 
   </div>
 </template>
@@ -222,12 +223,26 @@ export default {
     },
     supportProp(index, row) {
       alert(index)
+    },
+    clearall() {
+      this.form.name1 = ''
+      this.form.name2 = ''
+      this.form.name3 = ''
+    },
+    jumpToDetail(i) {
+      const p = '/proposal/propodetail/' + i
+      this.$router.push({ path: p })
     }
   }
 }
 </script>
 
 <style>
+  .support-footer{
+    height:50px;
+    background-color: white;
+  }
+
   .butt-group{
     margin-left:20%;
   }
