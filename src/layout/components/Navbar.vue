@@ -9,12 +9,10 @@
         <search id="header-search" class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
-
         <el-badge class="right-menu-item">
           <el-button size="small" @click="ToMessage">消息</el-button>
         </el-badge>
-
-        <span class="countsum">{{ countsum }}</span>
+        <span v-if="countsum > 0 && isactive" class="countsum">{{ countsum }}</span>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
@@ -71,7 +69,8 @@ export default {
   },
   data() {
     return {
-      countsum: 5
+      countsum: 0,
+      isactive: 'true'
     }
   },
   computed: {
@@ -90,6 +89,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     ToMessage() {
+      this.isactive = false
       this.$router.push('/message')
     }
   }
@@ -153,10 +153,10 @@ export default {
       }
     }
     .countsum {
-      position: fixed;
+      position: absolute;
       display:inline-block;
      // botton: 50px;
-      right: 170px;//球的位置
+      right: 170px; // 球的位置
       width: 18px;
       height: 18px;
       line-height: 18px;

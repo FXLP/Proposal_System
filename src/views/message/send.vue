@@ -1,15 +1,19 @@
 <template>
   <div class="app-container">
-    <aside>
-      send message
-    </aside>
+    <sending />
+    <sendMessage />
   </div>
 </template>
 
 <script>
+import sending from './components/sending'
+import sendMessage from './components/sendMessage'
 
 export default {
-  name: 'Send'
-
+  name: 'Send',
+  components: {
+    sending,
+    sendMessage
+  }
 }
 </script>
