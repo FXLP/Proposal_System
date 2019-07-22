@@ -60,19 +60,19 @@ export const asyncRoutes = [
     children: [
       {
         path: 'create',
-        component: () => import('@/views/proposal/create'),
+        component: '/views/proposal/create',
         name: 'NewProposal',
         meta: { title: 'NewProposal', roles: ['admin', 'editor'] }
       },
       {
         path: 'support',
-        component: () => import('@/views/proposal/support'),
+        component: '/views/proposal/support',
         name: 'SupportProposal',
         meta: { title: 'SupportProposal', roles: ['admin', 'editor'] }
       },
       {
         path: 'list',
-        component: () => import('@/views/proposal/list'),
+        component:'/views/proposal/list',
         name: 'ProposalDraft',
         meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
       }
@@ -90,13 +90,13 @@ export const asyncRoutes = [
     children: [
       {
         path: 'commander',
-        component: () => import('@/views/review/commander'),
+        component: '/views/review/commander',
         name: 'CommanderReview',
         meta: { title: 'CommanderReview', roles: ['admin'] }
       },
       {
         path: 'proposalGroup',
-        component: () => import('@/views/review/proposalGroup'),
+        component:'/views/review/proposalGroup',
         name: 'GroupReview',
         meta: { title: 'GroupReview', roles: ['admin'] }
       }
@@ -109,7 +109,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/assign/index'),
+        component: '@/views/assign/index',
         name: 'Assign',
         meta: { title: 'Assign', icon: 'list', roles: ['admin'] }
       }
@@ -122,7 +122,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/implement/index'),
+        component: '/views/implement/index',
         name: 'Implement',
         meta: { title: 'Implement', icon: 'tab', roles: ['admin'] }
       }
@@ -135,7 +135,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/handle/index'),
+        component: '/views/handle/index',
         name: 'Handle',
         meta: { title: 'Handle', icon: 'skill', roles: ['admin'] }
       }
@@ -155,7 +155,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'page',
-        component: () => import('@/views/permission/page'),
+        component: '/views/permission/page',
         name: 'PagePermission',
         meta: {
           title: 'Page Permission',
@@ -164,7 +164,7 @@ export const asyncRoutes = [
       },
       {
         path: 'directive',
-        component: () => import('@/views/permission/directive'),
+        component: '/views/permission/directive',
         name: 'DirectivePermission',
         meta: {
           title: 'Directive Permission'
@@ -173,7 +173,7 @@ export const asyncRoutes = [
       },
       {
         path: 'role',
-        component: () => import('@/views/permission/role'),
+        component: '/views/permission/role',
         name: 'RolePermission',
         meta: {
           title: 'Role Permission',
@@ -188,7 +188,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/documentation/index'),
+        component:'/views/documentation/index',
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation' }
       }
@@ -201,7 +201,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/guide/index'),
+        component: '/views/guide/index',
         name: 'Guide',
         meta: { title: 'Guide', icon: 'guide', affix: true }
       }
@@ -214,7 +214,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: '/views/dashboard/index',
         name: 'Dashboard',
         meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
       }
@@ -431,25 +431,25 @@ export const asyncRoutes = [
     children: [
       {
         path: 'dynamic-table',
-        component: () => import('@/views/table/dynamic-table/index'),
+        component:'/views/table/dynamic-table/index',
         name: 'DynamicTable',
         meta: { title: 'Dynamic Table' }
       },
       {
         path: 'drag-table',
-        component: () => import('@/views/table/drag-table'),
+        component: '/views/table/drag-table',
         name: 'DragTable',
         meta: { title: 'Drag Table' }
       },
       {
         path: 'inline-edit-table',
-        component: () => import('@/views/table/inline-edit-table'),
+        component: '/views/table/inline-edit-table',
         name: 'InlineEditTable',
         meta: { title: 'Inline Edit' }
       },
       {
         path: 'complex-table',
-        component: () => import('@/views/table/complex-table'),
+        component: '/views/table/complex-table',
         name: 'ComplexTable',
         meta: { title: 'Complex Table' }
       }
