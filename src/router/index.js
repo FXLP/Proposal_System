@@ -160,9 +160,10 @@ export const asyncRoutes = [
       },
       {
         path: 'propodetail/:id',
+        hidden: true,
         component: () => import('@/views/proposal/propodetail'),
-        name: 'propodetail',
-        meta: { title: 'proposalDetail', roles: ['admin', 'editor'] }
+        name: 'Propodetail',
+        meta: { title: 'ProposalDetail', roles: ['admin', 'editor'] }
       }
     ]
   },

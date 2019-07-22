@@ -62,12 +62,10 @@
                   <el-button type="info" round @click="clearall()">清空列表</el-button>
                 </div>
               </el-form>
-              <!--
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
               </span>
-              -->
             </el-dialog>
           </el-row>
         </div>
@@ -88,7 +86,7 @@
           <el-table-column
             prop="name"
             label="姓名"
-            width="60"
+            width="90"
           />
           <el-table-column
             prop="proponame"

@@ -1,39 +1,110 @@
 <template>
   <div class="components-container board">
-    <Kanban :key="1" :list="list1" :group="group" class="kanban todo" header-text="待办" />
-    <Kanban :key="2" :list="list2" :group="group" class="kanban working" header-text="办理中" />
-    <Kanban :key="3" :list="list3" :group="group" class="kanban done" header-text="完结" />
+    <div class="board-column">
+      <div class="board-column-header1">待办理</div>
+      <draggable
+        :list="list"
+        v-bind="$attrs"
+        class="board-column-content"
+        :set-data="setData"
+      >
+      <div v-for="element in list1" :key="element.id" class="board-item" >
+        {{ element.id }}#{{ element.name }}
+        <el-button
+        size="mini"
+        type="danger"
+        @click="changeToWorking()"
+        >办理</el-button>
+      </div>
+      </draggable>
+    </div>
+
+    <div class="board-column">
+      <div class="board-column-header2" >办理中</div>
+      <draggable
+        :list="list"
+        v-bind="$attrs"
+        class="board-column-content"
+        :set-data="setData"
+      >
+      <div v-for="element in list2" :key="element.id" class="board-item" >
+        {{ element.id }}#{{ element.name }}
+        <el-button
+        size="mini"
+        type="danger"
+        @click="changeToDone()"
+        >完结</el-button>
+      </div>
+      </draggable>
+    </div>
+
+    <div class="board-column">
+      <div class="board-column-header3">已完成</div>
+      <draggable
+        :list="list"
+        v-bind="$attrs"
+        class="board-column-content"
+        :set-data="setData"
+      >
+      <div v-for="element in list3" :key="element.id" class="board-item" >
+        {{ element.id }}#{{ element.name }}
+        <el-button
+        size="mini"
+        type="danger"
+        @click="deleteIt()"
+        >删除</el-button>
+      </div>
+      </draggable>
+    </div>
   </div>
 </template>
 <script>
-import Kanban from '@/components/Kanban'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'Handle',
   components: {
-    Kanban
+    draggable
+  },
+  props: {
+    headerText: {
+      type: String,
+      default: 'Header'
+    },
+    options: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    list: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
   },
   data() {
     return {
       group: 'mission',
       list1: [
-        { name: 'Mission', id: 1 },
-        { name: 'Mission', id: 2 },
-        { name: 'Mission', id: 3 },
-        { name: 'Mission', id: 4 },
-        { name: 'Mission', id: 5 }
+        { name: '关于徐汇校区宿舍安装空调的建议', id: 1, checked: false },
+        { name: '关于徐汇校区宿舍修建三食堂的建议', id: 2, checked: false },
+        { name: '关于奉贤校区宿舍新建五食堂的建议', id: 3, checked: false },
+        { name: '关于奉贤校区宿舍新建实验楼的建议', id: 4, checked: false },
+        { name: '关于奉贤校区宿舍新建教学楼的建议', id: 5, checked: false },
+        { name: '关于奉贤校区宿舍新建电影院的建议', id: 6, checked: false }
       ],
       list2: [
-        { name: 'Mission', id: 1 },
-        { name: 'Mission', id: 2 },
-        { name: 'Mission', id: 3 },
-        { name: 'Mission', id: 4 },
-
+        { name: '关于徐汇校区宿舍安装风扇的建议', id: 1, checked: false },
+        { name: '关于徐汇校区宿舍修建一食堂的建议', id: 2, checked: false },
+        { name: '关于奉贤校区宿舍新建四食堂的建议', id: 3, checked: false },
+        { name: '关于奉贤校区宿舍新建游泳馆的建议', id: 4, checked: false }
       ],
       list3: [
-        { name: 'Mission', id: 1 },
-        { name: 'Mission', id: 2 },
-        { name: 'Mission', id: 3 },
+        { name: '关于徐汇校区宿舍安装显示屏的建议', id: 1, checked: false },
+        { name: '关于徐汇校区宿舍修建大浴室的建议', id: 2, checked: false },
+        { name: '关于奉贤校区宿舍新建三食堂的建议', id: 3, checked: false }
       ]
     }
   }
@@ -48,20 +119,68 @@ export default {
   flex-direction: row;
   align-items: flex-start;
 }
-.kanban {
-  &.todo {
-    .board-column-header {
-      background: #4A9FF9;
-    }
+.board-column {
+  min-width: 300px;
+  min-height: 100px;
+  height: auto;
+  overflow: hidden;
+  background: #f0f0f0;
+  border-radius: 3px;
+
+  .board-column-header1 {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+    background: #4A9FF9;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
   }
-  &.working {
-    .board-column-header {
-      background: #f9944a;
-    }
+
+  .board-column-header2 {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+    background: #f9944a;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
   }
-  &.done {
-    .board-column-header {
-      background: #2ac06d;
+
+  .board-column-header3 {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+    background: #2ac06d;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .board-column-content {
+    height: auto;
+    overflow: hidden;
+    border: 10px solid transparent;
+    min-height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+
+    .board-item {
+      cursor: pointer;
+      width: 100%;
+      height: 64px;
+      margin: 5px 0;
+      background-color: #fff;
+      text-align: center;
+      line-height: 54px;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
     }
   }
 }
