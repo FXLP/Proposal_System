@@ -72,7 +72,7 @@ export const asyncRoutes = [
       },
       {
         path: 'list',
-        component:'/views/proposal/list',
+        component: '/views/proposal/list',
         name: 'ProposalDraft',
         meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
       }
@@ -96,7 +96,7 @@ export const asyncRoutes = [
       },
       {
         path: 'proposalGroup',
-        component:'/views/review/proposalGroup',
+        component: '/views/review/proposalGroup',
         name: 'GroupReview',
         meta: { title: 'GroupReview', roles: ['admin'] }
       }
@@ -109,7 +109,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: '@/views/assign/index',
+        component: '/views/assign/index',
         name: 'Assign',
         meta: { title: 'Assign', icon: 'list', roles: ['admin'] }
       }
@@ -188,7 +188,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component:'/views/documentation/index',
+        component: '/views/documentation/index',
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation' }
       }
@@ -431,7 +431,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'dynamic-table',
-        component:'/views/table/dynamic-table/index',
+        component: '/views/table/dynamic-table/index',
         name: 'DynamicTable',
         meta: { title: 'Dynamic Table' }
       },
