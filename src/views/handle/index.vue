@@ -12,7 +12,7 @@
         {{ element.id }}#{{ element.name }}
         <el-button
         size="mini"
-        type="danger"
+        type="warning"
         @click="changeToWorking()"
         >办理</el-button>
       </div>
@@ -31,7 +31,7 @@
         {{ element.id }}#{{ element.name }}
         <el-button
         size="mini"
-        type="danger"
+        type="success"
         @click="changeToDone()"
         >完结</el-button>
       </div>
@@ -144,7 +144,7 @@ export default {
     overflow: hidden;
     padding: 0 20px;
     text-align: center;
-    background: #f9944a;
+    background: #f3c735;
     color: #fff;
     border-radius: 3px 3px 0 0;
   }
