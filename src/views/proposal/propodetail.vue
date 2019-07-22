@@ -57,7 +57,7 @@
         <el-row>
           <div class="propobox">
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :span="8">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>提案附件</span>
@@ -70,7 +70,7 @@
                 </el-card>
               </el-col>
 
-              <el-col :span="12">
+              <el-col :span="8">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>提案附件</span>

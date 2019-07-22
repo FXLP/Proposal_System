@@ -108,7 +108,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)"
+                @click="goToDetail(scope.$index, scope.row)"
               >详情</el-button>
               <el-button
                 v-if="!tableData[scope.$index].checked"
@@ -121,12 +121,24 @@
                 disabled="true"
                 size="mini"
                 type="info"
-                @click="supportProp(scope.$index, scope.row)"
               >已附议</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
+
+      <el-dialog
+        title="确认附议"
+        :visible.sync="confirmDialog"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>您确定要附议该提案吗，提交不可修改！</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="confirmDialog = false">取 消</el-button>
+          <el-button type="primary" @click="tableData[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
+        </span>
+      </el-dialog>
 
     </el-row>
     <el-row class="support-footer" />
@@ -144,24 +156,28 @@ export default {
     return {
       driver: null,
       tableData: [{
+        propoId: '009',
         date: '2016-05-02',
         name: '冯伟横',
         proponame: '关于奉贤食堂会议',
         proponum: '7',
         checked: false
       }, {
+        propoId: '008',
         date: '2016-05-04',
         name: '王小虎',
         proponame: '关于徐汇住宿问题',
         proponum: '6',
         checked: true
       }, {
+        propoId: '007',
         date: '2016-05-01',
         name: '冯伟狠',
         proponame: '垃圾分类注意',
         proponum: '4',
         checked: false
       }, {
+        propoId: '006',
         date: '2016-05-03',
         name: '王小虎',
         proponame: '教工调整',
@@ -169,6 +185,7 @@ export default {
         checked: false
       },
       {
+        propoId: '005',
         date: '2016-05-01',
         name: '冯伟很',
         proponame: '垃圾分类注意',
@@ -176,6 +193,7 @@ export default {
         checked: true
       },
       {
+        propoId: '004',
         date: '2016-05-02',
         name: '王小虎',
         proponame: '关于奉贤食堂会议',
@@ -202,7 +220,9 @@ export default {
       },
       formLabelWidth: '80px',
       dialogVisible: false,
-      detail_con: ''
+      confirmDialog: false,
+      detail_con: '',
+      tableIndex: ''
     }
   },
   mounted() {
@@ -217,12 +237,17 @@ export default {
       }
       return ''
     },
+    goToDetail(index, row) {
+      const p = '/proposal/propodetail/' + this.tableData[index].propoId
+      this.$router.push({ path: p })
+    },
     inviteForprop(i) {
       this.dialogVisible = true
       this.detail_con = this.list[i].name
     },
     supportProp(index, row) {
-      alert(index)
+      this.tableIndex = index
+      this.confirmDialog = true
     },
     clearall() {
       this.form.name1 = ''

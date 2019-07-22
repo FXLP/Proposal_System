@@ -1,8 +1,5 @@
 <template>
   <div class="title">
-    <el-button icon="el-icon-edit-outline" type="primary" @click="ToSendMessage">
-      发送消息
-    </el-button>
     <div class="container_table">
       <el-table
         :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
@@ -11,12 +8,9 @@
         :default-sort="{prop: 'date', order: 'descending'}"
       >
         <el-table-column
-          type="selection"
-          width="40"
-        />
-        <el-table-column
           prop="id"
           label="序号"
+          sortable
           width="180"
         />
         <el-table-column
@@ -42,13 +36,12 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        class="fly"
         layout="prev, pager, next"
         background
-        hide-on-single-page
         :total="total"
         @current-change="current_change"
       />
+      <el-button type="primary" @click="ToSendMessage">发送消息</el-button>
     </div>
   </div>
 </template>
@@ -58,7 +51,7 @@ export default {
   name: 'Receive',
   data() {
     return {
-      total: 100, // 默认数据总数
+      total: 1000, // 默认数据总数
       pagesize: 9, // 每页的数据条数
       currentPage: 1, // 默认开始页面
       tableData: [
@@ -197,15 +190,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .title {
-    margin: 10px;
-  }
-  .container_table {
-    margin-top: 10px;
-  }
-  .fly {
-    margin-top: 10px;
-    float: right;
-  }
-</style>

@@ -16,19 +16,19 @@
       <el-col :span="12">
         <h3>已通过提案类型分布</h3>
         <el-row>
-        <el-col >
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
-        </el-col>
+          <el-col>
+            <div class="chart-wrapper">
+              <pie-chart />
+            </div>
+          </el-col>
         </el-row>
         <h3>每周办理情况</h3>
         <el-row>
-        <el-col >
-          <div class="chart-wrapper">
-            <bar-chart />
-          </div>
-        </el-col>
+          <el-col>
+            <div class="chart-wrapper">
+              <bar-chart />
+            </div>
+          </el-col>
         </el-row>
       </el-col>
 
@@ -58,12 +58,12 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="(item,i) in list" :key="item" :span="12">
+            <el-col v-for="item in list" :key="item" :span="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>标题:{{ item.name }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="showdialog(i)">提案详情</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.propoid)">提案详情</el-button>
                   </div>
                   <div class="text item">
                     <span>审批人:{{ item.person }}</span>
@@ -134,12 +134,12 @@ export default {
         { title: 'webpack4（下）', href: 'https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc' }
       ],
       list: [
-        { name: '提案1', person: 'abc1', pdate: '2019-06', content: '这是提案1，这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1' },
-        { name: '提案2', person: 'abc2', pdate: '2019-06', content: '这是提案2，这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2' },
-        { name: '提案3', person: 'abc3', pdate: '2019-06', content: '这是提案3，这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3' },
-        { name: '提案4', person: 'abc4', pdate: '2019-06', content: '这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，' },
-        { name: '提案5', person: 'abc3', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' },
-        { name: '提案6', person: 'abc4', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' }
+        { propoid: '001', name: '提案1', person: 'abc1', pdate: '2019-06', content: '这是提案1，这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1' },
+        { propoid: '002', name: '提案2', person: 'abc2', pdate: '2019-06', content: '这是提案2，这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2' },
+        { propoid: '003', name: '提案3', person: 'abc3', pdate: '2019-06', content: '这是提案3，这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3' },
+        { propoid: '004', name: '提案4', person: 'abc4', pdate: '2019-06', content: '这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，' },
+        { propoid: '005', name: '提案5', person: 'abc3', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' },
+        { propoid: '006', name: '提案6', person: 'abc4', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' }
       ],
       dateOptions: [{
         value: '选项1',
@@ -190,6 +190,10 @@ export default {
           done()
         })
         .catch(_ => {})
+    },
+    jumpToDetail(id) {
+      const p = '/proposal/propodetail/' + id
+      this.$router.push({ path: p })
     }
   }
 }
