@@ -62,10 +62,10 @@
                   <el-button type="info" round @click="clearall()">清空列表</el-button>
                 </div>
               </el-form>
-              <span slot="footer" class="dialog-footer">
+              <!-- <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-              </span>
+              </span> -->
             </el-dialog>
           </el-row>
         </div>
