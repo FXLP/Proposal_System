@@ -67,6 +67,9 @@
                     <h3>文件大小：</h3>239.93kb
                     <h3>上传时间：</h3>2019-07-17
                   </div>
+                  <div class="image-item">
+                    <img src="../../../public/pdf.jpg" width="100%">
+                  </div>
                 </el-card>
               </el-col>
 
@@ -79,6 +82,9 @@
                   <div class="text item">
                     <h3>文件大小：</h3>59.93kb
                     <h3>上传时间：</h3>2019-07-17
+                  </div>
+                  <div class="image-item">
+                    <img src="../../../public/pdf.jpg" width="100%">
                   </div>
                 </el-card>
               </el-col>
@@ -107,7 +113,7 @@
                 {{ activity.content }}
               </el-timeline-item>
             </el-timeline>
-            <h3 class="inlineh">已附议人数:</h3> 3
+            <h3 class="inlineh">已附议人数:</h3><el-tag type="warning">{{ supportNum }}</el-tag>
           </div>
 
           <div v-if="!isFormal" class="inviteBox">
@@ -136,7 +142,21 @@
           </div>
 
           <div v-if="isFormal" class="detailBox">
-            <el-row />
+            <el-collapse v-model="activeName" accordion>
+              <el-collapse-item title="审批人" name="1">
+                <div v-for="person in approveList" :key="person">
+                  {{ person }}
+                </div>
+              </el-collapse-item>
+              <el-collapse-item title="协办部门" name="2">
+                <div>审计部</div>
+              </el-collapse-item>
+              <el-collapse-item title="实施意见" name="3">
+                <div>简化流程：设计简洁直观的操作流程；</div>
+                <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
+                <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
+              </el-collapse-item>
+            </el-collapse>
           </div>
 
         </el-row>
@@ -154,6 +174,7 @@ export default {
   name: 'Proposaldetail',
   data() {
     return {
+      activeName: '1',
       isFormal: false,
       form: {
         name1: '',
@@ -184,7 +205,11 @@ export default {
       }, {
         content: '创建成功',
         timestamp: '2018-04-11'
-      }]
+      }],
+      supportNum: 3,
+      approveList: [
+        '林宇翩', '王青', '分为恒'
+      ]
     }
   },
   created: function() {
@@ -215,6 +240,21 @@ export default {
 
   .butt-group{
     margin-left:30%;
+  }
+
+  .detailBox{
+    margin-top:2%;
+  }
+
+  .image-item{
+    float:right;
+    width:50%;
+  }
+
+  .text{
+    margin-bottom:4%;
+    float:left;
+    width:50%;
   }
 
 </style>
