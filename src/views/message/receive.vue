@@ -5,10 +5,13 @@
     </el-button>
     <div class="table">
       <el-table
+        ref="multipleTable"
         :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
+        stripe
         style="width: 100%"
         :default-sort="{prop: 'date', order: 'descending'}"
+        @selection-change="handleSelectionChange"
       >
         <el-table-column
           type="selection"
@@ -34,7 +37,7 @@
           label="标题"
         />
         <el-table-column
-          prop="状态"
+          prop="status"
           label="读取状态"
         />
         <el-table-column label="操作">
@@ -42,13 +45,13 @@
             <el-button type="info" @click="open(scope.$index, scope.row)">
               详情
             </el-button>
-            <el-button type="danger" icon="el-icon-delete" round @click="delSingle(scope.$index, scope.row)" />
+            <el-button type="danger" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-button icon="el-icon-delete" class="btnDel" type="danger" round @click="AllDel">
-      删除所选
+    <el-button icon="el-icon-delete" class="btnDel" type="danger" round @click="batchDelete">
+      批量删除
     </el-button>
     <el-pagination
       class="fly"
@@ -68,13 +71,14 @@ export default {
       total: 100, // 默认数据总数
       pagesize: 8, // 每页的数据条数
       currentPage: 1, // 默认开始页面
+      multipleSelection: [],
       tableData: [
         {
           id: '1',
           日期: '2018-9-8',
           发件人: 'kk',
           标题: '1傻狗',
-          状态: '1V1.2',
+          status: '未读',
           内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
         },
         {
@@ -82,7 +86,7 @@ export default {
           日期: '2018-8-2',
           发件人: '小哈',
           标题: '傻狗2傻狗2傻狗2傻狗',
-          状态: '2V1.2',
+          status: '未读',
           内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
         },
         {
@@ -90,7 +94,7 @@ export default {
           日期: '2018-8-1',
           发件人: '小哈',
           标题: '3傻狗',
-          状态: '3V1.2',
+          status: '未读',
           内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
         },
         {
@@ -98,7 +102,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
         },
         {
@@ -106,7 +110,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
         },
         {
@@ -114,7 +118,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -122,7 +126,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -130,7 +134,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -138,7 +142,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -146,7 +150,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -154,7 +158,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -162,7 +166,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -170,7 +174,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -178,7 +182,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -186,7 +190,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -194,7 +198,7 @@ export default {
           日期: '2018-8-9',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         },
         {
@@ -202,7 +206,7 @@ export default {
           日期: '2018-3-7',
           发件人: '小花',
           标题: '4傻狗',
-          状态: '已读',
+          status: '已读',
           内容: 'sb'
         }
       ]
@@ -212,12 +216,15 @@ export default {
     created() {
       this.total = this.tableData.length
     },
+    // 实现分页渲染
     current_change(currentPage) {
       this.currentPage = currentPage
     },
+    // 跳转到发送消息页面
     ToSendMessage() {
       this.$router.push('/message/send')
     },
+    // 查看消息详情内容页
     open(index, row) {
       const p = this.tableData[index].内容
       this.$alert(p, '消息的具体内容', {
@@ -229,6 +236,26 @@ export default {
           })
         }
       })
+    },
+    // 删除单行
+    handleDelete(index) {
+      this.tableData.splice(index, 1)
+    },
+    batchDelete() {
+      const multData = this.multipleSelection
+      const tableData1 = this.tableData
+      const multDataLen = multData.length
+      const tableDataLen = tableData1.length
+      for (let i = 0; i < multDataLen; i++) {
+        for (let y = 0; y < tableDataLen; y++) {
+          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+            this.tableData.splice(y, 1)
+          }
+        }
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
     }
   }
 }
