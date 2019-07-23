@@ -2,13 +2,13 @@
   <div class="app-container">
     <aside>
       supportDetail 提案详情---------
-      代表通过Proposal support页面点击详情按钮跳转到该页面显示提案的详情
+      代表通过在其他页面点击详情按钮跳转到该页面显示 提案的详情 包括已审核和未审核两种
     </aside>
 
     <el-row>
-      <el-col :span="18">
+      <el-col :span="16">
         <el-row>
-          <h3>提案编号:{{ proposal.propoId }}</h3>
+          <h3 class="inlineh">提案编号:{{ proposal.propoId }}</h3>   <el-tag type="success">已完成</el-tag>
           <h2>提案{{ proposal.propoName }}</h2>
         </el-row>
         <el-row>
@@ -97,8 +97,49 @@
         </el-row>
       </el-col>
 
-      <el-col :span="6">
-        <h3>右侧的内容</h3>
+      <el-col :span="8">
+        <el-row>
+
+          <div class="block">
+            <h3>提案进度</h3>
+            <el-timeline>
+              <el-timeline-item v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp">
+                {{ activity.content }}
+              </el-timeline-item>
+            </el-timeline>
+            <h3 class="inlineh">已附议人数:</h3> 3
+          </div>
+
+          <div v-if="!isFormal" class="inviteBox">
+            <h3>邀请代表为您的提案附议</h3>
+            <el-form :model="form">
+              <el-form-item label="代表名字:" :label-width="formLabelWidth">
+                <div>
+                  <el-input v-model="form.name1" autocomplete="off" size="small" placeholder="姓名1" />
+                  <br><br>
+                  <el-input v-model="form.name2" autocomplete="off" size="small" placeholder="姓名2 选填" />
+                  <br><br>
+                  <el-input v-model="form.name3" autocomplete="off" size="small" placeholder="姓名3 选填 (一次最多邀请三名)" />
+                </div>
+              </el-form-item>
+              <el-form-item label="选项:" :label-width="formLabelWidth">
+                <el-select v-model="form.region" placeholder="请选择活动区域">
+                  <el-option label="区域一" value="shanghai" />
+                  <el-option label="区域二" value="beijing" />
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <div class="butt-group">
+              <el-button type="success" round>确认邀请</el-button>
+              <el-button type="info" round @click="clearall()">清空列表</el-button>
+            </div>
+          </div>
+
+          <div v-if="isFormal" class="detailBox">
+            <el-row />
+          </div>
+
+        </el-row>
       </el-col>
     </el-row>
 
@@ -113,14 +154,37 @@ export default {
   name: 'Proposaldetail',
   data() {
     return {
+      isFormal: false,
+      form: {
+        name1: '',
+        name2: '',
+        name3: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '80px',
       proposal: {
         propoId: '',
         propoName: '关于校园建设管理里的问题',
         propoContent: '由于学生存在对于课程项目的偏向性兴趣,以及选课考试能够通过的难易程度,导致了现阶段学生们疯狂抢课的现象,目前学校选课都是先到先得,每到选课时段,同学们便提早出发,全涌向理科楼,导致理科楼产生大面积拥挤现象,楼梯上也站满了人,为踩踏事件的发生创造了可能性;同时也导致选课时间一到就会有大量的信息冲击学校教务处系统,系统运行缓慢,网页无法打开,使许多同学选不到自己喜欢的课程,而勉强学习其他课程,而勉强学习其他课程,致使学生们的学习性不高。',
         supportPeople: ['林宇翩', '分为恒', '王琴'],
         suggestion: '增加热门课程人数和班次,满足同学们兴趣上的需求;丰富课程类型,使同学们拥有更大的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地从兴趣上选课;错开选课时间,严格控制各专业的选课时间,增强管理。'
-      }
-
+      },
+      activities: [{
+        content: '活动按期开始',
+        timestamp: '2018-04-15'
+      }, {
+        content: '通过审核',
+        timestamp: '2018-04-13'
+      }, {
+        content: '创建成功',
+        timestamp: '2018-04-11'
+      }]
     }
   },
   created: function() {
@@ -131,15 +195,26 @@ export default {
     this.driver = new Driver()
   },
   methods: {
-
+    clearall() {
+      this.form.name1 = ''
+      this.form.name2 = ''
+      this.form.name3 = ''
+    }
   }
 }
 </script>
 
 <style>
-
+  .inlineh{
+    display:inline;
+  }
   .propobox{
+    margin-left:3%;
     width:90%;
+  }
+
+  .butt-group{
+    margin-left:30%;
   }
 
 </style>

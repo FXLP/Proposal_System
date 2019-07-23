@@ -6,61 +6,66 @@
       点击“通过”则该提案会在提案组审核页面显示,同时更新该提案的状态；------------
       点击“驳回”则该提案的状态更改为“草稿”，仅该提案提出者在自己的草稿箱中可见
     </aside>
-    <el-table
-    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-    style="width: 98%">
-    <el-table-column
-      label="日期"
-      width="180">
-      <template slot-scope="scope">
-        <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="提案名"
-      width="360">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>附议人数: {{ scope.row.proponum }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-    <el-table-column
-      align="right">
-      <template slot="header" slot-scope="scope">
-        <el-input
-          v-model="search"
-          size="mini"
-          placeholder="输入关键字搜索"/>
-      </template>
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          type="primary"
-          @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-        <el-button
-          size="mini"
-          type="success"
-          @click="handlePass(scope.$index, scope.row)">通过</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">驳回</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+    <el-table :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))" style="width: 98%">
+      <el-table-column
+        label="日期"
+        width="180"
+      >
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="提案名"
+        width="360"
+      >
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+            <p>姓名: {{ scope.row.name }}</p>
+            <p>附议人数: {{ scope.row.proponum }}</p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="right"
+      >
+        <template slot="header">
+          <!-- slot-scope="scope1" -->
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="输入关键字搜索"
+          />
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+          >详情</el-button>
+          <el-button
+            size="mini"
+            type="success"
+            @click="handlePass(scope.$index, scope.row)"
+          >通过</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >驳回</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
-
 
 export default {
   name: 'CommanderReview',
@@ -120,7 +125,7 @@ export default {
         checked: false
       }
       ],
-        search: ''
+      search: ''
     }
   },
   mounted() {
@@ -128,13 +133,13 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      console.log(index, row)
     },
     handlePass(index, row) {
-      console.log(index, row);
+      console.log(index, row)
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      console.log(index, row)
     }
   }
 }
