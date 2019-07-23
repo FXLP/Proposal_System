@@ -175,6 +175,21 @@ export default {
   mounted() {
     this.driver = new Driver()
   },
+  // created() {
+  //   const data = {
+  //     user: 'sheng'
+  //   }
+  //   this.axios
+  //     .post(this.serverUrl + '/getPropoList', this.qs.stringify(data), this.headconfig)
+  //     .then(res => {
+  //       console.log(res)
+  //       if (res.data.code === 0) {
+  //         this.$router.push('/')
+  //       } else {
+  //         this.list = res.data.PopoList
+  //       }
+  //     })
+  // },
   methods: {
     guide() {
       this.driver.defineSteps(steps)
