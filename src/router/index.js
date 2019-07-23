@@ -171,12 +171,23 @@ export const asyncRoutes = [
     path: '/review',
     component: Layout,
     redirect: '/review/commander',
+    meta: {
+      title: 'Review',
+      icon: 'peoples',
+      roles: ['admin']
+    },
     children: [
       {
         path: 'commander',
         component: () => import('@/views/review/commander'),
-        name: 'Review',
-        meta: { title: 'Review', icon: 'people', roles: ['admin'] }
+        name: 'CommanderReview',
+        meta: { title: 'CommanderReview', roles: ['admin'] }
+      },
+      {
+        path: 'proposalGroup',
+        component: () => import('@/views/review/proposalGroup'),
+        name: 'GroupReview',
+        meta: { title: 'GroupReview', roles: ['admin'] }
       }
     ]
   },
