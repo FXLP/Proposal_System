@@ -6,12 +6,8 @@
         <el-form-item label="收信人" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="时间" required>
-          <el-col :span="11">
-            <el-form-item prop="date">
-              <el-date-picker v-model="ruleForm.date" type="date" placeholder="选择日期" style="width: 100%;" />
-            </el-form-item>
-          </el-col>
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="ruleForm.title" />
         </el-form-item>
         <el-form-item label="信息内容" prop="content">
           <el-input v-model="ruleForm.content" type="textarea" :rows="12" />
@@ -30,15 +26,15 @@ export default {
     return {
       ruleForm: {
         name: '',
-        date: '',
+        title: '',
         content: ''
       },
       rules: {
         name: [
           { required: true, message: '请输入收件人', trigger: 'blur' }
         ],
-        date: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        title: [
+          { required: true, message: '请输入标题', trigger: 'blur' }
         ],
         content: [
           { required: true, message: '请填写信息内容', trigger: 'blur' }

@@ -3,10 +3,10 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-
+import axios from 'axios'
 import Element from 'element-ui'
 import './styles/element-variables.scss'
-
+import Qs from 'qs'
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -36,6 +36,15 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
 
+axios.defaults.withCredentials = true
+Vue.prototype.axios = axios
+Vue.prototype.serverUrl = 'http://localhost:3000/api'
+Vue.prototype.qs = Qs
+Vue.prototype.headconfig = {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+}
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
