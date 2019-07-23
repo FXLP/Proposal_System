@@ -68,49 +68,58 @@ export default {
     return {
       tableData: [{
         propoId: '009',
-        date: '2016-05-02',
-        name: '冯伟横',
+        date: '2019-07-02',
+        name: '陈希豪',
         proponame: '关于奉贤校区新建食堂建议',
         proponum: '7',
         checked: false
       }, {
         propoId: '008',
-        date: '2016-05-04',
-        name: '王小虎',
+        date: '2019-07-04',
+        name: '盛泽宇',
         proponame: '关于徐汇校区修建宿舍楼问题',
         proponum: '6',
         checked: true
       }, {
         propoId: '007',
-        date: '2016-05-01',
-        name: '冯伟狠',
+        date: '2019-07-01',
+        name: '林宇翩',
         proponame: '垃圾分类建议',
         proponum: '4',
         checked: false
       }, {
         propoId: '006',
-        date: '2016-05-03',
-        name: '王小虎',
+        date: '2019-06-03',
+        name: '王琴',
         proponame: '教工调整',
         proponum: '2',
         checked: false
       },
       {
         propoId: '005',
-        date: '2016-05-01',
-        name: '冯伟很',
+        date: '2018-05-01',
+        name: '卜鑫源',
         proponame: '关于奉贤校区新建游泳馆的建议',
         proponum: '4',
         checked: true
       },
       {
         propoId: '004',
-        date: '2016-05-02',
-        name: '王小虎',
+        date: '2019-02-02',
+        name: '胡晓龙',
         proponame: '关于奉贤食堂会议',
         proponum: '7',
         checked: false
-      }],
+      },
+      {
+        propoId: '003',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议',
+        proponum: '7',
+        checked: false
+      }
+      ],
         search: ''
     }
   },
