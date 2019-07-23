@@ -3,9 +3,12 @@
     <el-col :span="14" class="col2">
       <h3>已发送的消息</h3>
       <el-table
+        ref="multipleTable"
         :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
         style="width: 100%"
+        :default-sort="{prop: 'date', order: 'descending'}"
+        @selection-change="handleSelectionChange"
       >
         <el-table-column
           type="selection"
@@ -37,12 +40,12 @@
             <el-button type="info" size="mini" @click="open(scope.$index, scope.row)">
               详情
             </el-button>
-            <el-button type="danger" size="mini" icon="el-icon-delete" round @click="delSingle(scope.$index, scope.row)" />
+            <el-button type="danger" size="mini" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
           </template>
         </el-table-column>
       </el-table>
-      <el-button icon="el-icon-delete" class="btnDel" type="danger" round @click="AllDel">
-        删除所选
+      <el-button icon="el-icon-delete" class="btnDel" type="danger" round @click="batchDelete">
+        批量删除
       </el-button>
       <el-pagination
         class="fly"
@@ -190,6 +193,26 @@ export default {
           })
         }
       })
+    },
+    // 删除单行
+    handleDelete(index) {
+      this.tableData.splice(index, 1)
+    },
+    batchDelete() {
+      const multData = this.multipleSelection
+      const tableData1 = this.tableData
+      const multDataLen = multData.length
+      const tableDataLen = tableData1.length
+      for (let i = 0; i < multDataLen; i++) {
+        for (let y = 0; y < tableDataLen; y++) {
+          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+            this.tableData.splice(y, 1)
+          }
+        }
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
     }
   }
 }
