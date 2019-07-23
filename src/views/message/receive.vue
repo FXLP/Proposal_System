@@ -16,7 +16,7 @@
         <el-table-column
           type="selection"
           width="40"
-        />s
+        />
         <el-table-column
           prop="id"
           label="序号"
