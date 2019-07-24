@@ -36,7 +36,7 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false // 解决跨域
 Vue.prototype.axios = axios
 Vue.prototype.serverUrl = 'http://localhost:7788'
 Vue.prototype.qs = Qs
