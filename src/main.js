@@ -38,7 +38,7 @@ Vue.use(Element, {
 
 axios.defaults.withCredentials = true
 Vue.prototype.axios = axios
-Vue.prototype.serverUrl = 'http://localhost:3000/api'
+Vue.prototype.serverUrl = 'http://localhost:7788'
 Vue.prototype.qs = Qs
 Vue.prototype.headconfig = {
   headers: {

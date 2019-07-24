@@ -167,6 +167,7 @@ export default {
         value: '选项4',
         label: '其他'
       }],
+      detail_con: '',
       dateop: '',
       classop: '',
       input: ''
@@ -176,15 +177,17 @@ export default {
     this.driver = new Driver()
   },
   created() {
-    const data = {
-      user: 'feng',
-      age: '13'
-    }
+    // const data = {
+    //   user: 'feng',
+    //   age: '13'
+    // }
     this.axios
-      .post(this.serverUrl + '/getPropoList', this.qs.stringify(data), this.headconfig)
+      .get(this.serverUrl + '/proposalDraft/getProposalDraftByID', { params: {
+        id: 0
+      }}, this.headconfig)
       .then(res => {
         console.log(res)
-        if (res.data.code === 0) {
+        if (res.code === 0) {
           this.$message({
             type: 'warning',
             message: '更新列表失败'
@@ -195,7 +198,7 @@ export default {
             type: 'success',
             message: '更新列表成功'
           })
-          this.list = res.data.PropoList
+          // this.list = res.data.PropoList
         }
       })
   },
