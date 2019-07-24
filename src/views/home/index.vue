@@ -176,20 +176,28 @@ export default {
     this.driver = new Driver()
   },
   created() {
-    // const data = {
-    //   user: 'sheng',
-    //   age: '13'
-    // }
-    // this.axios
-    //   .post(this.serverUrl + '/getPropoList', this.qs.stringify(data), this.headconfig)
-    //   .then(res => {
-    //     console.log(res)
-    //     if (res.data.code === 0) {
-    //       this.$router.push('/')
-    //     } else {
-    //       this.list = res.data.PropoList
-    //     }
-    //   })
+    const data = {
+      user: 'feng',
+      age: '13'
+    }
+    this.axios
+      .post(this.serverUrl + '/getPropoList', this.qs.stringify(data), this.headconfig)
+      .then(res => {
+        console.log(res)
+        if (res.data.code === 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+          // this.$router.push('/')
+        } else {
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+          this.list = res.data.PropoList
+        }
+      })
   },
   methods: {
     guide() {
