@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       counter: 0,
+      formLabelWidth: '80px',
       form: {
         name1: '',
         name2: '',
@@ -80,3 +81,8 @@ export default {
 }
 
 </script>
+<style>
+ .butt-group{
+    margin-left:30%;
+  }
+</style>

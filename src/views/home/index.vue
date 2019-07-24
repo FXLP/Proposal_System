@@ -13,7 +13,7 @@
     </el-button>
 
     <el-row>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <h3>已通过提案类型分布</h3>
         <el-row>
           <el-col>
@@ -32,7 +32,7 @@
         </el-row>
       </el-col>
 
-      <el-col :span="12">
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-row :gutter="20">
           <h3>已通过的提案</h3>
           <div class="filterbox">
@@ -58,7 +58,7 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="item in list" :key="item" :span="12">
+            <el-col v-for="item in list" :key="item" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
@@ -187,7 +187,7 @@ export default {
       }}, this.headconfig)
       .then(res => {
         console.log(res)
-        if (res.code === 0) {
+        if (res.data.code !== 0) {
           this.$message({
             type: 'warning',
             message: '更新列表失败'
