@@ -41,31 +41,7 @@
               <h4>提案名称:{{ detail_con }}</h4>
               <br>
               <br>
-              <el-form :model="form">
-                <el-form-item label="代表名字:" :label-width="formLabelWidth">
-                  <div>
-                    <el-input v-model="form.name1" autocomplete="off" size="small" placeholder="姓名1" />
-                    <br><br>
-                    <el-input v-model="form.name2" autocomplete="off" size="small" placeholder="姓名2 选填" />
-                    <br><br>
-                    <el-input v-model="form.name3" autocomplete="off" size="small" placeholder="姓名3 选填 (一次最多邀请三名)" />
-                  </div>
-                </el-form-item>
-                <el-form-item label="选项:" :label-width="formLabelWidth">
-                  <el-select v-model="form.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai" />
-                    <el-option label="区域二" value="beijing" />
-                  </el-select>
-                </el-form-item>
-                <div class="butt-group">
-                  <el-button type="success" round>确认邀请</el-button>
-                  <el-button type="info" round @click="clearall()">清空列表</el-button>
-                </div>
-              </el-form>
-              <!-- <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-              </span> -->
+              <invite-component />
             </el-dialog>
           </el-row>
         </div>
@@ -147,9 +123,12 @@
 <script>
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
-
+import InviteComponent from '../../components/InviteToSupport/index.vue'
 export default {
   name: 'Supportroposal',
+  components: {
+    InviteComponent
+  },
   data() {
     return {
       driver: null,
@@ -204,18 +183,6 @@ export default {
         { name: '提案3', progress: '已提交', pdate: '2019-06', num: '2' },
         { name: '提案4', progress: '已提交', pdate: '2019-06', num: '1' }
       ],
-      form: {
-        name1: '',
-        name2: '',
-        name3: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
       formLabelWidth: '80px',
       dialogVisible: false,
       confirmDialog: false,
@@ -246,11 +213,6 @@ export default {
     supportProp(index, row) {
       this.tableIndex = index
       this.confirmDialog = true
-    },
-    clearall() {
-      this.form.name1 = ''
-      this.form.name2 = ''
-      this.form.name3 = ''
     },
     jumpToDetail(i) {
       const p = '/proposal/propodetail/' + i
