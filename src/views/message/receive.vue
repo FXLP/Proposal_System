@@ -278,4 +278,4 @@ export default {
     top:600px
   }
 
-</style>
+  </style>

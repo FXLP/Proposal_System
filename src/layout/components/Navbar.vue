@@ -155,7 +155,7 @@ export default {
       }
     }
     .countsum {
-      position: fixed;
+      position:absolute;
       display:inline-block;
      // botton: 50px;
       right: 170px;//球的位置
