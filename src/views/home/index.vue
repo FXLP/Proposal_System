@@ -58,7 +58,7 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="item in list" :key="item" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-col v-for="item in list.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
@@ -87,6 +87,11 @@
               </span>
             </el-dialog>
           </el-row>
+          <el-row>
+            <div class="pagination-box">
+              <el-pagination layout="prev, pager, next" :total="total" :page-size="pagesize" :current-page.sync="currentPage" @current-change="handleCurrentChange" />
+            </div>
+          </el-row>
         </div>
       </el-col>
 
@@ -112,6 +117,11 @@ export default {
   },
   data() {
     return {
+      total: 10, // 默认数据总数
+      pagesize: 8, // 每页的数据条数
+      currentPage: 1, // 默认开始页面
+      pageNo: 1, // 当前页面
+      tableData: [],
       driver: null,
       carouselImages: [
         'https://wpimg.wallstcn.com/9679ffb0-9e0b-4451-9916-e21992218054.jpg',
@@ -221,6 +231,9 @@ export default {
     jumpToDetail(id) {
       const p = '/proposal/propodetail/' + id
       this.$router.push({ path: p })
+    },
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage
     }
   }
 }
@@ -253,5 +266,9 @@ export default {
   .image {
     width: 100%;
     height: 100%;
+  }
+  .pagination-box{
+    float:right;
+    margin-top:5%;
   }
 </style>
