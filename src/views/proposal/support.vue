@@ -125,7 +125,7 @@ import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 import InviteComponent from '../../components/InviteToSupport/index.vue'
 export default {
-  name: 'Supportroposal',
+  name: 'SupportProposal',
   components: {
     InviteComponent
   },

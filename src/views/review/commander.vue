@@ -23,7 +23,7 @@
       >
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
-            <p>姓名: {{ scope.row.name }}</p>
+            <p>提案发起者: {{ scope.row.name }}</p>
             <p>附议人数: {{ scope.row.proponum }}</p>
             <div slot="reference" class="name-wrapper">
               <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
@@ -46,7 +46,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="goToDetail(scope.$index, scope.row)"
           >详情</el-button>
           <el-button
             size="mini"
@@ -62,11 +62,11 @@
       </el-table-column>
     </el-table>
     <pagination 
-    v-show="total>0" 
-    :total="total" 
-    :page.sync="listQuery.page" 
-    :limit.sync="listQuery.limit" 
-    @pagination="getList" />
+     v-show="total>0"
+     :total="total"
+     :page.sync="listQuery.page"
+     :limit.sync="listQuery.limit"
+     @pagination="getList"/>
   </div>
 </template>
 
@@ -98,6 +98,10 @@ export default {
         this.list = response.data.items
         this.total = response.data.total
       })
+    },
+    goToDetail(index, row) {
+      const p = '/proposal/propodetail/' + this.list[index].propoId
+      this.$router.push({ path: p })
     },
     handleEdit(index, row) {
       console.log(index, row)
