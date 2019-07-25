@@ -22,6 +22,10 @@ for (let i = 0; i < count; i++) {
     display_time: '@datetime',
     comment_disabled: true,
     pageviews: '@integer(300, 5000)',
+    propoId: '@natural(1000, 1100)', // 随机生成1000-1100的数字
+    propoAuthor: '@cname', // 随机生成中文名字
+    propoName: '@first',
+    propoTime: +Mock.Random.date('T'), // 日期
     image_uri,
     platforms: ['a-platform']
   }))
@@ -45,6 +49,30 @@ export default [
         mockList = mockList.reverse()
       }
 
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
+  },
+
+  {
+    url: '/article/tableData',
+    type: 'get',
+    response: config => {
+      const { propoId, propoAuthor, propoName, propoTime, page = 1, limit = 10, sort } = config.query
+
+      let mockList = List.filter(item => {
+        return true
+      })
+      if (sort === '-id') {
+        mockList = mockList.reverse()
+      }
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
 
       return {

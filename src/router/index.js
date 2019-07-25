@@ -193,6 +193,7 @@ export const asyncRoutes = [
   },
   {
     path: '/assign',
+    name: 'Assign',
     component: Layout,
     redirect: '/assign/index',
     children: [
@@ -207,13 +208,24 @@ export const asyncRoutes = [
   {
     path: '/implement',
     component: Layout,
-    redirect: '/implement/implementView',
+    meta: {
+      title: 'Implement',
+      icon: 'tab',
+      roles: ['admin']
+    },
+    redirect: '/implement/handle',
     children: [
       {
-        path: 'implementView',
-        component: () => import('@/views/implement/implementView'),
-        name: 'ImplementView',
-        meta: { title: 'Implement', icon: 'tab', roles: ['admin'] }
+        path: 'handle',
+        component: () => import('@/views/implement/components/handle'),
+        name: 'Handle',
+        meta: { title: 'Handle', icon: 'tab', roles: ['admin'] }
+      },
+      {
+        path: 'jointly',
+        component: () => import('@/views/implement/components/jointly'),
+        name: 'Jointly',
+        meta: { title: 'Jointly', icon: 'tab', roles: ['admin'] }
       },
       {
         path: 'suggestion/:id',
