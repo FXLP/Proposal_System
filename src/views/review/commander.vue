@@ -6,7 +6,8 @@
       点击“通过”则该提案会在提案组审核页面显示,同时更新该提案的状态；------------
       点击“驳回”则该提案的状态更改为“草稿”，仅该提案提出者在自己的草稿箱中可见
     </aside>
-    <el-table :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))" style="width: 98%">
+    <el-table  :data="list" style="width: 98%">
+      //:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       <el-table-column
         label="日期"
         width="180"
@@ -60,17 +61,36 @@
         </template>
       </el-table-column>
     </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <!-- <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="pageSizesList"
+      :page-size="pageSize"
+      background
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    /> -->
   </div>
 </template>
 
 <script>
-import Driver from 'driver.js' // import driver.js
-import 'driver.js/dist/driver.min.css' // import driver.js css
+import { fetchProposalList } from '@/api/proposal'
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'CommanderReview',
+  components: { Pagination },
   data() {
     return {
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
       tableData: [{
         propoId: '009',
         date: '2019-07-02',
@@ -99,28 +119,60 @@ export default {
         proponame: '教工调整',
         proponum: '2',
         checked: false
-      },
-      {
+      }, {
         propoId: '005',
         date: '2018-05-01',
         name: '卜鑫源',
         proponame: '关于奉贤校区新建游泳馆的建议',
         proponum: '4',
         checked: true
-      },
-      {
+      }, {
         propoId: '004',
         date: '2019-02-02',
         name: '胡晓龙',
         proponame: '关于奉贤食堂会议',
         proponum: '7',
         checked: false
-      },
-      {
+      }, {
         propoId: '003',
         date: '2019-04-02',
         name: '冯伟恒',
         proponame: '关于徐汇食堂会议',
+        proponum: '7',
+        checked: false
+      }, {
+        propoId: '002',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议2',
+        proponum: '7',
+        checked: false
+      }, {
+        propoId: '001',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议3',
+        proponum: '7',
+        checked: false
+      }, {
+        propoId: '003',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议4',
+        proponum: '7',
+        checked: false
+      }, {
+        propoId: '003',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议5',
+        proponum: '7',
+        checked: false
+      }, {
+        propoId: '003',
+        date: '2019-04-02',
+        name: '冯伟恒',
+        proponame: '关于徐汇食堂会议6',
         proponum: '7',
         checked: false
       }
@@ -128,10 +180,16 @@ export default {
       search: ''
     }
   },
-  mounted() {
-    this.driver = new Driver()
+  created() {
+    this.getList()
   },
   methods: {
+    getList() {
+      fetchProposalList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+      })
+    },
     handleEdit(index, row) {
       console.log(index, row)
     },
