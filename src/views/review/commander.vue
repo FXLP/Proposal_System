@@ -6,7 +6,7 @@
       点击“通过”则该提案会在提案组审核页面显示,同时更新该提案的状态；------------
       点击“驳回”则该提案的状态更改为“草稿”，仅该提案提出者在自己的草稿箱中可见
     </aside>
-    <el-table  :data="list" style="width: 98%">
+    <el-table :data="list" style="width: 98%">
       //:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       <el-table-column
         label="日期"
@@ -61,12 +61,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination 
-    v-show="total>0" 
-    :total="total" 
-    :page.sync="listQuery.page" 
-    :limit.sync="listQuery.limit" 
-    @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 
