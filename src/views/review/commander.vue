@@ -61,16 +61,7 @@
         </template>
       </el-table-column>
     </el-table>
-<<<<<<< HEAD
-    <pagination 
-     v-show="total>0"
-     :total="total"
-     :page.sync="listQuery.page"
-     :limit.sync="listQuery.limit"
-     @pagination="getList"/>
-=======
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
->>>>>>> cf8909debb4f5330ce28e00a81c2612584fd78bb
   </div>
 </template>
 
