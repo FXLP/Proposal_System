@@ -1,4 +1,3 @@
-import Mock from 'mockjs'
 
 const ProposalList = [{
   propoId: '009',
@@ -77,7 +76,7 @@ const ProposalList = [{
   proponame: '关于徐汇食堂会议5',
   proponum: '7',
   checked: false
-},{
+}, {
   propoId: '003',
   date: '2019-04-02',
   name: '冯伟恒',
@@ -102,19 +101,19 @@ export default [
   {
     url: '/proposal/list',
     type: 'get',
-    response: config =>{
+    response: config => {
       const { page = 1, limit = 10 } = config.query
-        let mockList = ProposalList.filter(item => {
-          return true
-        })
-        const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-        return {
-          code: 20000,
-          data: {
-            total: mockList.length,
-            items: pageList
-          }
+      const mockList = ProposalList.filter(item => {
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
         }
+      }
     }
-}
+  }
 ]

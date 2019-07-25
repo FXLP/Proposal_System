@@ -38,11 +38,11 @@ Vue.use(Element, {
 
 axios.defaults.withCredentials = false // 解决跨域
 Vue.prototype.axios = axios
-Vue.prototype.serverUrl = 'http://localhost:7788'
+Vue.prototype.serverUrl = 'http://localhost:7788/api'
 Vue.prototype.qs = Qs
 Vue.prototype.headconfig = {
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
   }
 }
 // register global utility filters
