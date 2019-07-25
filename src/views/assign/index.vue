@@ -15,7 +15,14 @@
     >
       <el-table-column
         label="日期"
+        sortable
         prop="date"
+        width="120px"
+      />
+      <el-table-column
+        label="提案号"
+        prop="propoNumber"
+        sortable
         width="120px"
       />
       <el-table-column
@@ -30,12 +37,12 @@
       />
       <el-table-column label="操作" width="120px" align="center">
         <template slot-scope="scope">
-          <el-button type="info" @click="open(scope.$index, scope.row)">
+          <el-button type="info" @click="goToDetail(scope.$index, scope.row)">
             详情
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="选择部门办理" width="300px">
+      <el-table-column label="选择部门办理" width="250px">
         <template slot-scope="scope">
           <el-select v-model="scope.row.value" clearable placeholder="请选择">
             <el-option
@@ -75,88 +82,102 @@ export default {
       value: '',
       tableData: [
         {
+          date: '2016-05-01',
+          name: '王小虎',
+          title: '垃圾分类',
+          content: '我要垃圾分类',
+          propoNumber: '1'
+        },
+        {
           date: '2016-05-02',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分',
+          propoNumber: '2'
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          title: '垃圾分类',
+          content: '我要垃圾',
+          propoNumber: '3'
         },
         {
           date: '2016-05-04',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃',
+          propoNumber: '4'
         },
         {
-          date: '2016-05-01',
+          date: '2016-05-05',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要',
+          propoNumber: '5'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-06',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我',
+          propoNumber: '6'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-07',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '7'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-08',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '1008'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-09',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '1009'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-10',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '10010'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-11',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '10011'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-12',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '10012'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-13',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '10013'
         },
         {
-          date: '2016-05-03',
+          date: '2016-05-14',
           name: '王小虎',
           title: '垃圾分类',
-          content: '我要垃圾分类'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          title: '垃圾分类',
-          content: '我要垃圾分类'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          title: '垃圾分类',
-          content: '我要垃圾分类'
+          content: '我要垃圾分类',
+          propoNumber: '10014'
         }
       ],
       options: [
@@ -208,17 +229,9 @@ export default {
       this.currentPage = currentPage
     },
     // 打开详情页
-    open(index, row) {
-      const p = this.tableData[index].content
-      this.$alert(p, '消息的具体内容', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
+    goToDetail(index, row) {
+      const p = '/proposal/propodetail/' + this.tableData[index].propoNumber
+      this.$router.push({ path: p })
     },
     // 确认分配部门
     confirmText(index, row) {

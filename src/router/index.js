@@ -207,13 +207,20 @@ export const asyncRoutes = [
   {
     path: '/implement',
     component: Layout,
-    redirect: '/implement/index',
+    redirect: '/implement/implementView',
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/implement/index'),
-        name: 'Implement',
+        path: 'implementView',
+        component: () => import('@/views/implement/implementView'),
+        name: 'ImplementView',
         meta: { title: 'Implement', icon: 'tab', roles: ['admin'] }
+      },
+      {
+        path: 'suggestion/:id',
+        hidden: true,
+        component: () => import('@/views/implement/suggestion'),
+        name: 'Suggestion',
+        meta: { title: 'Suggestion', roles: ['admin'] }
       }
     ]
   },

@@ -13,7 +13,7 @@
     </el-button>
 
     <el-row>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <h3>已通过提案类型分布</h3>
         <el-row>
           <el-col>
@@ -32,7 +32,7 @@
         </el-row>
       </el-col>
 
-      <el-col :span="12">
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-row :gutter="20">
           <h3>已通过的提案</h3>
           <div class="filterbox">
@@ -58,7 +58,7 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="item in list" :key="item" :span="12">
+            <el-col v-for="item in list.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
@@ -87,6 +87,11 @@
               </span>
             </el-dialog>
           </el-row>
+          <el-row>
+            <div class="pagination-box">
+              <el-pagination layout="prev, pager, next" :total="total" :page-size="pagesize" :current-page.sync="currentPage" @current-change="handleCurrentChange" />
+            </div>
+          </el-row>
         </div>
       </el-col>
 
@@ -112,6 +117,11 @@ export default {
   },
   data() {
     return {
+      total: 10, // 默认数据总数
+      pagesize: 8, // 每页的数据条数
+      currentPage: 1, // 默认开始页面
+      pageNo: 1, // 当前页面
+      tableData: [],
       driver: null,
       carouselImages: [
         'https://wpimg.wallstcn.com/9679ffb0-9e0b-4451-9916-e21992218054.jpg',
@@ -167,6 +177,7 @@ export default {
         value: '选项4',
         label: '其他'
       }],
+      detail_con: '',
       dateop: '',
       classop: '',
       input: ''
@@ -177,19 +188,29 @@ export default {
   },
   created() {
     // const data = {
-    //   user: 'sheng',
+    //   user: 'feng',
     //   age: '13'
     // }
-    // this.axios
-    //   .post(this.serverUrl + '/getPropoList', this.qs.stringify(data), this.headconfig)
-    //   .then(res => {
-    //     console.log(res)
-    //     if (res.data.code === 0) {
-    //       this.$router.push('/')
-    //     } else {
-    //       this.list = res.data.PropoList
-    //     }
-    //   })
+    this.axios
+      .get(this.serverUrl + '/proposalDraft/getProposalDraftByID', { params: {
+        id: 0
+      }}, this.headconfig)
+      .then(res => {
+        console.log(res)
+        if (res.data.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+          // this.$router.push('/')
+        } else {
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+          // this.list = res.data.PropoList
+        }
+      })
   },
   methods: {
     guide() {
@@ -210,6 +231,9 @@ export default {
     jumpToDetail(id) {
       const p = '/proposal/propodetail/' + id
       this.$router.push({ path: p })
+    },
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage
     }
   }
 }
@@ -242,5 +266,9 @@ export default {
   .image {
     width: 100%;
     height: 100%;
+  }
+  .pagination-box{
+    float:right;
+    margin-top:5%;
   }
 </style>

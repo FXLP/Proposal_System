@@ -30,7 +30,11 @@
                 </template>
                 <div>
                   <el-tag type="warning">提案人</el-tag>
-                  &nbsp;<h3>风味恒</h3>
+                  &nbsp;<h3>{{ proposal.propoman }}</h3>
+                </div>
+                <div>
+                  <el-tag>所属代表团</el-tag>
+                  &nbsp;<h3>{{ proposal.delegation }}</h3>
                 </div>
                 <div>
                   <el-tag type="success">附议人</el-tag>
@@ -118,27 +122,7 @@
 
           <div v-if="!isFormal" class="inviteBox">
             <h3>邀请代表为您的提案附议</h3>
-            <el-form :model="form">
-              <el-form-item label="代表名字:" :label-width="formLabelWidth">
-                <div>
-                  <el-input v-model="form.name1" autocomplete="off" size="small" placeholder="姓名1" />
-                  <br><br>
-                  <el-input v-model="form.name2" autocomplete="off" size="small" placeholder="姓名2 选填" />
-                  <br><br>
-                  <el-input v-model="form.name3" autocomplete="off" size="small" placeholder="姓名3 选填 (一次最多邀请三名)" />
-                </div>
-              </el-form-item>
-              <el-form-item label="选项:" :label-width="formLabelWidth">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai" />
-                  <el-option label="区域二" value="beijing" />
-                </el-select>
-              </el-form-item>
-            </el-form>
-            <div class="butt-group">
-              <el-button type="success" round>确认邀请</el-button>
-              <el-button type="info" round @click="clearall()">清空列表</el-button>
-            </div>
+            <invite-component />
           </div>
 
           <div v-if="isFormal" class="detailBox">
@@ -169,28 +153,20 @@
 <script>
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
-
+import InviteComponent from '../../components/InviteToSupport/index.vue'
 export default {
   name: 'Proposaldetail',
+  components: {
+    InviteComponent
+  },
   data() {
     return {
       activeName: '1',
       isFormal: false,
-      form: {
-        name1: '',
-        name2: '',
-        name3: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
-      formLabelWidth: '80px',
       proposal: {
         propoId: '',
+        propoman: '分为哼',
+        delegation: '审计处',
         propoName: '关于校园建设管理里的问题',
         propoContent: '由于学生存在对于课程项目的偏向性兴趣,以及选课考试能够通过的难易程度,导致了现阶段学生们疯狂抢课的现象,目前学校选课都是先到先得,每到选课时段,同学们便提早出发,全涌向理科楼,导致理科楼产生大面积拥挤现象,楼梯上也站满了人,为踩踏事件的发生创造了可能性;同时也导致选课时间一到就会有大量的信息冲击学校教务处系统,系统运行缓慢,网页无法打开,使许多同学选不到自己喜欢的课程,而勉强学习其他课程,而勉强学习其他课程,致使学生们的学习性不高。',
         supportPeople: ['林宇翩', '分为恒', '王琴'],
@@ -220,11 +196,7 @@ export default {
     this.driver = new Driver()
   },
   methods: {
-    clearall() {
-      this.form.name1 = ''
-      this.form.name2 = ''
-      this.form.name3 = ''
-    }
+
   }
 }
 </script>
@@ -236,10 +208,6 @@ export default {
   .propobox{
     margin-left:3%;
     width:90%;
-  }
-
-  .butt-group{
-    margin-left:30%;
   }
 
   .detailBox{
