@@ -61,17 +61,12 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="pageSizesList"
-      :page-size="pageSize"
-      background
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    /> -->
+    <pagination 
+    v-show="total>0" 
+    :total="total" 
+    :page.sync="listQuery.page" 
+    :limit.sync="listQuery.limit" 
+    @pagination="getList" />
   </div>
 </template>
 
@@ -91,92 +86,6 @@ export default {
         page: 1,
         limit: 10
       },
-      tableData: [{
-        propoId: '009',
-        date: '2019-07-02',
-        name: '陈希豪',
-        proponame: '关于奉贤校区新建食堂建议',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '008',
-        date: '2019-07-04',
-        name: '盛泽宇',
-        proponame: '关于徐汇校区修建宿舍楼问题',
-        proponum: '6',
-        checked: true
-      }, {
-        propoId: '007',
-        date: '2019-07-01',
-        name: '林宇翩',
-        proponame: '垃圾分类建议',
-        proponum: '4',
-        checked: false
-      }, {
-        propoId: '006',
-        date: '2019-06-03',
-        name: '王琴',
-        proponame: '教工调整',
-        proponum: '2',
-        checked: false
-      }, {
-        propoId: '005',
-        date: '2018-05-01',
-        name: '卜鑫源',
-        proponame: '关于奉贤校区新建游泳馆的建议',
-        proponum: '4',
-        checked: true
-      }, {
-        propoId: '004',
-        date: '2019-02-02',
-        name: '胡晓龙',
-        proponame: '关于奉贤食堂会议',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '003',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '002',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议2',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '001',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议3',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '003',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议4',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '003',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议5',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '003',
-        date: '2019-04-02',
-        name: '冯伟恒',
-        proponame: '关于徐汇食堂会议6',
-        proponum: '7',
-        checked: false
-      }
-      ],
       search: ''
     }
   },
