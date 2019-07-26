@@ -26,6 +26,7 @@ for (let i = 0; i < count; i++) {
     propoAuthor: '@cname', // 随机生成中文名字
     propoName: '@first',
     propoTime: +Mock.Random.date('T'), // 日期
+    'propoStatus|1': ['true', 'false'],
     image_uri,
     platforms: ['a-platform']
   }))
@@ -65,16 +66,9 @@ export default [
     url: '/article/tableData',
     type: 'get',
     response: config => {
-      const { propoId, propoAuthor, propoName, propoTime, page = 1, limit = 10, sort } = config.query
-
-      let mockList = List.filter(item => {
-        return true
-      })
-      if (sort === '-id') {
-        mockList = mockList.reverse()
-      }
+      const { page = 1, limit = 10 } = config.query
+      let mockList = List
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-
       return {
         code: 20000,
         data: {
