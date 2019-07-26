@@ -65,7 +65,7 @@ export default [
     url: '/article/tableData',
     type: 'get',
     response: config => {
-      const { propoId, propoAuthor, propoName, propoTime, page = 1, limit = 10, sort } = config.query
+      const { page = 1, limit = 10, sort } = config.query // propoId, propoAuthor, propoName, propoTime,
 
       let mockList = List.filter(item => {
         return true
