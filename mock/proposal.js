@@ -310,5 +310,62 @@ export default [
         }
       }
     }
+  },
+  {
+    url: '/proposal/waitHandlelist',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 10 } = config.query
+      const mockList = ProposalList.filter(item => {
+        if(item.propostate !== '待办理') return false
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: '/proposal/handlinglist',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 10 } = config.query
+      const mockList = ProposalList.filter(item => {
+        if(item.propostate !== '办理中') return false
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: '/proposal/finishedlist',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 10 } = config.query
+      const mockList = ProposalList.filter(item => {
+        if(item.propostate !== '已完成') return false
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
   }
 ]

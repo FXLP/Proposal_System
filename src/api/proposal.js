@@ -15,3 +15,27 @@ export function fetchWaitGroupReviewList(query) {
     params: query
   })
 }
+
+export function fetchWaitHandleList(query) {
+  return request({
+    url: '/proposal/waitHandlelist',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchHandlingList(query) {
+  return request({
+    url: '/proposal/handlinglist',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchFinishedList(query) {
+  return request({
+    url: '/proposal/finishedlist',
+    method: 'get',
+    params: query
+  })
+}

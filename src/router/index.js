@@ -239,13 +239,30 @@ export const asyncRoutes = [
   {
     path: '/handle',
     component: Layout,
-    redirect: '/handle/index',
+    meta: {
+      title: 'Handle',
+      icon: 'skill',
+      roles: ['admin']
+    },
     children: [
+      
       {
-        path: 'index',
-        component: () => import('@/views/handle/index'),
-        name: 'Handle',
-        meta: { title: 'Handle', icon: 'skill', roles: ['admin'] }
+        path: 'waitHandle',
+        component: () => import('@/views/handle/waitHandle'),
+        name: 'WaitHandle',
+        meta: { title: 'WaitHandle', roles: ['admin'] }
+      },
+      {
+        path: 'Handling',
+        component: () => import('@/views/handle/handling'),
+        name: 'Handling',
+        meta: { title: 'Handling', roles: ['admin'] }
+      },
+      {
+        path: 'finished',
+        component: () => import('@/views/handle/finished'),
+        name: 'Finished',
+        meta: { title: 'Finished', roles: ['admin'] }
       }
     ]
   },
