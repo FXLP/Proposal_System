@@ -172,6 +172,31 @@ export default {
             .catch(() => {
               this.loading = false
             })
+          // this.axios
+          //   .post(this.serverUrl + '/login', this.qs.stringify({
+          //     id: 1,
+          //     password: '1'
+          //   }), {
+          //     headers: {
+          //       'Content-Type': 'application/x-www-form-urlencoded'
+          //     }
+          //   })
+          //   .then(res => {
+          //     console.log(res)
+          //     if (res.data.code !== 0) {
+          //       this.$message({
+          //         type: 'warning',
+          //         message: '登录失败'
+          //       })
+          //     } else {
+          //       this.$message({
+          //         type: 'success',
+          //         message: '登录成功'
+          //       })
+          //       this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+          //       this.loading = false
+          //     }
+          //   })
         } else {
           console.log('error submit!!')
           return false

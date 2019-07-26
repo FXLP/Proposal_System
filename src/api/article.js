@@ -7,6 +7,13 @@ export function fetchList(query) {
     params: query
   })
 }
+export function fetchTableData(query) {
+  return request({
+    url: '/article/tableData',
+    method: 'get',
+    params: query
+  })
+}
 
 export function fetchArticle(id) {
   return request({

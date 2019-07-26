@@ -1,5 +1,4 @@
 
-
 const ProposalList = [
 {
   propoId: '001',
@@ -244,26 +243,24 @@ const ProposalList = [
 }
 ]
 
-/*propostate  2019.7.25 create by FXLP
+/* propostate  2019.7.25 create by FXLP
 提案状态属性	    对应英文	              备注
 起始	           beginProposal	
 草稿	           draft	                  草稿
 已提交	         pubilshed	              待他人附议
 待代表团团长审核	waitCommanderReview	    附议人数>=2
-待提案组审核	    waitGroupReview	
-待校办分派部门	  waitAssign	
-待部门分派负责人	waitImplement	
-待办理	         waitHandle	
-办理中	         handling	
+待提案组审核	    waitGroupReview
+待校办分派部门	  waitAssign
+待部门分派负责人	waitImplement
+待办理	         waitHandle
+办理中	         handling
 已完成	         finished	               待提案组签意见
-待提案组讨论审定	waitDiscussionApproval	
-待提案组总结归档	waitSummaryArchive	
-结束	           endProposal	
+待提案组讨论审定	waitDiscussionApproval
+待提案组总结归档	waitSummaryArchive
+结束	           endProposal
 */
 
-
-
-//mock example
+// mock example
 // for (let i = 0; i < count; i++){
 //     ProposalList.push(Mock.mock({
 //         propoId:'@integer',
