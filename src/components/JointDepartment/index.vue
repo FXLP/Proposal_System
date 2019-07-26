@@ -1,32 +1,45 @@
 <template>
-  <el-form :model="form">
-    <el-form-item label="选择:" :label-width="formLabelWidth">
-      <el-select v-model="form.region" placeholder="请选择承办部门">
-        <el-option label="区域一" value="shanghai" />
-        <el-option label="区域二" value="beijing" />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="选项:" :label-width="formLabelWidth">
-      <el-select v-model="form.region" placeholder="请选择承办部门">
-        <el-option label="区域一" value="shanghai" />
-        <el-option label="区域二" value="beijing" />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="选项:" :label-width="formLabelWidth">
-      <el-select v-model="form.region" placeholder="请选择承办部门">
-        <el-option label="区域一" value="shanghai" />
-        <el-option label="区域二" value="beijing" />
-      </el-select>
-    </el-form-item>
-    <div class="butt-group">
-      <el-button type="success" round @click="invite()">确认邀请</el-button>
-      <el-button type="info" round @click="clearall()">清空列表</el-button>
-    </div>
-  </el-form>
+  <div>
+    <el-form :model="form">
+      <el-form-item label="选项:" :label-width="formLabelWidth" require="true">
+        <el-select v-model="form.region1" placeholder="请选择承办部门" clearable>
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="选项:" :label-width="formLabelWidth" clearable>
+        <el-select v-model="form.region2" placeholder="请选择承办部门">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="选项:" :label-width="formLabelWidth" clearable>
+        <el-select v-model="form.region3" placeholder="请选择承办部门">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <div class="butt-group">
+        <el-button type="success" round @click="sureInvite">确认邀请</el-button>
+        <el-button type="info" round @click="clearall">清空列表</el-button>
+      </div>
+    </el-form>
+  </div>
 </template>
 
 <script>
-
 export default {
   name: 'Invite',
   data() {
@@ -34,55 +47,47 @@ export default {
       counter: 0,
       formLabelWidth: '80px',
       form: {
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+        region1: '',
+        region2: '',
+        region3: ''
+      },
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: ''
     }
   },
   methods: {
     clearall() {
-      this.form.name1 = ''
-      this.form.name2 = ''
-      this.form.name3 = ''
+      this.form.region1 = ''
+      this.form.region2 = ''
+      this.form.region3 = ''
     },
-    invite() {
-      const data = {
-        name1: this.form.name1,
-        name2: this.form.name2,
-        name3: this.form.name3
-      }
-      this.axios
-        .post(this.serverUrl + '/inviteForSpport', this.qs.stringify(data), this.headconfig)
-        .then(res => {
-          console.log(res)
-          if (res.data.code === 0) {
-            this.$message.error('系统暂忙，请稍后再试')
-            this.$router.push('/')
-          } else {
-            this.$message({
-              message: '邀请成功！',
-              type: 'success'
-            })
-          }
-        })
-        .catch(err => {
-          this.$message.error({
-            message: err,
-            type: 'warning'
+    sureInvite() {
+      const p = '确认邀请'
+      this.$alert(p, '提示', {
+        confirmButtonText: '确定',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `action: ${action}`
           })
-        })
+        }
+      })
     }
   }
 }
-
 </script>
-<style>
- .butt-group{
-    margin-left:30%;
-  }
-</style>
