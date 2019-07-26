@@ -25,6 +25,7 @@
           <el-popover trigger="hover" placement="top">
             <p>提案发起者: {{ scope.row.name }}</p>
             <p>附议人数: {{ scope.row.proponum }}</p>
+            <p>提案状态: {{ scope.row.propostate }}</p>
             <div slot="reference" class="name-wrapper">
               <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
             </div>
@@ -51,12 +52,12 @@
           <el-button
             size="mini"
             type="success"
-            @click="handlePass(scope.$index, scope.row)"
+            @click="handleModifyStatus(scope.row,'待提案组审核')"
           >通过</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
+            @click="handleModifyStatus(scope.row,'草稿')"
           >驳回</el-button>
         </template>
       </el-table-column>
@@ -66,7 +67,7 @@
 </template>
 
 <script>
-import { fetchProposalList } from '@/api/proposal'
+import { fetchWaitCommanderReviewList } from '@/api/proposal'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -89,7 +90,7 @@ export default {
   },
   methods: {
     getList() {
-      fetchProposalList(this.listQuery).then(response => {
+      fetchWaitCommanderReviewList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
       })
@@ -98,14 +99,23 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleEdit(index, row) {
-      console.log(index, row)
-    },
-    handlePass(index, row) {
-      console.log(index, row)
-    },
-    handleDelete(index, row) {
-      console.log(index, row)
+    // handleDelete(row) {
+    //   this.$notify({
+    //     title: 'Success',
+    //     message: 'Delete Successfully',
+    //     type: 'success',
+    //     duration: 2000
+    //   })
+    //   const index = this.list.indexOf(row)
+    //   this.list.splice(index, 1)
+    // },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.propostate = status //change proposal state
+      console.log(row.propostate)
     }
   }
 }

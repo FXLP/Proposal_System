@@ -7,7 +7,7 @@ const ProposalList = [
   name: '陈希豪',
   proponame: '关于奉贤校区新建食堂建议',
   proponum: '7', 
-  propostate: 'draft', 
+  propostate: '草稿', 
   checked: false
 }, {
   propoId: '002',
@@ -15,7 +15,7 @@ const ProposalList = [
   name: '盛泽宇',
   proponame: '关于徐汇校区修建宿舍楼问题',
   proponum: '6',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: true
 }, {
   propoId: '003',
@@ -23,7 +23,7 @@ const ProposalList = [
   name: '林宇翩',
   proponame: '垃圾分类建议',
   proponum: '4',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '004',
@@ -31,7 +31,7 @@ const ProposalList = [
   name: '王琴',
   proponame: '教工调整',
   proponum: '2',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '005',
@@ -55,7 +55,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '008',
@@ -63,7 +63,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议2',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '009',
@@ -71,7 +71,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议3',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '010',
@@ -79,7 +79,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议4',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '011',
@@ -87,7 +87,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议5',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '012',
@@ -95,7 +95,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议6',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '013',
@@ -103,7 +103,7 @@ const ProposalList = [
   name: '冯伟恒',
   proponame: '关于徐汇食堂会议7',
   proponum: '4',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '014',
@@ -111,7 +111,7 @@ const ProposalList = [
   name: '林宇翩',
   proponame: '关于徐汇食堂会议8',
   proponum: '7',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '015',
@@ -119,7 +119,7 @@ const ProposalList = [
   name: '林宇翩',
   proponame: '关于徐汇食堂会议9',
   proponum: '7',
-  propostate: 'draft',
+  propostate: '草稿',
   checked: false
 }, {
   propoId: '016',
@@ -127,7 +127,7 @@ const ProposalList = [
   name: '林宇翩',
   proponame: '关于奉贤宿舍楼建议3',
   proponum: '6',
-  propostate: 'waitCommanderReview',
+  propostate: '待代表团团长审核',
   checked: false
 }, {
   propoId: '017',
@@ -135,7 +135,7 @@ const ProposalList = [
   name: '林宇翩',
   proponame: '关于奉贤宿舍楼建议4',
   proponum: '10',
-  propostate: 'waitGroupReview',
+  propostate: '待提案组审核',
   checked: false
 }, {
   propoId: '018',
@@ -247,8 +247,8 @@ const ProposalList = [
 /*propostate  2019.7.25 create by FXLP
 提案状态属性	    对应英文	              备注
 起始	           beginProposal	
-提案撰写阶段	    draft	                  草稿
-提交提案阶段	    pubilshed	              待他人附议
+草稿	           draft	                  草稿
+已提交	         pubilshed	              待他人附议
 待代表团团长审核	waitCommanderReview	    附议人数>=2
 待提案组审核	    waitGroupReview	
 待校办分派部门	  waitAssign	
@@ -277,12 +277,31 @@ const ProposalList = [
 
 export default [
   {
-    url: '/proposal/list',
+    url: '/proposal/waitCommanderReviewlist',
     type: 'get',
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate!='waitCommanderReview') return false
+        if(item.propostate !== '待代表团团长审核') return false
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: '/proposal/waitGroupReviewlist',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 10 } = config.query
+      const mockList = ProposalList.filter(item => {
+        if(item.propostate !== '待提案组审核') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
