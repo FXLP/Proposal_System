@@ -45,7 +45,7 @@
 
       <el-table-column label="选择承办部门" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.label" clearable placeholder="请选择">
+          <el-select v-model="scope.row.label" :disabled="scope.row.propostatus == '已办'" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -58,7 +58,7 @@
 
       <el-table-column label="选择协办部门" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.value" multiple clearable placeholder="请选择">
+          <el-select v-model="scope.row.value" multiple :disabled="scope.row.propostatus == '已办'" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -71,14 +71,14 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" @click="confirmText(scope.$index, scope.row)">
+          <el-button type="primary" :disabled="scope.row.propostatus == '已办'" @click="confirmText(scope.$index, scope.row)">
             确定
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" class="fly" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
   </div>
 </template>
 
@@ -139,21 +139,7 @@ export default {
     },
     // 确认分配部门
     confirmText(index, row) {
-      this.$confirm('此操作将确认操作, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消'
-        })
-      })
+      this.$set(this.tableData[index], 'propostatus', '已办')
     }
   }
 }
