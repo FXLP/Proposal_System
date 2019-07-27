@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column label="选择办理人" align="center" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.value" multiple clearable placeholder="请选择">
+          <el-select v-model="scope.row.value" :disabled="scope.row.propostatus == '已办'" multiple clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="105">
         <template slot-scope="scope">
-          <el-button type="primary" round @click="sure(scope.$index, scope.row)">
+          <el-button type="primary" round :disabled="scope.row.propostatus == '已办'" @click="sure(scope.$index, scope.row)">
             确定
           </el-button>
         </template>
@@ -121,38 +121,41 @@ export default {
         this.total = response.data.total
       })
     },
+    sure(index, row) {
+      this.$set(this.tableData[index], 'propostatus', '已办')
+    },
     // 去详情页面
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.tableData[index].propoId
       this.$router.push({ path: p })
-    },
-    // 邀请承办部门
-    inviteForJoint(index, row) {
-      this.dialogVisible = true
-      this.detail_con = this.tableData[index].propoId
-    },
-    // 删除单行
-    handleDelete(index) {
-      this.tableData.splice(index, 1)
-    },
-    // 批量删除
-    batchDelete() {
-      const multData = this.multipleSelection
-      const tableData1 = this.tableData
-      const multDataLen = multData.length
-      const tableDataLen = tableData1.length
-      for (let i = 0; i < multDataLen; i++) {
-        for (let y = 0; y < tableDataLen; y++) {
-          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-            this.tableData.splice(y, 1)
-          }
-        }
-      }
-    },
-    // 选中
-    handleSelectionChange(val) {
-      this.multipleSelection = val
     }
+    // // 邀请承办部门
+    // inviteForJoint(index, row) {
+    //   this.dialogVisible = true
+    //   this.detail_con = this.tableData[index].propoId
+    // }
+    // // 删除单行
+    // handleDelete(index) {
+    //   this.tableData.splice(index, 1)
+    // },
+    // // 批量删除
+    // batchDelete() {
+    //   const multData = this.multipleSelection
+    //   const tableData1 = this.tableData
+    //   const multDataLen = multData.length
+    //   const tableDataLen = tableData1.length
+    //   for (let i = 0; i < multDataLen; i++) {
+    //     for (let y = 0; y < tableDataLen; y++) {
+    //       if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+    //         this.tableData.splice(y, 1)
+    //       }
+    //     }
+    //   }
+    // },
+    // // 选中
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val
+    // }
   }
 }
 </script>
