@@ -2,27 +2,7 @@
   <div>
     <el-form :model="form">
       <el-form-item label="选项:" :label-width="formLabelWidth" require="true">
-        <el-select v-model="form.region1" placeholder="请选择承办部门" clearable>
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="选项:" :label-width="formLabelWidth" clearable>
-        <el-select v-model="form.region2" placeholder="请选择承办部门">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="选项:" :label-width="formLabelWidth" clearable>
-        <el-select v-model="form.region3" placeholder="请选择承办部门">
+        <el-select v-model="form.region1" multiple placeholder="请选择承办部门" clearable>
           <el-option
             v-for="item in options"
             :key="item.value"

@@ -58,8 +58,7 @@
       </el-form-item>
     </el-form>
     <el-row class="btn">
-      <el-button type="primary" @click="sure('proposal')">确定承办</el-button>
-      <el-button type="danger" @click="refuse('proposal')">拒绝承办</el-button>
+      <el-button type="primary">完成协办</el-button>
     </el-row>
   </div>
 </template>
@@ -90,49 +89,11 @@ export default {
     this.proposal.propoId = this.$route.params.id
   },
   methods: {
-    sure(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          const p = '确认承办该提案号: ' + this.proposal.propoId
-          this.$alert(p, '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-              this.$message({
-                type: 'info',
-                message: `action: ${action}`
-              })
-            }
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    refuse(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          const p = '确认承办该提案号: ' + this.proposal.propoId
-          this.$alert(p, '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-              this.$message({
-                type: 'info',
-                message: `action: ${action}`
-              })
-            }
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    }
   }
 }
 </script>
 <style scoped>
   .btn {
-    margin-left: 560px;
+    margin-left: 650px;
   }
 </style>

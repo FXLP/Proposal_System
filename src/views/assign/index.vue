@@ -29,22 +29,23 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="提案名" width="400px">
+      <el-table-column label="提案名" width="280px">
         <template slot-scope="scope">
           <span>{{ scope.row.propoName }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="120px" align="center">
+      <el-table-column label="查看" width="100px" align="center">
         <template slot-scope="scope">
           <el-button type="info" @click="goToDetail(scope.$index, scope.row)">
             详情
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="选择部门办理" width="250px">
+
+      <el-table-column label="选择承办部门" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.value" clearable placeholder="请选择">
+          <el-select v-model="scope.row.label" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -54,6 +55,20 @@
           </el-select>
         </template>
       </el-table-column>
+
+      <el-table-column label="选择协办部门" width="200px">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.value" multiple clearable placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" @click="confirmText(scope.$index, scope.row)">
@@ -62,6 +77,7 @@
         </template>
       </el-table-column>
     </el-table>
+
     <pagination v-show="total>0" class="fly" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
   </div>
 </template>
@@ -98,22 +114,6 @@ export default {
         {
           value: '选项4',
           label: '党委宣传部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
         },
         {
           value: '选项5',
