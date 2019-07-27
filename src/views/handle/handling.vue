@@ -8,18 +8,17 @@
         class="board-column-content"
         :set-data="setData"
       >
-      <div v-for="element in list2" :key="element.id" class="board-item" >
-        {{ element.id }}#{{ element.name }}
-        <el-button
-        size="mini"
-        type="success"
-        @click="changeToDone()"
-        >完结</el-button>
-      </div>
+        <div v-for="element in list2" :key="element.id" class="board-item">
+          {{ element.id }}#{{ element.name }}
+          <el-button
+            size="mini"
+            type="success"
+            @click="changeToDone()"
+          >完结</el-button>
+        </div>
       </draggable>
     </div>
 
-    
   </div>
 </template>
 <script>

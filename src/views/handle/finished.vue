@@ -8,18 +8,17 @@
         class="board-column-content"
         :set-data="setData"
       >
-      <div v-for="element in list3" :key="element.id" class="board-item" >
-        {{ element.id }}#{{ element.name }}
-        <el-button
-        size="mini"
-        type="danger"
-        @click="deleteIt()"
-        >删除</el-button>
-      </div>
+        <div v-for="element in list3" :key="element.id" class="board-item">
+          {{ element.id }}#{{ element.name }}
+          <el-button
+            size="mini"
+            type="danger"
+            @click="deleteIt()"
+          >删除</el-button>
+        </div>
       </draggable>
     </div>
 
-    
   </div>
 </template>
 <script>
@@ -87,7 +86,6 @@ export default {
     color: #fff;
     border-radius: 3px 3px 0 0;
   }
-
 
   .board-column-content {
     height: auto;

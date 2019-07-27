@@ -8,25 +8,24 @@
         class="board-column-content"
         :set-data="setData"
       >
-      <div v-for="element in list1" :key="element.id" class="board-item" >
-        {{ element.id }}#{{ element.name }}
-        <el-button
-        size="mini"
-        type="warning"
-        @click="changeToWorking()"
-        >办理</el-button>
-      </div>
+        <div v-for="element in list1" :key="element.id" class="board-item">
+          {{ element.id }}#{{ element.name }}
+          <el-button
+            size="mini"
+            type="warning"
+            @click="changeToWorking()"
+          >办理</el-button>
+        </div>
       </draggable>
     </div>
 
-    
   </div>
 </template>
 <script>
 import draggable from 'vuedraggable'
 
 export default {
-  name: 'waitHandle',
+  name: 'WaitHandle',
   components: {
     draggable
   },

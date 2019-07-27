@@ -245,7 +245,7 @@ export const asyncRoutes = [
       roles: ['admin']
     },
     children: [
-      
+
       {
         path: 'waitHandle',
         component: () => import('@/views/handle/waitHandle'),
