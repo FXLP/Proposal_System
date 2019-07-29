@@ -170,7 +170,7 @@ export const asyncRoutes = [
         path: 'propodetail/:id',
         hidden: true,
         component: () => import('@/views/proposal/propodetail'),
-        name: 'Propodetail',
+        name: 'ProposalDetail',
         meta: { title: 'ProposalDetail', roles: ['admin', 'editor'] }
       }
     ]
@@ -205,12 +205,13 @@ export const asyncRoutes = [
     name: 'Assign',
     component: Layout,
     redirect: '/assign/index',
+    meta:{ requireAuth: true },
     children: [
       {
         path: 'index',
         component: () => import('@/views/assign/index'),
         name: 'Assign',
-        meta: { title: 'Assign', icon: 'list', roles: ['admin'], requireAuth: true }
+        meta: { title: 'Assign', icon: 'list', roles: ['admin'] , requireAuth: true }
       }
     ]
   },
@@ -228,14 +229,14 @@ export const asyncRoutes = [
       {
         path: 'handle',
         component: () => import('@/views/implement/components/handle'),
-        name: 'Handle',
-        meta: { title: 'Handle', icon: 'tab', roles: ['admin'] }
+        name: 'Select',
+        meta: { title: 'Select', roles: ['admin'] }
       },
       {
         path: 'jointly',
         component: () => import('@/views/implement/components/jointly'),
         name: 'Jointly',
-        meta: { title: 'Jointly', icon: 'tab', roles: ['admin'] }
+        meta: { title: 'Jointly', roles: ['admin'] }
       },
       {
         path: 'suggestion/:id',
@@ -295,8 +296,9 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/page'),
         name: 'PagePermission',
         meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: 'PagePermission',
+          roles: ['admin'], // or you can only set roles in sub nav
+          requireAuth: true
         }
       },
       {
@@ -304,7 +306,8 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/directive'),
         name: 'DirectivePermission',
         meta: {
-          title: 'Directive Permission'
+          title: 'DirectivePermission',
+          requireAuth: true
           // if do not set roles, means: this page does not require permission
         }
       },
@@ -313,8 +316,9 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
         meta: {
-          title: 'Role Permission',
-          roles: ['admin']
+          title: 'RolePermission',
+          roles: ['admin'],
+          requireAuth: true
         }
       }
     ]
