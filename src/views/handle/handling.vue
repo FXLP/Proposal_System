@@ -85,7 +85,7 @@ export default {
         message: '操作成功',
         type: 'success'
       })
-      row.propostate = status 
+      row.propostate = status
       console.log(row.propostate)
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if=" per.indexOf(item.name) > -1 " class="menu-wrapper">
+  <div v-if=" per.indexOf(item.name) > -1 && !item.hidden" class="menu-wrapper">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
