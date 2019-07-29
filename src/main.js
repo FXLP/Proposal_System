@@ -27,7 +27,6 @@ import * as filters from './filters' // global filters
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-const per = getPer()
 
 import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'production') {
@@ -39,8 +38,9 @@ Vue.use(Element, {
 })
 
 router.beforeEach((to, from, next) => {
+  const per = getPer()
   if (to.matched.some(record => record.meta.requireAuth)) { // 判断该路由是否需要登录权限
-    if (per.indexOf(to.meta.title) > -1) { // 判断当前的token是否存在
+    if (per.indexOf(to.name) > -1) { // 判断当前的token是否存在
       next()
     } else {
       next({

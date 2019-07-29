@@ -183,6 +183,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Review',
       icon: 'peoples',
+      requireAuth: true,
       roles: ['admin']
     },
     children: [
@@ -222,7 +223,8 @@ export const asyncRoutes = [
     meta: {
       title: 'Implement',
       icon: 'tab',
-      roles: ['admin']
+      roles: ['admin'],
+      requireAuth: true
     },
     redirect: '/implement/handle',
     children: [
