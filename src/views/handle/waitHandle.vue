@@ -1,119 +1,93 @@
 <template>
-  <div class="components-container board">
-    <div class="board-column">
-      <div class="board-column-header1">待办理</div>
-      <draggable
-        :list="list"
-        v-bind="$attrs"
-        class="board-column-content"
-        :set-data="setData"
+  <div class="app-container">
+    <el-button size="mini" type="primary">待办理提案</el-button>
+    <el-table :data="list" style="width: 98%">
+      <el-table-column
+        label="日期"
+        width="180"
       >
-      <div v-for="element in list1" :key="element.id" class="board-item" >
-        {{ element.id }}#{{ element.name }}
-        <el-button
-        size="mini"
-        type="warning"
-        @click="changeToWorking()"
-        >办理</el-button>
-      </div>
-      </draggable>
-    </div>
-
-    
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="提案名"
+        width="360"
+      >
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+            <p>提案发起者: {{ scope.row.name }}</p>
+            <p>附议人数: {{ scope.row.proponum }}</p>
+            <p>提案状态: {{ scope.row.propostate }}</p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="right"
+      >
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="primary"
+            @click="goToDetail(scope.$index, scope.row)"
+          >详情</el-button>
+          <el-button
+            size="mini"
+            type="warning"
+            @click="handleModifyStatus(scope.row,'办理中')"
+          >办理</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
+
 <script>
-import draggable from 'vuedraggable'
+import { fetchWaitHandleList } from '@/api/proposal'
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'waitHandle',
-  components: {
-    draggable
-  },
-  props: {
-    headerText: {
-      type: String,
-      default: 'Header'
-    },
-    options: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    list: {
-      type: Array,
-      default() {
-        return []
-      }
-    }
-  },
+  name: 'CommanderReview',
+  components: { Pagination },
   data() {
     return {
-      group: 'wait handle proposal',
-      list1: [
-        { name: '关于徐汇校区宿舍安装空调的建议', id: 1, checked: false },
-        { name: '关于徐汇校区宿舍修建三食堂的建议', id: 2, checked: false },
-        { name: '关于奉贤校区宿舍新建五食堂的建议', id: 3, checked: false },
-        { name: '关于奉贤校区宿舍新建实验楼的建议', id: 4, checked: false },
-        { name: '关于奉贤校区宿舍新建教学楼的建议', id: 5, checked: false },
-        { name: '关于奉贤校区宿舍新建电影院的建议', id: 6, checked: false }
-      ]
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
+      search: ''
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      fetchWaitHandleList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+      })
+    },
+    goToDetail(index, row) {
+      const p = '/proposal/propodetail/' + this.list[index].propoId
+      this.$router.push({ path: p })
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.propostate = status 
+      console.log(row.propostate)
     }
   }
 }
 </script>
-<style lang="scss">
-.board {
-  width: 1300px;
-  margin-left: 20px;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  align-items: flex-start;
-}
-.board-column {
-  min-width: 300px;
-  min-height: 100px;
-  height: auto;
-  overflow: hidden;
-  background: #f0f0f0;
-  border-radius: 3px;
-
-  .board-column-header1 {
-    height: 50px;
-    line-height: 50px;
-    overflow: hidden;
-    padding: 0 20px;
-    text-align: center;
-    background: #4A9FF9;
-    color: #fff;
-    border-radius: 3px 3px 0 0;
-  }
-
-  .board-column-content {
-    height: auto;
-    overflow: hidden;
-    border: 10px solid transparent;
-    min-height: 60px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
-
-    .board-item {
-      cursor: pointer;
-      width: 100%;
-      height: 64px;
-      margin: 5px 0;
-      background-color: #fff;
-      text-align: center;
-      line-height: 54px;
-      padding: 5px 10px;
-      box-sizing: border-box;
-      box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
-    }
-  }
-}
-</style>
-

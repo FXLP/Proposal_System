@@ -239,13 +239,13 @@ export const asyncRoutes = [
   {
     path: '/handle',
     component: Layout,
+    redirect: '/handle/waitHandle',
     meta: {
       title: 'Handle',
       icon: 'skill',
       roles: ['admin']
     },
     children: [
-      
       {
         path: 'waitHandle',
         component: () => import('@/views/handle/waitHandle'),

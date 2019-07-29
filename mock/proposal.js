@@ -38,7 +38,7 @@ const ProposalList = [
   name: '卜鑫源',
   proponame: '关于奉贤校区新建游泳馆的建议',
   proponum: '4',
-  propostate: 'finished',
+  propostate: '已完成',
   checked: true
 }, {
   propoId: '006',
@@ -158,7 +158,7 @@ const ProposalList = [
   name: '盛泽宇',
   proponame: '关于奉贤绿化建设的建议2',
   proponum: '8',
-  propostate: 'waitHandle',
+  propostate: '待办理',
   checked: false
 }, {
   propoId: '021',
@@ -166,7 +166,7 @@ const ProposalList = [
   name: '盛泽宇',
   proponame: '关于奉贤绿化建设的建议',
   proponum: '14',
-  propostate: 'handling',
+  propostate: '办理中',
   checked: false
 }, {
   propoId: '022',
@@ -174,7 +174,7 @@ const ProposalList = [
   name: '陈希豪',
   proponame: '关于奉贤机房建设的建议',
   proponum: '14',
-  propostate: 'handling',
+  propostate: '办理中',
   checked: false
 }, {
   propoId: '023',
@@ -182,7 +182,7 @@ const ProposalList = [
   name: '陈希豪',
   proponame: '关于徐汇机房建设的建议',
   proponum: '14',
-  propostate: 'finished',
+  propostate: '已完成',
   checked: false
 }, {
   propoId: '024',
@@ -190,7 +190,7 @@ const ProposalList = [
   name: '卜鑫源',
   proponame: '关于徐汇体育馆建设的建议',
   proponum: '15',
-  propostate: 'finished',
+  propostate: '已完成',
   checked: false
 }, {
   propoId: '025',
