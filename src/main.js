@@ -40,7 +40,7 @@ Vue.use(Element, {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requireAuth)) { // 判断该路由是否需要登录权限
-    if (per.indexOf(to.title) > -1) { // 判断当前的token是否存在
+    if (per.indexOf(to.meta.title) > -1) { // 判断当前的token是否存在
       next()
     } else {
       next({
