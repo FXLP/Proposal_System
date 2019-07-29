@@ -8,7 +8,7 @@
     <el-row>
       <el-col :span="16">
         <el-row>
-          <h3 class="inlineh">提案编号:{{ proposal.propoId }}</h3>   <el-tag type="success">已完成</el-tag>
+          <h3 class="inlineh">提案编号:{{ proposal.id }}</h3>   <el-tag type="success">已完成</el-tag>
           <h2>提案{{ proposal.propoName }}</h2>
         </el-row>
         <el-row>
@@ -20,7 +20,7 @@
                 </template>
                 <div>
                   <p>
-                    {{ proposal.propoContent }}
+                    {{ proposal.proposalReviewTime }}
                   </p>
                 </div>
               </el-collapse-item>
@@ -30,22 +30,23 @@
                 </template>
                 <div>
                   <el-tag type="warning">提案人</el-tag>
-                  &nbsp;<h3>{{ proposal.propoman }}</h3>
+                  &nbsp;<h3>{{ proposal.proposerName }}</h3>
                 </div>
                 <div>
                   <el-tag>所属代表团</el-tag>
-                  &nbsp;<h3>{{ proposal.delegation }}</h3>
+                  &nbsp;<h3>{{ proposal.proposerDelegation }}</h3>
                 </div>
                 <div>
                   <el-tag type="success">附议人</el-tag>
-                  <div v-for="person in proposal.supportPeople" :key="person">{{ person }}</div>
+                  <!--                  <div v-for="person in proposal.supportPeople" :key="person">{{ person }}</div>-->
+                  <div>{{ proposal.proposalSeconder }}</div>
                 </div>
               </el-collapse-item>
               <el-collapse-item>
                 <template slot="title">
-                  <i class="el-icon-sort" /> &nbsp;办理人意见
+                  <i class="el-icon-sort" /> &nbsp;办理意见
                 </template>
-                <div>{{ proposal.suggestion }}</div>
+                <div>{{ proposal.proposalHandleOpinions }}</div>
               </el-collapse-item>
               <el-collapse-item>
                 <template slot="title">
@@ -65,7 +66,7 @@
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>提案附件</span>
-                    <el-button style="float: right; padding: 3px 0" type="text">下载附件</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="download(proposal.otherAttachmentsAddress)">下载附件</el-button>
                   </div>
                   <div class="text item">
                     <h3>文件大小：</h3>239.93kb
@@ -164,14 +165,17 @@ export default {
       activeName: '1',
       isFormal: false,
       proposal: {
-        propoId: '',
-        propoman: '分为哼',
-        delegation: '审计处',
-        propoName: '关于校园建设管理里的问题',
-        propoContent: '由于学生存在对于课程项目的偏向性兴趣,以及选课考试能够通过的难易程度,导致了现阶段学生们疯狂抢课的现象,目前学校选课都是先到先得,每到选课时段,同学们便提早出发,全涌向理科楼,导致理科楼产生大面积拥挤现象,楼梯上也站满了人,为踩踏事件的发生创造了可能性;同时也导致选课时间一到就会有大量的信息冲击学校教务处系统,系统运行缓慢,网页无法打开,使许多同学选不到自己喜欢的课程,而勉强学习其他课程,而勉强学习其他课程,致使学生们的学习性不高。',
-        supportPeople: ['林宇翩', '分为恒', '王琴'],
-        suggestion: '增加热门课程人数和班次,满足同学们兴趣上的需求;丰富课程类型,使同学们拥有更大的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地从兴趣上选课;错开选课时间,严格控制各专业的选课时间,增强管理。'
+        id: ''
       },
+      // proposal: {
+      //   propoId: '',
+      //   propoman: '分为哼',
+      //   delegation: '审计处',
+      //   propoName: '关于校园建设管理里的问题',
+      //   propoContent: '由于学生存在对于课程项目的偏向性兴趣,以及选课考试能够通过的难易程度,导致了现阶段学生们疯狂抢课的现象,目前学校选课都是先到先得,每到选课时段,同学们便提早出发,全涌向理科楼,导致理科楼产生大面积拥挤现象,楼梯上也站满了人,为踩踏事件的发生创造了可能性;同时也导致选课时间一到就会有大量的信息冲击学校教务处系统,系统运行缓慢,网页无法打开,使许多同学选不到自己喜欢的课程,而勉强学习其他课程,而勉强学习其他课程,致使学生们的学习性不高。',
+      //   supportPeople: ['林宇翩', '分为恒', '王琴'],
+      //   suggestion: '增加热门课程人数和班次,满足同学们兴趣上的需求;丰富课程类型,使同学们拥有更大的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地从兴趣上选课;错开选课时间,严格控制各专业的选课时间,增强管理。'
+      // },
       activities: [{
         content: '活动按期开始',
         timestamp: '2018-04-15'
@@ -190,13 +194,42 @@ export default {
   },
   created: function() {
     console.log(this.$route.params)
-    this.proposal.propoId = this.$route.params.id
+    this.proposal.id = this.$route.params.id
+    this.isFormal = this.$route.query.isFormal
+    console.log('Formal:' + this.$route.query.isFormal)
+    this.proposal =
+      this.axios
+        .get(this.serverUrl + '/proposalFormal/getProposalFormalByID', { params: {
+          id: this.proposal.id
+        }}, this.headconfig)
+        .then(res => {
+          console.log(res)
+          if (res.data.code !== 0) {
+            this.$message({
+              type: 'warning',
+              message: '更新列表失败'
+            })
+            // this.$router.push('/')
+          } else {
+            this.proposal = res.data.data
+            this.$message({
+              type: 'success',
+              message: '更新列表成功'
+            })
+            // this.list = res.data.PropoList
+          }
+        })
   },
   mounted() {
     this.driver = new Driver()
   },
   methods: {
-
+    download: (url) => {
+      const { href } = this.$router.resolve({
+        path: 'www.baidu.com'
+      })
+      window.open(href, '_blank')
+    }
   }
 }
 </script>

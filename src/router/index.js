@@ -205,13 +205,13 @@ export const asyncRoutes = [
     name: 'Assign',
     component: Layout,
     redirect: '/assign/index',
-    meta:{ requireAuth: true },
+    meta: { requireAuth: true },
     children: [
       {
         path: 'index',
         component: () => import('@/views/assign/index'),
         name: 'Assign',
-        meta: { title: 'Assign', icon: 'list', roles: ['admin'] , requireAuth: true }
+        meta: { title: 'Assign', icon: 'list', roles: ['admin'], requireAuth: true }
       }
     ]
   },
