@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Qs from 'qs'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
@@ -9,11 +10,17 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
+// axios.defaults.headers['Content-Type'] = 'appliction/x-www-form-urlencoded'
 
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+
+    config.method === 'post'
+      ? config.data = Qs.stringify({ ...config.data })
+      : config.params = { ...config.params }
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
     if (store.getters.token) {
       // let each request carry token
@@ -46,7 +53,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.code !== 20000 && res.code !== 0) {
       Message({
         message: res.message || 'Error',
         type: 'error',

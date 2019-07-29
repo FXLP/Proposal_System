@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -29,9 +28,10 @@ export default [
     url: '/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
-      const token = tokens[username]
-
+      // const { username } = config.body
+      // const token = tokens[username]
+      const token = tokens['admin']
+      console.log('token:' + token.token)
       // mock error
       if (!token) {
         return {

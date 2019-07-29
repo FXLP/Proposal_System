@@ -13,31 +13,31 @@
           <span>{{ scope.row.propoTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="提案号" sortable width="130px">
+      <el-table-column label="提案号" sortable width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.propoId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="提案者" width="120px">
+      <el-table-column label="提案者" width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.propoAuthor }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="提案名" width="308px">
+      <el-table-column label="提案名" width="400px">
         <template slot-scope="scope">
           <span>{{ scope.row.propoName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="105">
+      <el-table-column label="查看" align="center" width="100">
         <template slot-scope="scope">
           <el-button type="info" @click="goToDetail(scope.$index, scope.row)">
             详情
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="选择办理人" align="center" width="250px">
+      <el-table-column label="选择办理人" align="center" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.value" clearable placeholder="请选择">
+          <el-select v-model="scope.row.value" :disabled="scope.row.propostatus == '已办'" multiple clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -47,10 +47,10 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="205">
+      <el-table-column label="操作" align="center" width="105">
         <template slot-scope="scope">
-          <el-button type="warning" icon="el-icon-circle-plus-outline" round @click="inviteForJoint(scope.$index, scope.row)">
-            邀请承办部门
+          <el-button type="primary" round :disabled="scope.row.propostatus == '已办'" @click="sure(scope.$index, scope.row)">
+            确定
           </el-button>
         </template>
       </el-table-column>
@@ -94,39 +94,19 @@ export default {
       options: [
         {
           value: '选项1',
-          label: '党委办公室'
+          label: 'lily'
         },
         {
           value: '选项2',
-          label: '监察处'
+          label: 'haha'
         },
         {
           value: '选项3',
-          label: '党委组织部'
+          label: 'nacy'
         },
         {
           value: '选项4',
-          label: '党委宣传部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
-        },
-        {
-          value: '选项5',
-          label: '党委统战部'
+          label: 'lucy'
         }
       ]
     }
@@ -141,38 +121,41 @@ export default {
         this.total = response.data.total
       })
     },
+    sure(index, row) {
+      this.$set(this.tableData[index], 'propostatus', '已办')
+    },
     // 去详情页面
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.tableData[index].propoId
       this.$router.push({ path: p })
-    },
-    // 邀请承办部门
-    inviteForJoint(index, row) {
-      this.dialogVisible = true
-      this.detail_con = this.tableData[index].propoId
-    },
-    // 删除单行
-    handleDelete(index) {
-      this.tableData.splice(index, 1)
-    },
-    // 批量删除
-    batchDelete() {
-      const multData = this.multipleSelection
-      const tableData1 = this.tableData
-      const multDataLen = multData.length
-      const tableDataLen = tableData1.length
-      for (let i = 0; i < multDataLen; i++) {
-        for (let y = 0; y < tableDataLen; y++) {
-          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-            this.tableData.splice(y, 1)
-          }
-        }
-      }
-    },
-    // 选中
-    handleSelectionChange(val) {
-      this.multipleSelection = val
     }
+    // // 邀请承办部门
+    // inviteForJoint(index, row) {
+    //   this.dialogVisible = true
+    //   this.detail_con = this.tableData[index].propoId
+    // }
+    // // 删除单行
+    // handleDelete(index) {
+    //   this.tableData.splice(index, 1)
+    // },
+    // // 批量删除
+    // batchDelete() {
+    //   const multData = this.multipleSelection
+    //   const tableData1 = this.tableData
+    //   const multDataLen = multData.length
+    //   const tableDataLen = tableData1.length
+    //   for (let i = 0; i < multDataLen; i++) {
+    //     for (let y = 0; y < tableDataLen; y++) {
+    //       if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+    //         this.tableData.splice(y, 1)
+    //       }
+    //     }
+    //   }
+    // },
+    // // 选中
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val
+    // }
   }
 }
 </script>

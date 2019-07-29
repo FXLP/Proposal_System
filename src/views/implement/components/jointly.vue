@@ -8,9 +8,7 @@
         border
         stripe
         style="width: 100%"
-        @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="50" align="center" />
         <el-table-column label="日期" sortable prop="timestamp" width="200px">
           <template slot-scope="scope">
             <span>{{ scope.row.propoTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
@@ -39,14 +37,10 @@
             <el-button type="primary" @click="toSuggestion(scope.$index, scope.row)">
               会签意见
             </el-button>
-            <el-button type="danger" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-button icon="el-icon-delete" class="btnDel" type="danger" round @click="batchDelete">
-      批量删除
-    </el-button>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
   </div>
 </template>
@@ -59,7 +53,6 @@ export default {
   components: { Pagination },
   data() {
     return {
-      multipleSelection: [],
       tableData: null,
       total: 0,
       listQuery: {
@@ -82,37 +75,37 @@ export default {
     toSuggestion(index, row) {
       const p = '/implement/suggestion/' + this.tableData[index].propoId
       this.$router.push({ path: p })
-    },
-    // 删除单行
-    handleDelete(index) {
-      this.tableData.splice(index, 1)
-    },
-    // 批量删除
-    batchDelete() {
-      const multData = this.multipleSelection
-      const tableData1 = this.tableData
-      const multDataLen = multData.length
-      const tableDataLen = tableData1.length
-      for (let i = 0; i < multDataLen; i++) {
-        for (let y = 0; y < tableDataLen; y++) {
-          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-            this.tableData.splice(y, 1)
-          }
-        }
-      }
-    },
-    // 选中的选项
-    handleSelectionChange(val) {
-      this.multipleSelection = val
     }
+    // // 删除单行
+    // handleDelete(index) {
+    //   this.tableData.splice(index, 1)
+    // },
+    // // 批量删除
+    // batchDelete() {
+    //   const multData = this.multipleSelection
+    //   const tableData1 = this.tableData
+    //   const multDataLen = multData.length
+    //   const tableDataLen = tableData1.length
+    //   for (let i = 0; i < multDataLen; i++) {
+    //     for (let y = 0; y < tableDataLen; y++) {
+    //       if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+    //         this.tableData.splice(y, 1)
+    //       }
+    //     }
+    //   }
+    // },
+    // // 选中的选项
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val
+    // }
   }
 }
 </script>
 
 <style scoped>
-  .btnDel {
+  /* .btnDel {
     position: absolute;
     margin-top: 20px;
     margin-left: 1100px
-  }
+  } */
 </style>

@@ -29,22 +29,23 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="提案名" width="400px">
+      <el-table-column label="提案名" width="280px">
         <template slot-scope="scope">
           <span>{{ scope.row.propoName }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="120px" align="center">
+      <el-table-column label="查看" width="100px" align="center">
         <template slot-scope="scope">
           <el-button type="info" @click="goToDetail(scope.$index, scope.row)">
             详情
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="选择部门办理" width="250px">
+
+      <el-table-column label="选择承办部门" width="200px">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.value" clearable placeholder="请选择">
+          <el-select v-model="scope.row.label" :disabled="scope.row.propostatus == '已办'" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -54,15 +55,30 @@
           </el-select>
         </template>
       </el-table-column>
+
+      <el-table-column label="选择协办部门" width="200px">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.value" multiple :disabled="scope.row.propostatus == '已办'" clearable placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" @click="confirmText(scope.$index, scope.row)">
+          <el-button type="primary" :disabled="scope.row.propostatus == '已办'" @click="confirmText(scope.$index, scope.row)">
             确定
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" class="fly" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
   </div>
 </template>
 
@@ -100,23 +116,23 @@ export default {
           label: '党委宣传部'
         },
         {
-          value: '选项5',
+          value: '选项6',
           label: '党委统战部'
         },
         {
-          value: '选项5',
+          value: '选项7',
           label: '党委统战部'
         },
         {
-          value: '选项5',
+          value: '选项8',
           label: '党委统战部'
         },
         {
-          value: '选项5',
+          value: '选项9',
           label: '党委统战部'
         },
         {
-          value: '选项5',
+          value: '选项10',
           label: '党委统战部'
         }
       ]
@@ -139,21 +155,7 @@ export default {
     },
     // 确认分配部门
     confirmText(index, row) {
-      this.$confirm('此操作将确认操作, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消'
-        })
-      })
+      this.$set(this.tableData[index], 'propostatus', '已办')
     }
   }
 }

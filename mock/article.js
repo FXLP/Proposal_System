@@ -26,6 +26,7 @@ for (let i = 0; i < count; i++) {
     propoAuthor: '@cname', // 随机生成中文名字
     propoName: '@first',
     propoTime: +Mock.Random.date('T'), // 日期
+    'propostatus|1': ['已办', '未办'],
     image_uri,
     platforms: ['a-platform']
   }))

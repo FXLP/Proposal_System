@@ -19,6 +19,7 @@
       <div class="butt-group">
         <el-button type="success" round @click="findUser()">确认邀请</el-button>
         <el-button type="info" round @click="clearall()">清空列表</el-button>
+        <el-button type="primary" @click="go()">go</el-button>
       </div>
     </el-form>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
@@ -132,6 +133,9 @@ export default {
             type: 'warning'
           })
         })
+    },
+    go() {
+      console.log('pppp:' + this.$store.state.user.token)
     }
   }
 }

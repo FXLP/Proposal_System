@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setPer, getPer } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -7,12 +7,16 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  permission: getPer()
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  SET_PER: (state, permission) => {
+    state.permission = permission
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
@@ -33,10 +37,15 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+      login({ id: username, password: password }).then(response => {
+        // const { data } = response // for mock data
+        const data = response // for true data
+        // console.log('data:' + data.token.token)
+        // console.log('roles:' + data.roles)
+        commit('SET_TOKEN', data.token.token)
+        commit('SET_PER', data.roles)
+        setToken(data.token.token)
+        setPer(data.roles)
         resolve()
       }).catch(error => {
         reject(error)

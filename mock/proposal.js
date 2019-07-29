@@ -245,7 +245,7 @@ const ProposalList = [
 
 /* propostate  2019.7.25 create by FXLP
 提案状态属性	    对应英文	              备注
-起始	           beginProposal	
+起始	           beginProposal
 草稿	           draft	                  草稿
 已提交	         pubilshed	              待他人附议
 待代表团团长审核	waitCommanderReview	    附议人数>=2
@@ -279,7 +279,7 @@ export default [
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate !== '待代表团团长审核') return false
+        if (item.propostate !== '待代表团团长审核') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -298,7 +298,7 @@ export default [
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate !== '待提案组审核') return false
+        if (item.propostate !== '待提案组审核') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -317,7 +317,7 @@ export default [
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate !== '待办理') return false
+        if (item.propostate !== '待办理') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -336,7 +336,7 @@ export default [
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate !== '办理中') return false
+        if (item.propostate !== '办理中') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -355,7 +355,7 @@ export default [
     response: config => {
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
-        if(item.propostate !== '已完成') return false
+        if (item.propostate !== '已完成') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
