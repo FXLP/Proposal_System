@@ -16,7 +16,7 @@ import router from './router'
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
-
+import { getPer } from '@/utils/auth'
 import * as filters from './filters' // global filters
 
 /**
@@ -27,6 +27,8 @@ import * as filters from './filters' // global filters
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
+const per = getPer()
+
 import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'production') {
   mockXHR()
@@ -34,6 +36,21 @@ if (process.env.NODE_ENV === 'production') {
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireAuth)) { // 判断该路由是否需要登录权限
+    if (per.indexOf(to.title) > -1) { // 判断当前的token是否存在
+      next()
+    } else {
+      next({
+        path: '/404',
+        query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+      })
+    }
+  } else {
+    next()
+  }
 })
 
 axios.defaults.withCredentials = false // 解决跨域

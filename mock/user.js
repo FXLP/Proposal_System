@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -33,33 +32,6 @@ export default [
       // const token = tokens[username]
       const token = tokens['admin']
       console.log('token:' + token.token)
-      // const { username, password } = config.body
-      // const token = tokens['admin']
-      // console.log('username:' + username)
-      // console.log('password:' + password)
-      // axios
-      //   .post('http://localhost:7788/api' + '/login', Qs.stringify({
-      //     id: 1,
-      //     password: password
-      //   }), {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded'
-      //     }
-      //   })
-      //   .then(res => {
-      //     console.log('response code:' + res.data.code)
-      //     if (res.data.code !== 0) {
-      //       return {
-      //         code: 60204,
-      //         message: 'Account and password are incorrect.'
-      //       }
-      //     } else {
-      //       return {
-      //         code: 20000,
-      //         data: token
-      //       }
-      //     }
-      //   })
       // mock error
       if (!token) {
         return {

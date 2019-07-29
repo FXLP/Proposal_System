@@ -116,7 +116,23 @@ export default {
           label: '党委宣传部'
         },
         {
-          value: '选项5',
+          value: '选项6',
+          label: '党委统战部'
+        },
+        {
+          value: '选项7',
+          label: '党委统战部'
+        },
+        {
+          value: '选项8',
+          label: '党委统战部'
+        },
+        {
+          value: '选项9',
+          label: '党委统战部'
+        },
+        {
+          value: '选项10',
           label: '党委统战部'
         }
       ]

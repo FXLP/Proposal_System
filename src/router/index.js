@@ -41,6 +41,7 @@ import nestedRouter from './modules/nested'
 export const constantRoutes = [
   {
     path: '/redirect',
+    name: 'Redirect',
     component: Layout,
     hidden: true,
     children: [
@@ -52,21 +53,25 @@ export const constantRoutes = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
   {
     path: '/auth-redirect',
+    name: 'Auth',
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
   {
     path: '/404',
+    name: '404',
     component: () => import('@/views/error-page/404'),
     hidden: true
   },
   {
     path: '/401',
+    name: '401',
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
@@ -74,6 +79,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/home',
+    name: 'Home',
     children: [
       {
         path: 'home',
@@ -85,6 +91,7 @@ export const constantRoutes = [
   },
   {
     path: '/profile',
+    name: 'Profile',
     component: Layout,
     redirect: '/profile/index',
     hidden: true,
@@ -132,6 +139,7 @@ export const asyncRoutes = [
   },
   {
     path: '/proposal',
+    name: 'Proposal',
     component: Layout,
     redirect: '/proposal/create',
     meta: {
@@ -169,6 +177,7 @@ export const asyncRoutes = [
   },
   {
     path: '/review',
+    name: 'Review',
     component: Layout,
     redirect: '/review/commander',
     meta: {
@@ -201,12 +210,13 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/assign/index'),
         name: 'Assign',
-        meta: { title: 'Assign', icon: 'list', roles: ['admin'] }
+        meta: { title: 'Assign', icon: 'list', roles: ['admin'], requireAuth: true }
       }
     ]
   },
   {
     path: '/implement',
+    name: 'Implement',
     component: Layout,
     meta: {
       title: 'Implement',
@@ -238,6 +248,7 @@ export const asyncRoutes = [
   },
   {
     path: '/handle',
+    name: 'Handle',
     component: Layout,
     meta: {
       title: 'Handle',
@@ -273,6 +284,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
+      requireAuth: true,
       title: 'Permission',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
@@ -309,6 +321,7 @@ export const asyncRoutes = [
   },
   {
     path: '/documentation',
+    name: 'Documentation',
     component: Layout,
     children: [
       {
@@ -321,6 +334,7 @@ export const asyncRoutes = [
   },
   {
     path: '/guide',
+    name: 'Guide',
     component: Layout,
     redirect: '/guide/index',
     children: [
@@ -335,6 +349,7 @@ export const asyncRoutes = [
   {
     path: '/dashboard',
     component: Layout,
+    name: 'Dashboard',
     redirect: '/dashboard',
     children: [
       {
@@ -347,6 +362,7 @@ export const asyncRoutes = [
   },
   {
     path: '/icon',
+    name: 'Icon',
     component: Layout,
     children: [
       {
@@ -398,6 +414,7 @@ export const asyncRoutes = [
 
   {
     path: '/tab',
+    name: 'Tab',
     component: Layout,
     children: [
       {
@@ -437,6 +454,7 @@ export const asyncRoutes = [
   {
     path: '/error-log',
     component: Layout,
+    name: 'Error-log',
     children: [
       {
         path: 'log',
@@ -504,6 +522,7 @@ export const asyncRoutes = [
   {
     path: '/pdf',
     component: Layout,
+    name: 'Pdf',
     redirect: '/pdf/index',
     children: [
       {
@@ -516,12 +535,14 @@ export const asyncRoutes = [
   },
   {
     path: '/pdf/download',
+    name: 'Pdfdownload',
     component: () => import('@/views/pdf/download'),
     hidden: true
   },
 
   {
     path: '/theme',
+    name: 'Theme',
     component: Layout,
     children: [
       {
@@ -535,6 +556,7 @@ export const asyncRoutes = [
 
   {
     path: '/clipboard',
+    name: 'Clipboard',
     component: Layout,
     children: [
       {
@@ -548,6 +570,7 @@ export const asyncRoutes = [
 
   {
     path: 'external-link',
+    name: 'External-link',
     component: Layout,
     children: [
       {

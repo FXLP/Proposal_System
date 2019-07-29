@@ -58,7 +58,7 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="item in list.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-col v-for="item in list.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.propoid" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
