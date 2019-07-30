@@ -19,17 +19,18 @@
       <div class="butt-group">
         <el-button type="success" round @click="findUser()">确认邀请</el-button>
         <el-button type="info" round @click="clearall()">清空列表</el-button>
-        <el-button type="primary" @click="go()">go</el-button>
       </div>
     </el-form>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+
+    <el-dialog title="提示" :visible.sync="DialogVisible" width="40%" top="25vh" append-to-body="true" :before-close="handleClose">
       <span>您即将要邀请 工号为：{{ form.id1 }}</span>
       <span>姓名为：{{ name1 }}  的同志为您附议！</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="DialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="invite()">确 定 邀 请</el-button>
       </span>
     </el-dialog>
+
   </div>
 </template>
 
@@ -41,7 +42,7 @@ export default {
     return {
       counter: 0,
       formLabelWidth: '80px',
-      dialogVisible: false,
+      DialogVisible: false,
       form: {
         id1: '',
         id2: '',
@@ -64,20 +65,11 @@ export default {
       this.form.id3 = ''
     },
     invite() {
-      // const messageQuery = {
-      //   // name1: this.form.name1,
-      //   // name2: this.form.name2,
-      //   // name3: this.form.name3
-      //   id: '',
-      //   fromTo: '',
-      //   toNumber: '',
-      //   toName: '',
-      //   sendTime: '',
-      //   isRead: false,
-      //   content: 'invitaion'
-      // }
-      this.axios
-        .post(this.serverUrl + '/message/createMessage', JSON.stringify({
+      this.axios({
+        method: 'post',
+        url: this.serverUrl + '/message/createMessage',
+        // 注意：post方式提交 参数这里可以写data get方式提交用params
+        data: {
           id: '',
           fromTo: '0002',
           toNumber: '0001',
@@ -85,26 +77,55 @@ export default {
           sendTime: '',
           isRead: false,
           content: 'invitaion'
-        }), this.headconfig)
-        .then(res => {
-          console.log(res)
-          if (res.data.code !== 0) {
-            this.$message.error('系统暂忙，请稍后再试')
-            this.$router.push('/')
-          } else {
-            this.$message({
-              message: '邀请成功！',
-              type: 'success'
-            })
-          }
-        })
+        }
+      }).then(res => {
+        console.log(res)
+        if (res.data.code !== 0) {
+          this.$message.error('系统暂忙，请稍后再试')
+        } else {
+          this.$message({
+            message: '邀请成功！',
+            type: 'success'
+          })
+          this.$emit('transfer', false)
+        }
+      })
         .catch(err => {
           this.$message.error({
             message: err,
             type: 'warning'
           })
         })
-      this.dialogVisible = false
+
+      // this.axios
+      //   .post(this.serverUrl + '/message/createMessage', JSON.stringify({
+      //     id: '',
+      //     fromTo: '0002',
+      //     toNumber: '0001',
+      //     toName: 'ahkjdadjkfbsa',
+      //     sendTime: '',
+      //     isRead: false,
+      //     content: 'invitaion'
+      //   }), this.headconfig)
+      //   .then(res => {
+      //     console.log(res)
+      //     if (res.data.code !== 0) {
+      //       this.$message.error('系统暂忙，请稍后再试')
+      //     } else {
+      //       this.$message({
+      //         message: '邀请成功！',
+      //         type: 'success'
+      //       })
+      //       this.$emit('transfer',false)
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$message.error({
+      //       message: err,
+      //       type: 'warning'
+      //     })
+      //   })
+      this.DialogVisible = false
     },
     findUser() {
       this.axios
@@ -120,7 +141,7 @@ export default {
             this.$router.push('/')
           } else {
             this.name1 = res.data.data.userName
-            this.dialogVisible = true
+            this.DialogVisible = true
             this.$message({
               message: '查询成功！',
               type: 'success'
@@ -133,9 +154,6 @@ export default {
             type: 'warning'
           })
         })
-    },
-    go() {
-      console.log('pppp:' + this.$store.state.user.token)
     }
   }
 }

@@ -32,18 +32,18 @@
                 </el-card>
               </div>
             </el-col>
-            <el-dialog
-              title="邀请代表附议"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose"
-            >
-              <h4>提案名称:{{ detail_con }}</h4>
-              <br>
-              <br>
-              <invite-component />
-            </el-dialog>
           </el-row>
+          <el-dialog
+            title="邀请代表附议"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose"
+          >
+            <h4>提案名称:{{ detail_con }}</h4>
+            <br>
+            <br>
+            <invite-component @transfer="getState" />
+          </el-dialog>
         </div>
       </el-col>
 
@@ -217,6 +217,10 @@ export default {
     jumpToDetail(i) {
       const p = '/proposal/propodetail/' + i
       this.$router.push({ path: p })
+    },
+    getState(msg) {
+      // console.log('msg: ${ msg }')
+      this.dialogVisible = msg
     }
   }
 }
