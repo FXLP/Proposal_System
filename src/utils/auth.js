@@ -22,3 +22,4 @@ export function setPer(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+
