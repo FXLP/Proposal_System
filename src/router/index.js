@@ -386,6 +386,7 @@ export const asyncRoutes = [
     path: '/dashboard',
     component: Layout,
     name: '仪表盘',
+    hidden: true,
     redirect: '/dashboard',
     children: [
       {
@@ -400,6 +401,7 @@ export const asyncRoutes = [
     path: '/icon',
     name: '图标',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -520,8 +522,8 @@ export const asyncRoutes = [
       {
         path: 'export-selected-excel',
         component: () => import('@/views/excel/select-excel'),
-        name: '上传Excel',
-        meta: { title: '上传Excel' }
+        name: '选择Excel',
+        meta: { title: '选择Excel' }
       },
       {
         path: 'export-merge-header',

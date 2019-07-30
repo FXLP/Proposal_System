@@ -85,16 +85,6 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    // handleDelete(row) {
-    //   this.$notify({
-    //     title: 'Success',
-    //     message: 'Delete Successfully',
-    //     type: 'success',
-    //     duration: 2000
-    //   })
-    //   const index = this.list.indexOf(row)
-    //   this.list.splice(index, 1)
-    // },
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
