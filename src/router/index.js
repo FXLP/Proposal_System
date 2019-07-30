@@ -79,19 +79,19 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/home',
-    name: 'Home',
+    name: '首页',
     children: [
       {
         path: 'home',
         component: () => import('@/views/home/index'),
-        name: 'Home',
-        meta: { title: 'Home', icon: 'international', affix: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'international', affix: true }
       }
     ]
   },
   {
     path: '/profile',
-    name: 'Profile',
+    name: '个人中心',
     component: Layout,
     redirect: '/profile/index',
     hidden: true,
@@ -99,8 +99,8 @@ export const constantRoutes = [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        name: '个人中心',
+        meta: { title: '个人中心', icon: 'user', noCache: true }
       }
     ]
   }
@@ -116,9 +116,9 @@ export const asyncRoutes = [
     path: '/message',
     hidden: true,
     component: Layout,
-    name: 'Message',
+    name: '消息',
     meta: {
-      title: 'Message'
+      title: '消息'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     redirect: '/message/receive',
@@ -126,24 +126,24 @@ export const asyncRoutes = [
       {
         path: 'receive',
         component: () => import('@/views/message/receive'),
-        name: 'Receive',
+        name: '接收',
         meta: { title: 'ReceiveMessage', icon: 'message', noCache: true }
       },
       {
         path: 'send',
         component: () => import('@/views/message/send'),
-        name: 'Send',
+        name: '发送',
         meta: { title: 'SendMessage', icon: 'message', noCache: true }
       }
     ]
   },
   {
     path: '/proposal',
-    name: 'Proposal',
+    name: '提案',
     component: Layout,
     redirect: '/proposal/create',
     meta: {
-      title: 'Proposal',
+      title: '提案',
       icon: 'edit',
       roles: ['admin', 'editor']
     },
@@ -151,37 +151,37 @@ export const asyncRoutes = [
       {
         path: 'create',
         component: () => import('@/views/proposal/create'),
-        name: 'NewProposal',
-        meta: { title: 'NewProposal', roles: ['admin', 'editor'] }
+        name: '新建提案',
+        meta: { title: '新建提案', roles: ['admin', 'editor'] }
       },
       {
         path: 'support',
         component: () => import('@/views/proposal/support'),
-        name: 'SupportProposal',
-        meta: { title: 'SupportProposal', roles: ['admin', 'editor'] }
+        name: '附议提案',
+        meta: { title: '附议提案', roles: ['admin', 'editor'] }
       },
       {
         path: 'list',
         component: () => import('@/views/proposal/list'),
-        name: 'ProposalDraft',
-        meta: { title: 'ProposalDraft', roles: ['admin', 'editor'] }
+        name: '提案草稿',
+        meta: { title: '提案草稿', roles: ['admin', 'editor'] }
       },
       {
         path: 'propodetail/:id',
         hidden: true,
         component: () => import('@/views/proposal/propodetail'),
-        name: 'ProposalDetail',
-        meta: { title: 'ProposalDetail', roles: ['admin', 'editor'] }
+        name: '提案详情',
+        meta: { title: '提案详情', roles: ['admin', 'editor'] }
       }
     ]
   },
   {
     path: '/review',
-    name: 'Review',
+    name: '审核',
     component: Layout,
     redirect: '/review/commander',
     meta: {
-      title: 'Review',
+      title: '审核',
       icon: 'peoples',
       roles: ['admin']
     },
@@ -189,20 +189,20 @@ export const asyncRoutes = [
       {
         path: 'commander',
         component: () => import('@/views/review/commander'),
-        name: 'CommanderReview',
-        meta: { title: 'CommanderReview', roles: ['admin'] }
+        name: '代表团团长审核',
+        meta: { title: '代表团团长审核', roles: ['admin'] }
       },
       {
         path: 'proposalGroup',
         component: () => import('@/views/review/proposalGroup'),
-        name: 'GroupReview',
-        meta: { title: 'GroupReview', roles: ['admin'] }
+        name: '提案组审核',
+        meta: { title: '提案组审核', roles: ['admin'] }
       }
     ]
   },
   {
     path: '/assign',
-    name: 'Assign',
+    name: '指定',
     component: Layout,
     redirect: '/assign/index',
     meta:{ requireAuth: true },
@@ -210,17 +210,17 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/assign/index'),
-        name: 'Assign',
-        meta: { title: 'Assign', icon: 'list', roles: ['admin'] , requireAuth: true }
+        name: '指定',
+        meta: { title: '指定', icon: 'list', roles: ['admin'] , requireAuth: true }
       }
     ]
   },
   {
     path: '/implement',
-    name: 'Implement',
+    name: '实行',
     component: Layout,
     meta: {
-      title: 'Implement',
+      title: '实行',
       icon: 'tab',
       roles: ['admin']
     },
@@ -229,31 +229,31 @@ export const asyncRoutes = [
       {
         path: 'handle',
         component: () => import('@/views/implement/components/handle'),
-        name: 'Select',
-        meta: { title: 'Select', roles: ['admin'] }
+        name: '承办',
+        meta: { title: '承办', roles: ['admin'] }
       },
       {
         path: 'jointly',
         component: () => import('@/views/implement/components/jointly'),
-        name: 'Jointly',
-        meta: { title: 'Jointly', roles: ['admin'] }
+        name: '协办',
+        meta: { title: '协办', roles: ['admin'] }
       },
       {
         path: 'suggestion/:id',
         hidden: true,
         component: () => import('@/views/implement/suggestion'),
-        name: 'Suggestion',
-        meta: { title: 'Suggestion', roles: ['admin'] }
+        name: '会签意见',
+        meta: { title: '会签意见', roles: ['admin'] }
       }
     ]
   },
   {
     path: '/handle',
-    name: 'Handle',
+    name: '办理',
     component: Layout,
     redirect: '/handle/waitHandle',
     meta: {
-      title: 'Handle',
+      title: '办理',
       icon: 'skill',
       roles: ['admin']
     },
@@ -261,20 +261,20 @@ export const asyncRoutes = [
       {
         path: 'waitHandle',
         component: () => import('@/views/handle/waitHandle'),
-        name: 'WaitHandle',
-        meta: { title: 'WaitHandle', roles: ['admin'] }
+        name: '待办理',
+        meta: { title: '待办理', roles: ['admin'] }
       },
       {
         path: 'Handling',
         component: () => import('@/views/handle/handling'),
-        name: 'Handling',
-        meta: { title: 'Handling', roles: ['admin'] }
+        name: '办理中',
+        meta: { title: '办理中', roles: ['admin'] }
       },
       {
         path: 'finished',
         component: () => import('@/views/handle/finished'),
-        name: 'Finished',
-        meta: { title: 'Finished', roles: ['admin'] }
+        name: '已完成',
+        meta: { title: '已完成', roles: ['admin'] }
       }
     ]
   },
@@ -283,10 +283,10 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/permission/page',
     alwaysShow: true, // will always show the root menu
-    name: 'Permission',
+    name: '权限',
     meta: {
       requireAuth: true,
-      title: 'Permission',
+      title: '权限',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -294,9 +294,9 @@ export const asyncRoutes = [
       {
         path: 'page',
         component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
+        name: '权限页面',
         meta: {
-          title: 'PagePermission',
+          title: '权限页面',
           roles: ['admin'], // or you can only set roles in sub nav
           requireAuth: true
         }
@@ -304,9 +304,9 @@ export const asyncRoutes = [
       {
         path: 'directive',
         component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
+        name: '指定权限',
         meta: {
-          title: 'DirectivePermission',
+          title: '指定权限',
           requireAuth: true
           // if do not set roles, means: this page does not require permission
         }
@@ -314,9 +314,9 @@ export const asyncRoutes = [
       {
         path: 'role',
         component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
+        name: '角色权限',
         meta: {
-          title: 'RolePermission',
+          title: '角色权限',
           roles: ['admin'],
           requireAuth: true
         }
@@ -325,28 +325,28 @@ export const asyncRoutes = [
   },
   {
     path: '/documentation',
-    name: 'Documentation',
+    name: '文档',
     component: Layout,
     children: [
       {
         path: 'index',
         component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation' }
+        name: '文档',
+        meta: { title: '文档', icon: 'documentation' }
       }
     ]
   },
   {
     path: '/guide',
-    name: 'Guide',
+    name: '指南',
     component: Layout,
     redirect: '/guide/index',
     children: [
       {
         path: 'index',
         component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', affix: true }
+        name: '指南',
+        meta: { title: '指南', icon: 'guide', affix: true }
       }
     ]
   },
@@ -360,7 +360,7 @@ export const asyncRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
+        meta: { title: '仪表盘', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -373,7 +373,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/icons/index'),
         name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
+        meta: { title: '图标', icon: 'icon', noCache: true }
       }
     ]
   },
@@ -482,14 +482,14 @@ export const asyncRoutes = [
       {
         path: 'export-excel',
         component: () => import('@/views/excel/export-excel'),
-        name: 'ExportExcel',
-        meta: { title: 'Export Excel' }
+        name: '导出Excel',
+        meta: { title: '导出Excel' }
       },
       {
         path: 'export-selected-excel',
         component: () => import('@/views/excel/select-excel'),
-        name: 'SelectExcel',
-        meta: { title: 'Export Selected' }
+        name: '上传Excel',
+        meta: { title: '上传Excel' }
       },
       {
         path: 'export-merge-header',
@@ -500,8 +500,8 @@ export const asyncRoutes = [
       {
         path: 'upload-excel',
         component: () => import('@/views/excel/upload-excel'),
-        name: 'UploadExcel',
-        meta: { title: 'Upload Excel' }
+        name: '上传Excel',
+        meta: { title: '上传Excel' }
       }
     ]
   },
@@ -517,8 +517,8 @@ export const asyncRoutes = [
       {
         path: 'download',
         component: () => import('@/views/zip/index'),
-        name: 'ExportZip',
-        meta: { title: 'Export Zip' }
+        name: '导出Zip',
+        meta: { title: '导出Zip' }
       }
     ]
   },
@@ -546,14 +546,14 @@ export const asyncRoutes = [
 
   {
     path: '/theme',
-    name: 'Theme',
+    name: '主题',
     component: Layout,
     children: [
       {
         path: 'index',
         component: () => import('@/views/theme/index'),
-        name: 'Theme',
-        meta: { title: 'Theme', icon: 'theme' }
+        name: '主题',
+        meta: { title: '主题', icon: 'theme' }
       }
     ]
   },
@@ -574,12 +574,12 @@ export const asyncRoutes = [
 
   {
     path: 'external-link',
-    name: 'External-link',
+    name: '更多',
     component: Layout,
     children: [
       {
         path: 'https://www.ecust.edu.cn/',
-        meta: { title: 'External Link', icon: 'link' }
+        meta: { title: '更多', icon: 'link' }
       }
     ]
   },
