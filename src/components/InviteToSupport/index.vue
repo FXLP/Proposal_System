@@ -35,7 +35,7 @@
 </template>
 
 <script>
-
+import { get_uuid } from '@/utils/utils'
 export default {
   name: 'Invite',
   data() {
@@ -70,7 +70,7 @@ export default {
         url: this.serverUrl + '/message/createMessage',
         // 注意：post方式提交 参数这里可以写data get方式提交用params
         data: {
-          id: '',
+          id: get_uuid(),
           fromTo: '0002',
           toNumber: '0001',
           toName: 'ahkjdadjkfbsa',
