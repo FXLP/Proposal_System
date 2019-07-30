@@ -38,7 +38,7 @@
           <el-button
             size="mini"
             type="success"
-            @click="handleModifyStatus(scope.row,'已审阅')"
+            @click="handleVerify(scope.$index,scope.row)"
           >已审阅</el-button>
         </template>
       </el-table-column>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { fetchWaitHandleList } from '@/api/proposal'
+import { fetchWaitImplementList } from '@/api/proposal'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     getList() {
-      fetchWaitHandleList(this.listQuery).then(response => {
+      fetchWaitImplementList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
       })
@@ -80,13 +80,8 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.propostate = status
-      console.log(row.propostate)
+    handleVerify(index){
+      this.list.splice(index, 1)
     }
   }
 }

@@ -16,6 +16,14 @@ export function fetchWaitGroupReviewList(query) {
   })
 }
 
+export function fetchWaitImplementList(query) {
+  return request({
+    url: '/proposal/waitImplementlist',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchWaitHandleList(query) {
   return request({
     url: '/proposal/waitHandlelist',

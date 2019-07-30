@@ -150,7 +150,7 @@ const ProposalList = [
   name: '胡晓龙',
   proponame: '关于奉贤道路建设的建议',
   proponum: '5',
-  propostate: 'waitImplement',
+  propostate: '待部门分派负责人',
   checked: false
 }, {
   propoId: '020',
@@ -299,6 +299,25 @@ export default [
       const { page = 1, limit = 10 } = config.query
       const mockList = ProposalList.filter(item => {
         if (item.propostate !== '待提案组审核') return false
+        return true
+      })
+      const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        code: 20000,
+        data: {
+          total: mockList.length,
+          items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: '/proposal/waitImplementlist',
+    type: 'get',
+    response: config => {
+      const { page = 1, limit = 10 } = config.query
+      const mockList = ProposalList.filter(item => {
+        if (item.propostate !== '待部门分派负责人') return false
         return true
       })
       const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))

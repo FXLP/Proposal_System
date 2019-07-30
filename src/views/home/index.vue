@@ -144,40 +144,6 @@ export default {
         { title: 'webpack4（上）', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
         { title: 'webpack4（下）', href: 'https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc' }
       ],
-      list: [
-        { propoid: '001', name: '提案1', person: 'abc1', pdate: '2019-06', content: '这是提案1，这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1这是提案1' },
-        { propoid: '002', name: '提案2', person: 'abc2', pdate: '2019-06', content: '这是提案2，这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2这是提案2' },
-        { propoid: '003', name: '提案3', person: 'abc3', pdate: '2019-06', content: '这是提案3，这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3这是提案3' },
-        { propoid: '004', name: '提案4', person: 'abc4', pdate: '2019-06', content: '这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，这是提案4，' },
-        { propoid: '005', name: '提案5', person: 'abc3', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' },
-        { propoid: '006', name: '提案6', person: 'abc4', pdate: '2019-06', content: '这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，这是提案5，' }
-      ],
-      dateOptions: [{
-        value: '选项1',
-        label: '近一周'
-      }, {
-        value: '选项2',
-        label: '近三周'
-      }, {
-        value: '选项3',
-        label: '近半年'
-      }, {
-        value: '选项4',
-        label: '半年前'
-      }],
-      classOptions: [{
-        value: '选项1',
-        label: '教务提案'
-      }, {
-        value: '选项2',
-        label: '团建提案'
-      }, {
-        value: '选项3',
-        label: '学生工作'
-      }, {
-        value: '选项4',
-        label: '其他'
-      }],
       detail_con: '',
       dateop: '',
       classop: '',
