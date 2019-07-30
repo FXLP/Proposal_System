@@ -58,18 +58,18 @@
 
         <div class="msgbox">
           <el-row :gutter="20">
-            <el-col v-for="item in list.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.propoid" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-col v-for="item in passedList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.propoid" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
-                    <span>标题:{{ item.name }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.propoid)">提案详情</el-button>
+                    <span>标题:{{ item.proposalTitle }}</span>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id)">提案详情</el-button>
                   </div>
                   <div class="text item">
-                    <span>审批人:{{ item.person }}</span>
+                    <span>所属代表团:{{ item.proposalDelegation }}</span>
                     <br>
                     <br>
-                    <span>通过日期:{{ item.pdate }}</span>
+                    <span>提出日期:{{ item.proposalTime }}</span>
                   </div>
                 </el-card>
               </div>
@@ -132,6 +132,7 @@ export default {
       avatarPrefix,
       carouselPrefix,
       dialogVisible: false,
+      passedList: [],
       articleList: [
         { title: '基础篇', href: 'https://juejin.im/post/59097cd7a22b9d0065fb61d2' },
         { title: '登录权限篇', href: 'https://juejin.im/post/591aa14f570c35006961acac' },
@@ -192,7 +193,7 @@ export default {
     //   age: '13'
     // }
     this.axios
-      .get(this.serverUrl + '/proposalDraft/getProposalDraftByID', { params: {
+      .get(this.serverUrl + '/proposalFormal/findAllByProposalReviewTime', { params: {
         id: 0
       }}, this.headconfig)
       .then(res => {
@@ -204,6 +205,7 @@ export default {
           })
           // this.$router.push('/')
         } else {
+          this.passedList = res.data.data
           this.$message({
             type: 'success',
             message: '更新列表成功'
@@ -230,7 +232,7 @@ export default {
     },
     jumpToDetail(id) {
       const p = '/proposal/propodetail/' + id
-      this.$router.push({ path: p })
+      this.$router.push({ path: p, query: { 'isFormal': true }})
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage

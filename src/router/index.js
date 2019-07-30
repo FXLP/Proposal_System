@@ -183,6 +183,7 @@ export const asyncRoutes = [
     meta: {
       title: '审核',
       icon: 'peoples',
+      requireAuth: true,
       roles: ['admin']
     },
     children: [
@@ -205,7 +206,7 @@ export const asyncRoutes = [
     name: '指定',
     component: Layout,
     redirect: '/assign/index',
-    meta:{ requireAuth: true },
+    meta: { requireAuth: true },
     children: [
       {
         path: 'index',
@@ -222,7 +223,8 @@ export const asyncRoutes = [
     meta: {
       title: '实行',
       icon: 'tab',
-      roles: ['admin']
+      roles: ['admin'],
+      requireAuth: true
     },
     redirect: '/implement/handle',
     children: [
