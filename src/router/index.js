@@ -217,6 +217,21 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/verify',
+    name: '审阅',
+    component: Layout,
+    redirect: '/verify/index',
+    meta: { requireAuth: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/verify/index'),
+        name: '审阅',
+        meta: { title: '审阅', icon: 'education', roles: ['admin'] , requireAuth: true }
+      }
+    ]
+  },
+  {
     path: '/implement',
     name: '实行',
     component: Layout,
@@ -277,6 +292,21 @@ export const asyncRoutes = [
         component: () => import('@/views/handle/finished'),
         name: '已完成',
         meta: { title: '已完成', roles: ['admin'] }
+      }
+    ]
+  },
+  {
+    path: '/addUser',
+    name: '添加用户',
+    component: Layout,
+    redirect: '/addUser/index',
+    meta: { requireAuth: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/addUser/index'),
+        name: '添加用户',
+        meta: { title: '添加用户', icon: 'user', roles: ['admin'] , requireAuth: true }
       }
     ]
   },
@@ -355,26 +385,26 @@ export const asyncRoutes = [
   {
     path: '/dashboard',
     component: Layout,
-    name: 'Dashboard',
+    name: '仪表盘',
     redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: '仪表盘',
         meta: { title: '仪表盘', icon: 'dashboard', noCache: true }
       }
     ]
   },
   {
     path: '/icon',
-    name: 'Icon',
+    name: '图标',
     component: Layout,
     children: [
       {
         path: 'index',
         component: () => import('@/views/icons/index'),
-        name: 'Icons',
+        name: '图标',
         meta: { title: '图标', icon: 'icon', noCache: true }
       }
     ]
