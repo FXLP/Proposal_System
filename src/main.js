@@ -7,6 +7,7 @@ import axios from 'axios'
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 import Qs from 'qs'
+import request from '@/utils/request'
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -57,6 +58,7 @@ axios.defaults.withCredentials = false // 解决跨域
 Vue.prototype.axios = axios
 Vue.prototype.serverUrl = 'http://localhost:7788/api'
 Vue.prototype.qs = Qs
+Vue.prototype.request = request
 Vue.prototype.headconfig = {
   headers: {
     'Content-Type': 'application/json'
