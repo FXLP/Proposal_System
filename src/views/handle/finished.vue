@@ -88,8 +88,8 @@ export default {
       row.propostate = status 
       console.log(row.propostate)
     },
-    handleDelete(row, status){
-      
+    handleDelete(index){
+      this.list.splice(index,1)
     }
   }
 }

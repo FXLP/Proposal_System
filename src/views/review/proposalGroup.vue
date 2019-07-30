@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <aside>
-      提案组审核
-    </aside>
     <el-table :data="list" style="width: 98%">
       //:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       <el-table-column

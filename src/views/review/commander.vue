@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <aside>
-      代表团团长审核
-    </aside>
     <el-table :data="list" style="width: 98%">
       //:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       <el-table-column
@@ -32,14 +29,6 @@
       <el-table-column
         align="right"
       >
-        <template slot="header">
-          <!-- slot-scope="scope1" -->
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入关键字搜索"
-          />
-        </template>
         <template slot-scope="scope">
           <el-button
             size="mini"
