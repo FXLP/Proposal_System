@@ -212,7 +212,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/assign/index'),
         name: '指定',
-        meta: { title: '指定', icon: 'list', roles: ['admin'] , requireAuth: true }
+        meta: { title: '指定', icon: 'list', roles: ['admin'], requireAuth: true }
       }
     ]
   },
@@ -227,7 +227,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/verify/index'),
         name: '审阅',
-        meta: { title: '审阅', icon: 'education', roles: ['admin'] , requireAuth: true }
+        meta: { title: '审阅', icon: 'education', roles: ['admin'], requireAuth: true }
       }
     ]
   },
@@ -306,7 +306,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/addUser/index'),
         name: '添加用户',
-        meta: { title: '添加用户', icon: 'user', roles: ['admin'] , requireAuth: true }
+        meta: { title: '添加用户', icon: 'user', roles: ['admin'], requireAuth: true }
       }
     ]
   },
