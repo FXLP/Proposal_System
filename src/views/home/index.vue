@@ -192,27 +192,25 @@ export default {
     //   user: 'feng',
     //   age: '13'
     // }
-    this.axios
-      .get(this.serverUrl + '/proposalFormal/findAllByProposalReviewTime', { params: {
-        id: 0
-      }}, this.headconfig)
-      .then(res => {
-        console.log(res)
-        if (res.data.code !== 0) {
-          this.$message({
-            type: 'warning',
-            message: '更新列表失败'
-          })
-          // this.$router.push('/')
-        } else {
-          this.passedList = res.data.data
-          this.$message({
-            type: 'success',
-            message: '更新列表成功'
-          })
-          // this.list = res.data.PropoList
-        }
-      })
+    return this.request({
+      url: this.serverUrl + '/proposalFormal/findAllByProposalReviewTime',
+      methods: 'get',
+      params: {}
+    }).then(res => {
+      console.log(res)
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '更新列表失败'
+        })
+      } else {
+        this.passedList = res.data
+        this.$message({
+          type: 'success',
+          message: '更新列表成功'
+        })
+      }
+    })
   },
   methods: {
     guide() {

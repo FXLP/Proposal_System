@@ -197,28 +197,30 @@ export default {
     this.proposal.id = this.$route.params.id
     this.isFormal = this.$route.query.isFormal
     console.log('Formal:' + this.$route.query.isFormal)
-    this.proposal =
-      this.axios
-        .get(this.serverUrl + '/proposalFormal/getProposalFormalByID', { params: {
-          id: this.proposal.id
-        }}, this.headconfig)
-        .then(res => {
-          console.log(res)
-          if (res.data.code !== 0) {
-            this.$message({
-              type: 'warning',
-              message: '更新列表失败'
-            })
-            // this.$router.push('/')
-          } else {
-            this.proposal = res.data.data
-            this.$message({
-              type: 'success',
-              message: '更新列表成功'
-            })
-            // this.list = res.data.PropoList
-          }
+
+    return this.request({
+      url: this.serverUrl + '/proposalFormal/getProposalFormalByID',
+      method: 'get',
+      params: {
+        id: this.proposal.id
+      }
+    }).then(res => {
+      console.log(res)
+      // request return response.data
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '获取提案失败'
         })
+        // this.$router.push('/')
+      } else {
+        this.proposal = res.data
+        this.$message({
+          type: 'success',
+          message: '获取提案成功'
+        })
+      }
+    })
   },
   mounted() {
     this.driver = new Driver()
