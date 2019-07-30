@@ -48,7 +48,7 @@
       </el-col>
 
       <el-col :span="12">
-        <h3>已提交的提案</h3>
+        <h3>待附议的提案</h3>
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -124,6 +124,7 @@
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 import InviteComponent from '../../components/InviteToSupport/index.vue'
+
 export default {
   name: 'SupportProposal',
   components: {

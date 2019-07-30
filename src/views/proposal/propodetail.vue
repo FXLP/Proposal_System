@@ -226,7 +226,7 @@ export default {
     this.driver = new Driver()
   },
   methods: {
-    download: (url) => {
+    download(url) {
       const { href } = this.$router.resolve({
         path: 'www.baidu.com'
       })

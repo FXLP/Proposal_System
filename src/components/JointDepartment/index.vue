@@ -1,8 +1,9 @@
 <template>
   <div>
+    <h4>提案号:{{ detail_con1 }}</h4>
     <el-form :model="form">
       <el-form-item label="选项:" :label-width="formLabelWidth" require="true">
-        <el-select v-model="form.region1" multiple placeholder="请选择承办部门" clearable>
+        <el-select v-model="form.region" placeholder="请选择领导" clearable>
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -12,8 +13,7 @@
         </el-select>
       </el-form-item>
       <div class="butt-group">
-        <el-button type="success" round @click="sureInvite">确认邀请</el-button>
-        <el-button type="info" round @click="clearall">清空列表</el-button>
+        <el-button type="success" round style="display:block;margin:0 auto" @click="sure">发送消息</el-button>
       </div>
     </el-form>
   </div>
@@ -22,51 +22,43 @@
 <script>
 export default {
   name: 'Invite',
+  props: {
+    tableData: {
+      type: Array,
+      required: true
+    },
+    detailCon1: String
+
+  },
   data() {
     return {
       counter: 0,
       formLabelWidth: '80px',
       form: {
-        region1: '',
-        region2: '',
-        region3: ''
+        region: ''
       },
       options: [{
         value: '选项1',
-        label: '黄金糕'
+        label: '小名'
       }, {
         value: '选项2',
-        label: '双皮奶'
+        label: '小红'
       }, {
         value: '选项3',
-        label: '蚵仔煎'
+        label: '小绿'
       }, {
         value: '选项4',
-        label: '龙须面'
+        label: '小黄'
       }, {
         value: '选项5',
-        label: '北京烤鸭'
+        label: '小紫'
       }],
       value: ''
     }
   },
   methods: {
-    clearall() {
-      this.form.region1 = ''
-      this.form.region2 = ''
-      this.form.region3 = ''
-    },
-    sureInvite() {
-      const p = '确认邀请'
-      this.$alert(p, '提示', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
+    sure() {
+      this.$emit('statusChanged', '已办') // 子组件注册一个事件
     }
   }
 }

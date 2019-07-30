@@ -71,12 +71,22 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" :disabled="scope.row.propostatus == '已办'" @click="confirmText(scope.$index, scope.row)">
+          <el-button type="primary" :disabled="scope.row.propostatus == '已办'" @click="confirmText(scope.$index, scope.row, scope.row.propostatus)">
             确定
           </el-button>
+
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      title="选择领导"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <JointDepartment :table-data="tableData" :detail_con1="detail_con" @statusChanged="statusChanging($event)" />
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
   </div>
@@ -85,12 +95,16 @@
 <script>
 import { fetchTableData } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import JointDepartment from '@/components/JointDepartment/index.vue'
 
 export default {
   name: 'Assign',
-  components: { Pagination },
+  components: { Pagination, JointDepartment },
   data() {
     return {
+      dialogVisible: false,
+      confirmDialog: false,
+      detail_con: '',
       tableData: null,
       total: 0,
       listQuery: {
@@ -148,6 +162,9 @@ export default {
         this.total = response.data.total
       })
     },
+    statusChanging(propo) {
+      this.$set(this.tableData, 'propoId', 'propo')
+    },
     // 打开详情页
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.tableData[index].propoId
@@ -155,7 +172,8 @@ export default {
     },
     // 确认分配部门
     confirmText(index, row) {
-      this.$set(this.tableData[index], 'propostatus', '已办')
+      this.dialogVisible = true
+      this.detail_con = this.tableData[index].propoId
     }
   }
 }
