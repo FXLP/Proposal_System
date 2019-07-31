@@ -65,15 +65,16 @@ export default {
   methods: {
     getTableData() {
       var _this = this
-      this.axios.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+      this.$http.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
         .then(res => {
           console.log(res.data.data)
           _this.tableData = res.data.data
+          _this.total = res.data.data.length
         })
     },
     // 会签意见
     toSuggestion(index, row) {
-      const p = '/implement/suggestion/' + this.tableData[index].propoId
+      const p = '/implement/suggestion/' + this.tableData[index].putOnRecordNumber
       this.$router.push({ path: p })
     }
     // // 删除单行

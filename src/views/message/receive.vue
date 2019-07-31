@@ -212,10 +212,12 @@ export default {
       ]
     }
   },
+  created() {
+    this.total = this.tableData.length
+  },
   methods: {
-    created() {
-      this.total = this.tableData.length
-    },
+
+    // http://localhost:7788/api/message
     // 实现分页渲染
     current_change(currentPage) {
       this.currentPage = currentPage
