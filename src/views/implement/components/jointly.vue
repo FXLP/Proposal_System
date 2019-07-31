@@ -4,7 +4,7 @@
     <div class="table">
       <el-table
         ref="multipleTable"
-        :data="tableData"
+        :data="tableData.slice((page-1)*limit,page*limit)"
         border
         stripe
         style="width: 100%"
@@ -41,12 +41,11 @@
         </el-table-column>
       </el-table>
     </div>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
+    <pagination v-show="total>0" :total="total" :page.sync="page" :limit.sync="limit" @pagination="getTableData" />
   </div>
 </template>
 
 <script>
-import { fetchTableData } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 export default {
   name: 'Jointly',
@@ -54,11 +53,10 @@ export default {
   data() {
     return {
       tableData: null,
-      total: 0,
-      listQuery: {
-        page: 1,
-        limit: 10
-      }
+      total: 50,
+      page: 1,
+      limit: 5
+
     }
   },
   created() {
@@ -66,10 +64,12 @@ export default {
   },
   methods: {
     getTableData() {
-      fetchTableData(this.listQuery).then(response => {
-        this.tableData = response.data.items
-        this.total = response.data.total
-      })
+      var _this = this
+      this.axios.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+        .then(res => {
+          console.log(res.data.data)
+          _this.tableData = res.data.data
+        })
     },
     // 会签意见
     toSuggestion(index, row) {
