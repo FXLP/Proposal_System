@@ -57,9 +57,7 @@ export default {
     }
   },
   methods: {
-    sure() {
-      this.$emit('statusChanged', '已办') // 子组件注册一个事件
-    }
+
   }
 }
 </script>

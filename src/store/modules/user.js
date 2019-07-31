@@ -42,6 +42,7 @@ const actions = {
         const data = response // for true data
         // console.log('data:' + data.token.token)
         // console.log('roles:' + data.roles)
+        localStorage.setItem('user_Id', username)
         commit('SET_TOKEN', data.token.token)
         commit('SET_PER', data.roles)
         setToken(data.token.token)
@@ -85,6 +86,7 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
+        localStorage.removeItem('user_Id')
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         removeToken()
