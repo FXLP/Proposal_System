@@ -1,14 +1,13 @@
 <template>
   <div class="app-container">
-    <el-table :data="list" style="width: 98%">
-      //:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+    <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
         width="180"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -17,11 +16,11 @@
       >
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
-            <p>提案发起者: {{ scope.row.name }}</p>
-            <p>附议人数: {{ scope.row.proponum }}</p>
-            <p>提案状态: {{ scope.row.propostate }}</p>
+            <p>提案发起者: {{ scope.row.proposerName }}</p>
+            <p>附议人数: {{ scope.row.proposalSeconderCount }}</p>
+            <p>提案状态: {{ scope.row.proposalStage }}</p>
             <div slot="reference" class="name-wrapper">
-              <el-tag type="primary">{{ scope.row.proponame }}</el-tag>
+              <el-tag type="primary">{{ scope.row.proposalTitle }}</el-tag>
             </div>
           </el-popover>
         </template>
@@ -48,12 +47,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total"  @pagination="getList" />
   </div>
 </template>
 
 <script>
-import { fetchWaitGroupReviewList } from '@/api/proposal'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -64,10 +62,8 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 10
-      },
+      page: 1,
+      limit: 10,
       search: ''
     }
   },
@@ -76,10 +72,26 @@ export default {
   },
   methods: {
     getList() {
-      fetchWaitGroupReviewList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-      })
+      return this.request({
+      url: this.serverUrl + '/proposalFormal/getAllByStage',
+      method: 'post',
+      params: {stage: '待提案组审核'}
+     }).then(res => {
+      console.log(res)
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '更新列表失败'
+        })
+      } else {
+        this.list = res.data
+        this.total = res.data.length
+        this.$message({
+          type: 'success',
+          message: '更新列表成功'
+        })
+      }
+    })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
