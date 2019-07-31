@@ -22,8 +22,8 @@
                   <div class="text item">
                     <span>提案进度:{{ item.proposalStage }}</span>
                     <br>
-                    item.id
-                    <span>创建时间:{{ item.createTime }}</span>
+                    <br>
+                    <span>创建时间:{{ item.createTime | compFilter }}</span>
                     <br>
                     <br>
                     <el-button type="warning" icon="el-icon-circle-plus-outline" round @click="inviteForprop(i)">邀请附议
@@ -130,6 +130,12 @@ export default {
   name: 'SupportProposal',
   components: {
     InviteComponent
+  },
+  filters: {
+    compFilter: function(value) {
+      if (value && value.length > 10) { value = value.substr(0, 10) }
+      return value
+    }
   },
   data() {
     return {
