@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-button size="mini" type="primary">校领导审阅</el-button>
-    <el-table :data="list" style="width: 98%">
+    <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
         width="180"
@@ -57,12 +57,10 @@ export default {
   data() {
     return {
       list: null,
-      total: 0,
+      total: 50,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 10
-      },
+      page: 1,
+      limit: 10,
       search: ''
     }
   },
@@ -84,6 +82,7 @@ export default {
         })
       } else {
         this.list = res.data
+        this.total = res.data.length
         this.$message({
           type: 'success',
           message: '更新列表成功'
