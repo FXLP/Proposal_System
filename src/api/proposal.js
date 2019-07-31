@@ -47,3 +47,19 @@ export function fetchFinishedList(query) {
     params: query
   })
 }
+
+export function getProposalFormalById(data) {
+  return request({
+    url: 'http://localhost:7788/api' + '/proposalFormal/getProposalFormalByID',
+    method: 'get',
+    params: data
+  })
+}
+
+export function getProposalDraftById(data) {
+  return request({
+    url: 'http://localhost:7788/api' + '/proposalDraft/getProposalDraftByID',
+    method: 'get',
+    params: data
+  })
+}

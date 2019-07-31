@@ -20,11 +20,11 @@
                 </template>
                 <div>
                   <p>
-                    {{ proposal.proposalReviewTime }}
+                    {{ proposal.summary }}
                   </p>
                 </div>
               </el-collapse-item>
-              <el-collapse-item>
+              <el-collapse-item v-if="isFormal">
                 <template slot="title">
                   <i class="el-icon-service" /> &nbsp;提案人及附议人
                 </template>
@@ -40,6 +40,24 @@
                   <el-tag type="success">附议人</el-tag>
                   <!--                  <div v-for="person in proposal.supportPeople" :key="person">{{ person }}</div>-->
                   <div>{{ proposal.proposalSeconder }}</div>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item v-if="!isFormal">
+                <template slot="title">
+                  <i class="el-icon-service" /> &nbsp;提案理由及提案状态
+                </template>
+                <div>
+                  <el-tag type="warning">提案理由</el-tag>
+                  &nbsp;<h3>{{ proposal.proposalReason }}</h3>
+                </div>
+                <div>
+                  <el-tag>所属代表团</el-tag>
+                  &nbsp;<h3>{{ proposal.proposalStage }}</h3>
+                </div>
+                <div>
+                  <el-tag type="success">所属代表团</el-tag>
+                  <!--                  <div v-for="person in proposal.supportPeople" :key="person">{{ person }}</div>-->
+                  <div>{{ proposal.proposerDelegation }}</div>
                 </div>
               </el-collapse-item>
               <el-collapse-item>
@@ -154,6 +172,7 @@
 <script>
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
+import { getProposalFormalById, getProposalDraftById } from '@/api/proposal'
 import InviteComponent from '../../components/InviteToSupport/index.vue'
 export default {
   name: 'Proposaldetail',
@@ -187,39 +206,43 @@ export default {
     console.log(this.$route.params)
     this.proposal.id = this.$route.params.id
     this.isFormal = this.$route.query.isFormal
-    console.log('Formal:' + this.$route.query.isFormal)
-    if (this.isFormal === true) {
-      return this.request({
-        url: this.serverUrl + '/proposalFormal/getProposalFormalByID',
-        method: 'get',
-        params: {
-          id: this.proposal.id
-        }
-      }).then(res => {
-        console.log(res)
-        // request return response.data
-        if (res.code !== 0) {
-          this.$message({
-            type: 'warning',
-            message: '获取提案失败'
-          })
+    console.log('Formal:' + this.isFormal)
+    if (this.isFormal) {
+      return getProposalFormalById({ id: this.proposal.id })
+        .then(res => {
+          console.log(res)
+          // request return response.data
+          if (res.code !== 0) {
+            this.$message({
+              type: 'warning',
+              message: '获取提案失败'
+            })
           // this.$router.push('/')
-        } else {
-          this.proposal = res.data
-          this.$message({
-            type: 'success',
-            message: '获取提案成功'
-          })
-        }
-      })
+          } else {
+            this.proposal = res.data
+            this.$message({
+              type: 'success',
+              message: '获取提案成功'
+            })
+          }
+        })
     } else {
-      return this.request({
-        url: this.serverUrl + '/proposalDraft/getProposalDraftByID',
-        method: 'get',
-        params: {
-          id: this.proposal.id
-        }
-      })
+      return getProposalDraftById({ id: this.proposal.id })
+        .then(res => {
+          if (res.code !== 0) {
+            this.$message({
+              type: 'warning',
+              message: '获取提案失败'
+            })
+            // this.$router.push('/')
+          } else {
+            this.proposal = res.data
+            this.$message({
+              type: 'success',
+              message: '获取提案成功'
+            })
+          }
+        })
     }
   },
   mounted() {

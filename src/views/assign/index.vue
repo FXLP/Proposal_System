@@ -159,21 +159,22 @@ export default {
   methods: {
     getTableData() {
       var _this = this
-      this.axios.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+      this.$http.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
         .then(res => {
           console.log(res.data.data)
           _this.tableData = res.data.data
+          _this.total = res.data.data.length
         })
     },
     // 打开详情页
     goToDetail(index, row) {
-      const p = '/proposal/propodetail/' + this.tableData[index].propoId
+      const p = '/proposal/propodetail/' + this.tableData[index].putOnRecordNumber
       this.$router.push({ path: p })
     },
     // 确认分配部门
     confirmText(index, row) {
       this.dialogVisible = true
-      this.detail_con = this.tableData[index].propoId
+      this.detail_con = this.tableData[index].putOnRecordNumber
     }
   }
 }

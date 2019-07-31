@@ -115,10 +115,11 @@ export default {
   methods: {
     getTableData() {
       var _this = this
-      this.axios.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+      this.$http.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
         .then(res => {
           console.log(res.data.data)
           _this.tableData = res.data.data
+          _this.total = res.data.data.length
         })
     },
     sure(index, row) {
@@ -126,7 +127,7 @@ export default {
     },
     // 去详情页面
     goToDetail(index, row) {
-      const p = '/proposal/propodetail/' + this.tableData[index].propoId
+      const p = '/proposal/propodetail/' + this.tableData[index].putOnRecordNumber
       this.$router.push({ path: p })
     }
     // // 邀请承办部门
