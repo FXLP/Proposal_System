@@ -36,23 +36,35 @@
         <el-row :gutter="20">
           <h3>已通过的提案</h3>
           <div class="filterbox">
-            <el-select v-model="dateop" placeholder="日期">
-              <el-option
-                v-for="item in dateOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-select v-model="classop" placeholder="类型">
-              <el-option
-                v-for="item in classOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-button type="primary" round>搜索</el-button>
+            <!--            <el-select v-model="dateop" placeholder="日期">-->
+            <!--              <el-option-->
+            <!--                v-for="item in dateOptions"-->
+            <!--                :key="item.value"-->
+            <!--                :label="item.label"-->
+            <!--                :value="item.value"-->
+            <!--              />-->
+            <!--            </el-select>-->
+            <!--            <el-select v-model="classop" placeholder="类型">-->
+            <!--              <el-option-->
+            <!--                v-for="item in classOptions"-->
+            <!--                :key="item.value"-->
+            <!--                :label="item.label"-->
+            <!--                :value="item.value"-->
+            <!--              />-->
+            <!--            </el-select>-->
+            <el-date-picker
+              v-model="datevalue1"
+              align="right"
+              type="date"
+              placeholder="选择日期"
+              :picker-options="pickerOptions"
+            />
+            <el-date-picker
+              v-model="datevalue2"
+              type="date"
+              placeholder="选择日期"
+            />
+            <el-button type="primary" round @click="searchByDate()">搜索</el-button>
           </div>
         </el-row>
 
@@ -117,6 +129,33 @@ export default {
   },
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
+      },
+      datevalue1: '',
+      datevalue2: '',
       total: 10, // 默认数据总数
       pagesize: 8, // 每页的数据条数
       currentPage: 1, // 默认开始页面
@@ -154,10 +193,6 @@ export default {
     this.driver = new Driver()
   },
   created() {
-    // const data = {
-    //   user: 'feng',
-    //   age: '13'
-    // }
     return this.request({
       url: this.serverUrl + '/proposalFormal/findAllByProposalReviewTime',
       methods: 'get',
@@ -200,6 +235,36 @@ export default {
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
+    },
+    searchByDate() {
+      if (this.datevalue === null || this.datevalue2 === null) {
+        this.$message({
+          message: '日期选项不能为空',
+          type: 'warning'
+        })
+      } else {
+        return this.request({
+          url: this.serverUrl + '/proposalFormal/getProposalFormalListByTime',
+          methods: 'get',
+          params: {
+            fromTime: this.datevalue1,
+            toTime: this.datevalue2
+          }
+        }).then((response) => {
+          if (response.code !== 0) {
+            this.$message({
+              message: '网络繁忙',
+              type: 'warning'
+            })
+          } else {
+            this.passedList = response.data
+            this.message({
+              message: '更新列表成功',
+              type: 'success'
+            })
+          }
+        })
+      }
     }
   }
 }
