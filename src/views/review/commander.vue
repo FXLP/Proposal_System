@@ -89,7 +89,7 @@ export default {
         message: '操作成功',
         type: 'success'
       })
-      row.propostate = status // change proposal state
+      row.proposalStage = status // change proposal state
       console.log(row.propostate)
     }
   }
