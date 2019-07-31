@@ -167,15 +167,6 @@ export default {
       proposal: {
         id: ''
       },
-      // proposal: {
-      //   propoId: '',
-      //   propoman: '分为哼',
-      //   delegation: '审计处',
-      //   propoName: '关于校园建设管理里的问题',
-      //   propoContent: '由于学生存在对于课程项目的偏向性兴趣,以及选课考试能够通过的难易程度,导致了现阶段学生们疯狂抢课的现象,目前学校选课都是先到先得,每到选课时段,同学们便提早出发,全涌向理科楼,导致理科楼产生大面积拥挤现象,楼梯上也站满了人,为踩踏事件的发生创造了可能性;同时也导致选课时间一到就会有大量的信息冲击学校教务处系统,系统运行缓慢,网页无法打开,使许多同学选不到自己喜欢的课程,而勉强学习其他课程,而勉强学习其他课程,致使学生们的学习性不高。',
-      //   supportPeople: ['林宇翩', '分为恒', '王琴'],
-      //   suggestion: '增加热门课程人数和班次,满足同学们兴趣上的需求;丰富课程类型,使同学们拥有更大的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地的选择余地;平衡各课程考试通过的难易程度,使学生们适当地放下考试的顾虑,更多地从兴趣上选课;错开选课时间,严格控制各专业的选课时间,增强管理。'
-      // },
       activities: [{
         content: '活动按期开始',
         timestamp: '2018-04-15'
@@ -197,30 +188,39 @@ export default {
     this.proposal.id = this.$route.params.id
     this.isFormal = this.$route.query.isFormal
     console.log('Formal:' + this.$route.query.isFormal)
-
-    return this.request({
-      url: this.serverUrl + '/proposalFormal/getProposalFormalByID',
-      method: 'get',
-      params: {
-        id: this.proposal.id
-      }
-    }).then(res => {
-      console.log(res)
-      // request return response.data
-      if (res.code !== 0) {
-        this.$message({
-          type: 'warning',
-          message: '获取提案失败'
-        })
-        // this.$router.push('/')
-      } else {
-        this.proposal = res.data
-        this.$message({
-          type: 'success',
-          message: '获取提案成功'
-        })
-      }
-    })
+    if (this.isFormal === true) {
+      return this.request({
+        url: this.serverUrl + '/proposalFormal/getProposalFormalByID',
+        method: 'get',
+        params: {
+          id: this.proposal.id
+        }
+      }).then(res => {
+        console.log(res)
+        // request return response.data
+        if (res.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '获取提案失败'
+          })
+          // this.$router.push('/')
+        } else {
+          this.proposal = res.data
+          this.$message({
+            type: 'success',
+            message: '获取提案成功'
+          })
+        }
+      })
+    } else {
+      return this.request({
+        url: this.serverUrl + '/proposalDraft/getProposalDraftByID',
+        method: 'get',
+        params: {
+          id: this.proposal.id
+        }
+      })
+    }
   },
   mounted() {
     this.driver = new Driver()

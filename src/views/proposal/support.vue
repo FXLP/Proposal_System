@@ -12,18 +12,18 @@
         <h3>我提出的提案</h3>
         <div class="mypro">
           <el-row :gutter="20">
-            <el-col v-for="(item,i) in list" :key="item" :span="12">
+            <el-col v-for="(item,i) in mylist" :key="item" :span="12">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
-                    <span>标题:{{ item.name }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(i)">详情</el-button>
+                    <span>标题:{{ item.proposalTitle }}</span>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id)">详情</el-button>
                   </div>
                   <div class="text item">
-                    <span>提案进度:{{ item.progress }}</span>
+                    <span>提案进度:{{ item.proposalStage }}</span>
                     <br>
-                    <br>
-                    <span>附议人数:{{ item.num }}</span>
+                    item.id
+                    <span>创建时间:{{ item.createTime }}</span>
                     <br>
                     <br>
                     <el-button type="warning" icon="el-icon-circle-plus-outline" round @click="inviteForprop(i)">邀请附议
@@ -52,6 +52,7 @@
         <el-table
           :data="tableData"
           style="width: 100%"
+          max-height="450"
           :row-class-name="tableRowClassName"
         >
           <el-table-column
@@ -184,11 +185,39 @@ export default {
         { name: '提案3', progress: '已提交', pdate: '2019-06', num: '2' },
         { name: '提案4', progress: '已提交', pdate: '2019-06', num: '1' }
       ],
+      mylist: [],
+      userId: '',
       formLabelWidth: '80px',
       dialogVisible: false,
       confirmDialog: false,
       detail_con: '',
       tableIndex: ''
+    }
+  },
+  created() {
+    this.userId = localStorage.getItem('user_Id')
+    if (this.userId === null) {
+      this.$message({
+        message: '登陆过期，请您重新登陆',
+        type: 'warning'
+      })
+    } else {
+      return this.request({
+        url: this.serverUrl + '/proposalDraft/getProposalDraftListByNumber',
+        methods: 'get',
+        params: {
+          proposerNumber: this.userId
+        }
+      }).then((res) => {
+        if (res.code !== 0) {
+          this.$message({
+            message: '未查询到有您发起的提案',
+            type: 'warning'
+          })
+        } else {
+          this.mylist = res.data
+        }
+      })
     }
   },
   mounted() {
@@ -203,10 +232,6 @@ export default {
       }
       return ''
     },
-    goToDetail(index, row) {
-      const p = '/proposal/propodetail/' + this.tableData[index].propoId
-      this.$router.push({ path: p })
-    },
     inviteForprop(i) {
       this.dialogVisible = true
       this.detail_con = this.list[i].name
@@ -215,13 +240,24 @@ export default {
       this.tableIndex = index
       this.confirmDialog = true
     },
-    jumpToDetail(i) {
-      const p = '/proposal/propodetail/' + i
-      this.$router.push({ path: p })
+    jumpToDetail(id) {
+      const p = '/proposal/propodetail/' + id
+      this.$router.push({ path: p, query: { 'isFormal': false }})
     },
     getState(msg) {
       // console.log('msg: ${ msg }')
       this.dialogVisible = msg
+    },
+    getNpassedList() {
+      return this.request({
+        url: this.serverUrl + '/proposalFormal/findAllByProposalReviewTime',
+        methods: 'post',
+        data: {
+
+        }
+      }).then(res => {
+
+      })
     }
   }
 }
