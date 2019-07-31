@@ -6,32 +6,32 @@
     </aside>
     <el-table
       ref="multipleTable"
-      :data="tableData"
+      :data="tableData.slice((page-1)*limit,page*limit)"
       border
       stripe
       style="width: 100%"
     >
       <el-table-column label="日期" sortable prop="timestamp" width="140px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="提案号" sortable width="120px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoId }}</span>
+          <span>{{ scope.row.putOnRecordNumber }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="提案者" width="120px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoAuthor }}</span>
+          <span>{{ scope.row.proposalHandlerName }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="提案名" width="280px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoName }}</span>
+          <span>{{ scope.row.proposalTitle }}</span>
         </template>
       </el-table-column>
 
@@ -85,15 +85,14 @@
       width="30%"
       :before-close="handleClose"
     >
-      <JointDepartment :table-data="tableData" :detail_con1="detail_con" @statusChanged="statusChanging($event)" />
+      <JointDepartment :table-data="tableData" :detail_con1="detail_con" />
     </el-dialog>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getTableData" />
+    <pagination v-show="total>0" :total="total" :page.sync="page" :limit.sync="limit" @pagination="getTableData" />
   </div>
 </template>
 
 <script>
-import { fetchTableData } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import JointDepartment from '@/components/JointDepartment/index.vue'
 
@@ -106,11 +105,10 @@ export default {
       confirmDialog: false,
       detail_con: '',
       tableData: null,
-      total: 0,
-      listQuery: {
-        page: 1,
-        limit: 10
-      },
+      total: 50,
+      page: 1,
+      limit: 5,
+
       value: '',
       options: [
         {
@@ -155,15 +153,17 @@ export default {
   created() {
     this.getTableData()
   },
+  mounted() {
+
+  },
   methods: {
     getTableData() {
-      fetchTableData(this.listQuery).then(response => {
-        this.tableData = response.data.items
-        this.total = response.data.total
-      })
-    },
-    statusChanging(propo) {
-      this.$set(this.tableData, 'propoId', 'propo')
+      var _this = this
+      this.axios.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+        .then(res => {
+          console.log(res.data.data)
+          _this.tableData = res.data.data
+        })
     },
     // 打开详情页
     goToDetail(index, row) {
