@@ -55,7 +55,7 @@ export default {
       tableData: null,
       total: 50,
       page: 1,
-      limit: 5
+      limit: 10
 
     }
   },
@@ -65,7 +65,8 @@ export default {
   methods: {
     getTableData() {
       var _this = this
-      this.$http.get('http://localhost:7788/api/proposalFormal/findAllByProposalReviewTime')
+      var url = _this.serverUrl + '/proposalFormal/findAllByProposalReviewTime'
+      this.$http.get(url)
         .then(res => {
           console.log(res.data.data)
           _this.tableData = res.data.data
