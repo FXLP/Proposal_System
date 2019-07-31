@@ -17,13 +17,14 @@
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
                     <span>标题:{{ item.proposalTitle }}</span>
-                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id)">详情</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id, item.proposalSeconder?true:false)">详情</el-button>
                   </div>
                   <div class="text item">
                     <span>提案进度:{{ item.proposalStage }}</span>
                     <br>
                     <br>
-                    <span>创建时间:{{ item.createTime | compFilter }}</span>
+                    <span v-if="!item.proposalSeconder">创建时间:{{ item.createTime | compFilter }}</span>
+                    <span v-if="item.proposalSeconder">创建时间:{{ item.proposalTime | compFilter }}</span>
                     <br>
                     <br>
                     <el-button type="warning" icon="el-icon-circle-plus-outline" round @click="inviteForprop(i)">邀请附议
@@ -224,7 +225,41 @@ export default {
           this.mylist = res.data
         }
       })
+        .then(() => {
+          return this.request({
+            url: this.serverUrl + '/proposalFormal/getProposalFormalListByNumber',
+            methods: 'get',
+            params: {
+              proposerNumber: this.userId
+            }
+          }).then((res) => {
+            if (res.code === 0) {
+              this.mylist = [...this.mylist, ...res.data]
+            }
+          })
+        })
     }
+    // return this.request({
+    //   url: this.serverUrl + '/proposalDraft/getAllByNotSeconded',
+    //   method: 'post',
+    //   data: {
+    //     id: this.userId,
+    //     已提交: '已提交'
+    //   }
+    // }).then(res => {
+    //   if(res.code !== 0 ){
+    //     this.$message({
+    //       message: '系统暂忙',
+    //       type: 'warning'
+    //     })
+    //   }
+    //   else{
+    //     this.$message({
+    //       message: 'success',
+    //       type: 'success'
+    //     })
+    //   }
+    // })
   },
   mounted() {
     this.driver = new Driver()
@@ -246,9 +281,9 @@ export default {
       this.tableIndex = index
       this.confirmDialog = true
     },
-    jumpToDetail(id) {
+    jumpToDetail(id, formal) {
       const p = '/proposal/propodetail/' + id
-      this.$router.push({ path: p, query: { 'isFormal': false }})
+      this.$router.push({ path: p, query: { 'isFormal': formal }})
     },
     getState(msg) {
       // console.log('msg: ${ msg }')
@@ -256,13 +291,24 @@ export default {
     },
     getNpassedList() {
       return this.request({
-        url: this.serverUrl + '/proposalFormal/findAllByProposalReviewTime',
-        methods: 'post',
+        url: this.serverUrl + '/proposalDraft/getAllByNotSeconded',
+        method: 'post',
         data: {
-
+          id: this.userId,
+          已提交: '已提交'
         }
       }).then(res => {
-
+        if (res.code !== 0) {
+          this.$message({
+            message: '系统暂忙',
+            type: 'warning'
+          })
+        } else {
+          this.$message({
+            message: 'success',
+            type: 'success'
+          })
+        }
       })
     }
   }
