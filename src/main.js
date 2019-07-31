@@ -55,9 +55,9 @@ router.beforeEach((to, from, next) => {
 })
 
 axios.defaults.withCredentials = false // 解决跨域
-Vue.prototype.axios = axios
+Vue.prototype.$http = axios
 Vue.prototype.serverUrl = 'http://localhost:7788/api'
-Vue.prototype.qs = Qs
+Vue.prototype.$qs = Qs
 Vue.prototype.request = request
 Vue.prototype.headconfig = {
   headers: {
