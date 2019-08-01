@@ -115,6 +115,7 @@
 <script>
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
+import { formartDate } from '@/utils/parseTime'
 import steps from './steps'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
@@ -206,6 +207,7 @@ export default {
         })
       } else {
         this.passedList = res.data
+        this.total = res.data.length
         this.$message({
           type: 'success',
           message: '更新列表成功'
@@ -247,8 +249,8 @@ export default {
           url: this.serverUrl + '/proposalFormal/getProposalFormalListByTime',
           methods: 'get',
           params: {
-            fromTime: this.datevalue1,
-            toTime: this.datevalue2
+            fromTime: formartDate(this.datevalue1).substr(0, 10),
+            toTime: formartDate(this.datevalue2).substr(0, 10)
           }
         }).then((response) => {
           if (response.code !== 0) {
@@ -258,6 +260,7 @@ export default {
             })
           } else {
             this.passedList = response.data
+            this.total = response.data.length
             this.message({
               message: '更新列表成功',
               type: 'success'
