@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button size="mini" type="primary">提案组审核</el-button>
     <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
@@ -7,7 +8,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -103,10 +104,7 @@ export default {
         type: 'success'
       })
       row.proposalStage = status // change proposal state
-      if(row.proposalStage == '草稿'){
-        this.list.splice(index, 1)
-      }
-      console.log(row.propostate)
+      console.log(row.proposalStage)
     }
   }
 }

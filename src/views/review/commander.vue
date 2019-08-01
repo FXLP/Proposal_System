@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button size="mini" type="primary">代表团团长审核</el-button>
     <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
@@ -7,7 +8,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -72,13 +73,33 @@ export default {
   },
   methods: {
     getList() {
-      var _this = this
-    this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待代表团团长审核'}) )
-    .then(res => {
-      console.log(res.data)
-      _this.list = res.data.data
-      _this.total = res.data.data.length
+      return this.request({
+      url: this.serverUrl + '/proposalFormal/getAllByStage',
+      method: 'post',
+      params: {stage: '已提交'}//待代表团团长审核
+     }).then(res => {
+      console.log(res)
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '更新列表失败'
+        })
+      } else {
+        this.list = res.data
+        this.total = res.data.length
+        this.$message({
+          type: 'success',
+          message: '更新列表成功'
+        })
+      }
     })
+    //   var _this = this
+    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待代表团团长审核'}) )
+    // .then(res => {
+    //   console.log(res.data)
+    //   _this.list = res.data.data
+    //   _this.total = res.data.data.length
+    // })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
@@ -90,7 +111,7 @@ export default {
         type: 'success'
       })
       row.proposalStage = status // change proposal state
-      console.log(row.propostate)
+      console.log(row.proposalStage)
     }
   }
 }

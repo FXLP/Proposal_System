@@ -296,6 +296,36 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/discussionApproval',
+    name: '讨论审定',
+    component: Layout,
+    redirect: '/discussionApproval/index',
+    meta: { requireAuth: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/discussionApproval/index'),
+        name: '讨论审定',
+        meta: { title: '讨论审定', icon: 'user', roles: ['admin'], requireAuth: true }
+      }
+    ]
+  },
+  {
+    path: '/summaryArchive',
+    name: '总结归档',
+    component: Layout,
+    redirect: '/summaryArchive/index',
+    meta: { requireAuth: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/summaryArchive/index'),
+        name: '总结归档',
+        meta: { title: '总结归档', icon: 'user', roles: ['admin'], requireAuth: true }
+      }
+    ]
+  },
+  {
     path: '/addUser',
     name: '添加用户',
     component: Layout,

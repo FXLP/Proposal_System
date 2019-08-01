@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button size="mini" type="primary">校领导审阅</el-button>
+    <el-button size="mini" type="primary">提案组讨论审定</el-button>
     <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
@@ -37,9 +37,9 @@
           >详情</el-button>
           <el-button
             size="mini"
-            type="success"
-            @click="handleVerify(scope.$index,scope.row)"
-          >审阅</el-button>
+            type="warning"
+            @click="handleApproval(scope.$index,scope.row)"
+          >审定</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { fetchWaitImplementList } from '@/api/proposal'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -72,7 +71,7 @@ export default {
       return this.request({
       url: this.serverUrl + '/proposalFormal/getAllByStage',
       method: 'post',
-      params: {stage: '待部门分派负责人'}
+      params: {stage: '待提案组讨论审定'}
      }).then(res => {
       console.log(res)
       if (res.code !== 0) {
@@ -89,18 +88,12 @@ export default {
         })
       }
     })
-    // var _this = this
-    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待部门分派负责人'}) )
-    // .then(res => {
-    //   console.log(res.data)
-    //   _this.list = res.data.data
-    // })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleVerify(index){
+    handleApproval(index){
       this.list.splice(index, 1)
     }
   }

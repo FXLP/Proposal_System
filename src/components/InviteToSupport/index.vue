@@ -65,7 +65,7 @@ export default {
       this.form.id3 = ''
     },
     invite() {
-      this.axios({
+      this.$http({
         method: 'post',
         url: this.serverUrl + '/message/createMessage',
         // 注意：post方式提交 参数这里可以写data get方式提交用params
@@ -97,38 +97,10 @@ export default {
           })
         })
 
-      // this.axios
-      //   .post(this.serverUrl + '/message/createMessage', JSON.stringify({
-      //     id: '',
-      //     fromTo: '0002',
-      //     toNumber: '0001',
-      //     toName: 'ahkjdadjkfbsa',
-      //     sendTime: '',
-      //     isRead: false,
-      //     content: 'invitaion'
-      //   }), this.headconfig)
-      //   .then(res => {
-      //     console.log(res)
-      //     if (res.data.code !== 0) {
-      //       this.$message.error('系统暂忙，请稍后再试')
-      //     } else {
-      //       this.$message({
-      //         message: '邀请成功！',
-      //         type: 'success'
-      //       })
-      //       this.$emit('transfer',false)
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.$message.error({
-      //       message: err,
-      //       type: 'warning'
-      //     })
-      //   })
       this.DialogVisible = false
     },
     findUser() {
-      this.axios
+      this.$http
         .get(this.serverUrl + '/user/findUser', { params: {
           id: this.form.id1
         }}, this.headconfig)

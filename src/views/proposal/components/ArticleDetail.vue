@@ -16,8 +16,6 @@
 
       <div class="createPost-main-container">
         <el-row>
-          <Warning />
-
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
               <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
