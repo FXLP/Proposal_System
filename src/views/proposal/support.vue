@@ -45,32 +45,39 @@
           <el-table
             :data="notPassedList"
             style="width: 100%"
-            max-height="450"
+            max-height="1600"
             :row-class-name="tableRowClassName"
           >
             <el-table-column
               prop="id"
               label="提案编号"
-              width="120"
             />
             <el-table-column
               prop="proposalTitle"
               label="提案名"
-              width="180"
+            />
+            <el-table-column
+              prop="proposalReason"
+              label="提案原因"
             />
             <el-table-column
               prop="proposalType"
               label="提案类型"
-              width="120"
             />
             <el-table-column
               prop="proposerName"
               label="发起人"
-              width="120"
+            />
+            <el-table-column
+              prop="proposerDelegation"
+              label="发起人所属代表团"
+            />
+            <el-table-column
+              prop="proposerNumber"
+              label="发起人联系方式"
             />
             <el-table-column
               label="操作"
-              width="180"
             >
               <template slot-scope="scope">
                 <el-button
@@ -101,13 +108,13 @@
             <span>您确定要附议该提案吗，提交不可修改！</span>
             <span slot="footer" class="dialog-footer">
               <el-button @click="confirmDialog = false">取 消</el-button>
-              <el-button type="primary" @click="tableData[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
+              <el-button type="primary" @click="notPassedList[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
             </span>
           </el-dialog>
 
         </el-tab-pane>
         <el-tab-pane label="我附议过的提案">
-          <el-col span="18">
+          <div class="supportBox">
             <el-table
               :data="mySupportList"
               style="width: 100%"
@@ -160,7 +167,7 @@
                 </template>
               </el-table-column>
             </el-table>
-          </el-col>
+          </div>
 
         </el-tab-pane>
       </el-tabs>
@@ -259,6 +266,9 @@ export default {
             }
           })
         })
+        .catch((err) => {
+          this.$message.error(err)
+        })
     }
   },
   mounted() {
@@ -324,6 +334,10 @@ export default {
   .mypro{
     width:90%;
     margin-left:5%;
+  }
+
+  .supportBox{
+    width: 100%;
   }
 
   .grid-content{
