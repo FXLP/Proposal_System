@@ -124,7 +124,7 @@ export default {
       //   })
       this.request({
         url: this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId',
-        methods: 'get',
+        method: 'get',
         params: { stage: '待部门分派负责人', id: '0' }
       }).then(res => {
         console.log(res.data)

@@ -92,7 +92,7 @@ export default {
       //   })
       this.request({
         url: this.serverUrl + '/message/getMessageListByToNumber',
-        methods: 'get',
+        method: 'get',
         params: { toNumber: '1' }
       }).then(res => {
         console.log(res)

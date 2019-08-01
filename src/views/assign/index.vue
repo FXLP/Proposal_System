@@ -164,7 +164,7 @@ export default {
       //   })
       this.request({
         url: this.serverUrl + '/proposalFormal/getAllByStage',
-        methods: 'get',
+        method: 'post',
         params: { Stage: '待校办分派部门' }
       }).then(res => {
         console.log(res)
