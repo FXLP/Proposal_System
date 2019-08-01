@@ -11,25 +11,25 @@
       >
         <el-table-column label="日期" sortable prop="timestamp" width="200px">
           <template slot-scope="scope">
-            <span>{{ scope.row.propoTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <span>{{ scope.row.proposalFormal.proposalReviewTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
 
         <el-table-column label="提案号" sortable width="200px">
           <template slot-scope="scope">
-            <span>{{ scope.row.propoId }}</span>
+            <span>{{ scope.row.proposalFormal.putOnRecordNumber }}</span>
           </template>
         </el-table-column>
 
         <el-table-column label="提案者" width="200px">
           <template slot-scope="scope">
-            <span>{{ scope.row.propoAuthor }}</span>
+            <span>{{ scope.row.proposalFormal.proposerName }}</span>
           </template>
         </el-table-column>
 
         <el-table-column label="提案名" width="400px">
           <template slot-scope="scope">
-            <span>{{ scope.row.propoName }}</span>
+            <span>{{ scope.row.proposalFormal.proposalTitle }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="216" align="center">
@@ -64,18 +64,19 @@ export default {
   },
   methods: {
     getTableData() {
-      var _this = this
-      var url = _this.serverUrl + '/proposalFormal/findAllByProposalReviewTime'
-      this.$http.get(url)
-        .then(res => {
-          console.log(res.data.data)
-          _this.tableData = res.data.data
-          _this.total = res.data.data.length
-        })
+      this.request({
+        url: this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId',
+        methods: 'get',
+        params: { stage: '待部门分派负责人', id: '0' }
+      }).then(res => {
+        console.log(res)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
     },
     // 会签意见
     toSuggestion(index, row) {
-      const p = '/implement/suggestion/' + this.tableData[index].putOnRecordNumber
+      const p = '/implement/suggestion/' + this.tableData[index].proposalFormal.putOnRecordNumber
       this.$router.push({ path: p })
     }
     // // 删除单行
