@@ -61,6 +61,6 @@ export default {
 </script>
 <style scoped>
   .col1 {
-    margin-right: 40px;
+    margin-right: 50px;
   }
 </style>

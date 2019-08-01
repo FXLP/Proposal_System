@@ -10,22 +10,22 @@
     >
       <el-table-column label="日期" sortable prop="timestamp" width="150px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.proposalFormal.proposalReviewTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="提案号" sortable width="150px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoId }}</span>
+          <span>{{ scope.row.proposalFormal.putOnRecordNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="提案者" width="150px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoAuthor }}</span>
+          <span>{{ scope.row.proposalFormal.proposerName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="提案名" width="400px">
         <template slot-scope="scope">
-          <span>{{ scope.row.propoName }}</span>
+          <span>{{ scope.row.proposalFormal.proposalTitle }}</span>
         </template>
       </el-table-column>
       <el-table-column label="查看" align="center" width="100">
@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      tableData: null,
+      tableData: [],
       total: 50,
       page: 1,
       limit: 10,
@@ -114,21 +114,30 @@ export default {
   },
   methods: {
     getTableData() {
-      var _this = this
-      var url = _this.serverUrl + '/proposalFormal/findAllByProposalReviewTime'
-      this.$http.get(url)
-        .then(res => {
-          console.log(res.data.data)
-          _this.tableData = res.data.data
-          _this.total = res.data.data.length
-        })
+      // var _this = this
+      // var url = _this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId'
+      // this.$http.get(url, this.$qs.stringify({ stage: '待部门分派负责人',id: '0' }) )
+      //   .then(res => {
+      //     console.log(res.data.data)
+      //     // _this.tableData = res.data.data
+      //     // _this.total = res.data.data.length
+      //   })
+      this.request({
+        url: this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId',
+        methods: 'get',
+        params: { stage: '待部门分派负责人', id: '0' }
+      }).then(res => {
+        console.log(res.data)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
     },
     sure(index, row) {
       this.$set(this.tableData[index], 'propostatus', '已办')
     },
     // 去详情页面
     goToDetail(index, row) {
-      const p = '/proposal/propodetail/' + this.tableData[index].putOnRecordNumber
+      const p = '/proposal/propodetail/' + this.tableData[index].proposalFormal.putOnRecordNumber
       this.$router.push({ path: p })
     }
     // // 邀请承办部门

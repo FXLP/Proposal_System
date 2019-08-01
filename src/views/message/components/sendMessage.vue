@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="14" class="col2">
+    <el-col :span="13" class="col2">
       <h3>已发送的消息</h3>
       <el-table
         ref="multipleTable"
@@ -12,35 +12,33 @@
       >
         <el-table-column
           type="selection"
-          width="35"
+          width="42"
         />
-        <el-table-column
-          prop="id"
-          label="序号"
-          width="60"
-        />
-        <el-table-column
-          prop="date"
-          label="日期"
-          sortable
-          width="143"
-        />
-        <el-table-column
-          prop="name"
-          label="接受方"
-          width="160"
-        />
-        <el-table-column
-          prop="title"
-          label="标题"
-          width="200"
-        />
-        <el-table-column label="操作" width="150">
+
+        <el-table-column label="日期" sortable prop="timestamp" width="200px">
           <template slot-scope="scope">
-            <el-button type="info" size="mini" @click="open(scope.$index, scope.row)">
+            <span>{{ scope.row.sendTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="接受者" prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.toName }}</span>
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column label="消息内容" prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.content }}</span>
+          </template>
+        </el-table-column> -->
+
+        <el-table-column label="操作" width="250">
+          <template slot-scope="scope">
+            <el-button type="info" @click="open(scope.$index, scope.row)">
               详情
             </el-button>
-            <el-button type="danger" size="mini" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
+            <el-button type="danger" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -66,118 +64,32 @@ export default {
       total: 100, // 默认数据总数
       pagesize: 9, // 每页的数据条数
       currentPage: 1, // 默认开始页面
-      tableData: [
-        {
-          id: '1',
-          date: '2016-05-02',
-          name: '冯伟横',
-          title: 'hhhhhh,憨憨',
-          content: '第1条'
-        },
-        {
-          id: '2',
-          date: '2016-05-04',
-          name: '王小虎',
-          title: 'hhhhhh,憨憨',
-          content: '第2条'
-        },
-        {
-          id: '3',
-          date: '2016-05-01',
-          name: '冯伟狠',
-          title: 'hhhhhh,憨憨',
-          content: '第3条'
-        },
-        {
-          id: '4',
-          date: '2016-05-03',
-          name: '王小虎',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '5',
-          date: '2016-05-01',
-          name: '冯伟很',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        },
-        {
-          id: '6',
-          date: '2016-05-02',
-          name: '王小虎',
-          title: 'hhhhhh,憨憨',
-          content: '第一条'
-        }
-      ]
+      tableData: []
     }
   },
+  created() {
+    this.getTableData()
+  },
   methods: {
-    created: function() {
-      this.total = this.tableData.length
+    getTableData() {
+      // var _this = this
+      // var number = localStorage.getItem('user_Id')
+      // var url = _this.serverUrl + '/message/getMessageListByToNumber'
+      // this.$http.get(url, this.$qs.stringify({ toNumber: 'number'}))
+      //   .then(res => {
+      //     console.log(res)
+      //     // _this.tableData = res.data.data
+      //     // _this.total = res.data.data.length
+      //   })
+      this.request({
+        url: this.serverUrl + '/message/getMessageListByFromTo',
+        methods: 'get',
+        params: { fromTo: '1' }
+      }).then(res => {
+        console.log(res)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
     },
     current_change: function(currentPage) {
       this.currentPage = currentPage

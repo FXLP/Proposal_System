@@ -11,21 +11,21 @@
       stripe
       style="width: 100%"
     >
-      <el-table-column label="日期" sortable prop="timestamp" width="140px">
+      <el-table-column label="立案日期" sortable prop="timestamp" width="140px">
         <template slot-scope="scope">
-          <span>{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.proposalReviewTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="提案号" sortable width="120px">
+      <el-table-column label="立案号" sortable width="120px">
         <template slot-scope="scope">
           <span>{{ scope.row.putOnRecordNumber }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="提案者" width="120px">
+      <el-table-column label="立案人" width="120px">
         <template slot-scope="scope">
-          <span>{{ scope.row.proposalHandlerName }}</span>
+          <span>{{ scope.row.proposerName }}</span>
         </template>
       </el-table-column>
 
@@ -158,14 +158,23 @@ export default {
   },
   methods: {
     getTableData() {
-      var _this = this
-      var url = _this.serverUrl + '/proposalFormal/findAllByProposalReviewTime'
-      this.$http.get(url)
-        .then(res => {
-          console.log(res.data.data)
-          _this.tableData = res.data.data
-          _this.total = res.data.data.length
-        })
+      // var _this = this
+      // var url = _this.serverUrl + '/proposalFormal/getAllByStage'
+      // this.$http.get(url, { Stage: '待校办分派部门' } )
+      //   .then(res => {
+      //     console.log(res.data)
+      // _this.tableData = res.data.data
+      // _this.total = res.data.data.length
+      //   })
+      this.request({
+        url: this.serverUrl + '/proposalFormal/getAllByStage',
+        methods: 'get',
+        params: { Stage: '待校办分派部门' }
+      }).then(res => {
+        console.log(res)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
     },
     // 打开详情页
     goToDetail(index, row) {

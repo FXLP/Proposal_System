@@ -17,29 +17,30 @@
           type="selection"
           width="40"
         />
-        <el-table-column
-          prop="id"
-          label="序号"
-          width="180"
-        />
-        <el-table-column
-          prop="日期"
-          label="日期"
-          sortable
-          width="180"
-        />
-        <el-table-column
-          prop="发件人"
-          label="发件人"
-        />
-        <el-table-column
-          prop="标题"
-          label="标题"
-        />
-        <el-table-column
-          prop="status"
-          label="读取状态"
-        />
+        <el-table-column label="日期" sortable prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.sendTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="发送者" prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.fromTo }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="消息内容" prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.content }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="状态" prop="timestamp" width="200px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.read }}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="info" @click="open(scope.$index, scope.row)">
@@ -72,152 +73,33 @@ export default {
       pagesize: 8, // 每页的数据条数
       currentPage: 1, // 默认开始页面
       multipleSelection: [],
-      tableData: [
-        {
-          id: '1',
-          日期: '2018-9-8',
-          发件人: 'kk',
-          标题: '1傻狗',
-          status: '未读',
-          内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
-        },
-        {
-          id: '2',
-          日期: '2018-8-2',
-          发件人: '小哈',
-          标题: '傻狗2傻狗2傻狗2傻狗',
-          status: '未读',
-          内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
-        },
-        {
-          id: '3',
-          日期: '2018-8-1',
-          发件人: '小哈',
-          标题: '3傻狗',
-          status: '未读',
-          内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
-        },
-        {
-          id: '4',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
-        },
-        {
-          id: '5',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: '1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗1傻狗'
-        },
-        {
-          id: '6',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '7',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '8',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '9',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '10',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '11',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '12',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '15',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '14',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '58',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '58',
-          日期: '2018-8-9',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        },
-        {
-          id: '25',
-          日期: '2018-3-7',
-          发件人: '小花',
-          标题: '4傻狗',
-          status: '已读',
-          内容: 'sb'
-        }
-      ]
+      tableData: []
     }
   },
   created() {
-    this.total = this.tableData.length
+    this.getTableData()
   },
   methods: {
-
-    // http://localhost:7788/api/message
+    getTableData() {
+      // var _this = this
+      // var number = localStorage.getItem('user_Id')
+      // var url = _this.serverUrl + '/message/getMessageListByToNumber'
+      // this.$http.get(url, this.$qs.stringify({ toNumber: 'number'}))
+      //   .then(res => {
+      //     console.log(res)
+      //     // _this.tableData = res.data.data
+      //     // _this.total = res.data.data.length
+      //   })
+      this.request({
+        url: this.serverUrl + '/message/getMessageListByToNumber',
+        methods: 'get',
+        params: { toNumber: '1' }
+      }).then(res => {
+        console.log(res)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
+    },
     // 实现分页渲染
     current_change(currentPage) {
       this.currentPage = currentPage
