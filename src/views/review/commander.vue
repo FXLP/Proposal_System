@@ -73,13 +73,33 @@ export default {
   },
   methods: {
     getList() {
-      var _this = this
-    this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待代表团团长审核'}) )
-    .then(res => {
-      console.log(res.data)
-      _this.list = res.data.data
-      _this.total = res.data.data.length
+      return this.request({
+      url: this.serverUrl + '/proposalFormal/getAllByStage',
+      method: 'post',
+      params: {stage: '已提交'}//待代表团团长审核
+     }).then(res => {
+      console.log(res)
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '更新列表失败'
+        })
+      } else {
+        this.list = res.data
+        this.total = res.data.length
+        this.$message({
+          type: 'success',
+          message: '更新列表成功'
+        })
+      }
     })
+    //   var _this = this
+    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待代表团团长审核'}) )
+    // .then(res => {
+    //   console.log(res.data)
+    //   _this.list = res.data.data
+    //   _this.total = res.data.data.length
+    // })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId

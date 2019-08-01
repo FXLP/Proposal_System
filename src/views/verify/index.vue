@@ -90,7 +90,7 @@ export default {
       }
     })
     // var _this = this
-    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待部门分派负责人'}) , {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待部门分派负责人'}) )
     // .then(res => {
     //   console.log(res.data)
     //   _this.list = res.data.data

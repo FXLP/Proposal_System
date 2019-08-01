@@ -88,19 +88,13 @@ export default {
         })
       }
     })
-    // var _this = this
-    // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待部门分派负责人'}) , {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
-    // .then(res => {
-    //   console.log(res.data)
-    //   _this.list = res.data.data
-    // })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
     handleApproval(index){
-      
+      this.list.splice(index, 1)
     }
   }
 }
