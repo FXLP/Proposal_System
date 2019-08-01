@@ -8,7 +8,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
       </el-table-column>
       <el-table-column
