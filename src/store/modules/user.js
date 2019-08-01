@@ -41,9 +41,7 @@ const actions = {
         // const { data } = response // for mock data
         const data = response // for true data
         // console.log('data:' + data.token.token)
-        // console.log('roles:' + data.roles)
-        localStorage.setItem('user_Id', username)
-        localStorage.setItem('user_Name', data.userName)
+        localStorage.setItem('user', JSON.stringify(data.user))
         commit('SET_TOKEN', data.token.token)
         commit('SET_PER', data.permission)
         setToken(data.token.token)
@@ -87,7 +85,7 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
-        localStorage.removeItem('user_Id')
+        localStorage.removeItem('user')
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         removeToken()
