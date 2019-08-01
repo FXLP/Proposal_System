@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button size="mini" type="primary">代表团团长审核</el-button>
     <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
@@ -90,7 +91,7 @@ export default {
         type: 'success'
       })
       row.proposalStage = status // change proposal state
-      console.log(row.propostate)
+      console.log(row.proposalStage)
     }
   }
 }

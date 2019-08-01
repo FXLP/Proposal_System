@@ -1,9 +1,5 @@
 <template>
   <div class="app-container">
-    <aside>
-      选定实行部门
-      消息(收/发消息)
-    </aside>
     <el-table
       ref="multipleTable"
       :data="tableData.slice((page-1)*limit,page*limit)"
