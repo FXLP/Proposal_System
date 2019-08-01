@@ -175,7 +175,7 @@
 import Driver from 'driver.js' // import driver.js
 import 'driver.js/dist/driver.min.css' // import driver.js css
 import InviteComponent from '../../components/InviteToSupport/index.vue'
-
+import { get_uuid } from '@/utils/utils'
 export default {
   name: 'SupportProposal',
   components: {
@@ -316,21 +316,26 @@ export default {
         }
       })
     },
-    supportProposal(proposalid, proposername, tableIndex) {
-      console.log('id:' + proposalid + 'name:${' + proposername + '},tableindex:${' + tableIndex + '}')
-      // return this.request({
-      //   url: this.serverUrl + '/seconded/createSeconded',
-      //   method: 'post',
-      //   data: {
-      //     secondedQuery: {
-      //       proposalId: proposalid,
-      //       proposerNumber: proposername,
-      //       seconderName: '',
-      //       seconderNumber: this.userId,
-      //       seconderTime: new Date()
-      //     }
-      //   }
-      // })
+    supportProposal(proposalid, proposernumber, tableIndex) {
+      console.log('id:' + proposalid + 'name:${' + proposernumber + '},tableindex:${' + tableIndex + '}')
+
+      this.$http
+        .post(this.serverUrl + '/seconded/createSeconded',
+          {
+            id: get_uuid(),
+            firstBatch: 'true',
+            proposerNumber: proposernumber,
+            seconderName: this.user.userName,
+            seconderNumber: this.user.id,
+            seconderTime: new Date(),
+            proposalDraftId: '1',
+            proposalFormalId: '0'
+          }
+          , { headers: {
+            'Content-Type': 'application/json'
+            // {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+          }})
+
       this.notPassedList[tableIndex].checked = true
       this.confirmDialog = false
     },
