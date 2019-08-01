@@ -55,7 +55,20 @@ export default {
         resource: '',
         desc: ''
       },
-      name1: ''
+      name1: '',
+      userId: ''
+    }
+  },
+  created() {
+    this.userId = localStorage.getItem('user_Id')
+    if (this.userId === null) {
+      this.$message({
+        message: '登陆过期，请您重新登陆',
+        type: 'warning'
+      })
+      this.$router.push({
+        path: `/`
+      })
     }
   },
   methods: {
@@ -71,12 +84,12 @@ export default {
         // 注意：post方式提交 参数这里可以写data get方式提交用params
         data: {
           id: get_uuid(),
-          fromTo: '0002',
-          toNumber: '0001',
-          toName: 'ahkjdadjkfbsa',
-          sendTime: '',
+          fromTo: this.userId,
+          toNumber: this.form.id1,
+          toName: this.name1,
+          sendTime: new Date(),
           isRead: false,
-          content: 'invitaion'
+          content: 'Invitaion to support'
         }
       }).then(res => {
         console.log(res)

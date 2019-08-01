@@ -36,22 +36,6 @@
         <el-row :gutter="20">
           <h3>已通过的提案</h3>
           <div class="filterbox">
-            <!--            <el-select v-model="dateop" placeholder="日期">-->
-            <!--              <el-option-->
-            <!--                v-for="item in dateOptions"-->
-            <!--                :key="item.value"-->
-            <!--                :label="item.label"-->
-            <!--                :value="item.value"-->
-            <!--              />-->
-            <!--            </el-select>-->
-            <!--            <el-select v-model="classop" placeholder="类型">-->
-            <!--              <el-option-->
-            <!--                v-for="item in classOptions"-->
-            <!--                :key="item.value"-->
-            <!--                :label="item.label"-->
-            <!--                :value="item.value"-->
-            <!--              />-->
-            <!--            </el-select>-->
             <el-date-picker
               v-model="datevalue1"
               align="right"
@@ -130,6 +114,14 @@ export default {
   },
   data() {
     return {
+      carouselImages: [
+        'https://wpimg.wallstcn.com/9679ffb0-9e0b-4451-9916-e21992218054.jpg',
+        'https://wpimg.wallstcn.com/bcce3734-0837-4b9f-9261-351ef384f75a.jpg',
+        'https://wpimg.wallstcn.com/d1d7b033-d75e-4cd6-ae39-fcd5f1c0a7c5.jpg',
+        'https://wpimg.wallstcn.com/50530061-851b-4ca5-9dc5-2fead928a939.jpg'
+      ],
+      avatarPrefix,
+      carouselPrefix,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now()
@@ -163,27 +155,8 @@ export default {
       pageNo: 1, // 当前页面
       tableData: [],
       driver: null,
-      carouselImages: [
-        'https://wpimg.wallstcn.com/9679ffb0-9e0b-4451-9916-e21992218054.jpg',
-        'https://wpimg.wallstcn.com/bcce3734-0837-4b9f-9261-351ef384f75a.jpg',
-        'https://wpimg.wallstcn.com/d1d7b033-d75e-4cd6-ae39-fcd5f1c0a7c5.jpg',
-        'https://wpimg.wallstcn.com/50530061-851b-4ca5-9dc5-2fead928a939.jpg'
-      ],
-      avatarPrefix,
-      carouselPrefix,
       dialogVisible: false,
       passedList: [],
-      articleList: [
-        { title: '基础篇', href: 'https://juejin.im/post/59097cd7a22b9d0065fb61d2' },
-        { title: '登录权限篇', href: 'https://juejin.im/post/591aa14f570c35006961acac' },
-        { title: '实战篇', href: 'https://juejin.im/post/593121aa0ce4630057f70d35' },
-        { title: 'vue-admin-template 篇', href: 'https://juejin.im/post/595b4d776fb9a06bbe7dba56' },
-        { title: 'v4.0 篇', href: 'https://juejin.im/post/5c92ff94f265da6128275a85' },
-        { title: '自行封装 component', href: 'https://segmentfault.com/a/1190000009090836' },
-        { title: '优雅的使用 icon', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
-        { title: 'webpack4（上）', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
-        { title: 'webpack4（下）', href: 'https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc' }
-      ],
       detail_con: '',
       dateop: '',
       classop: '',

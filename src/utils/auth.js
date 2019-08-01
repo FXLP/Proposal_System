@@ -23,3 +23,7 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
+export function removePer() {
+  return Cookies.remove(PerKey)
+}
+

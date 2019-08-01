@@ -15,7 +15,7 @@ export function login(data) {
     data
   })
     .then(response => {
-      console.log('response.roles:' + response.roles)
+      console.log('response.roles:' + response.permission)
       response.token = {
         token: 'admin-token'
       }

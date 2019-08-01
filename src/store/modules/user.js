@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, setPer, getPer } from '@/utils/auth'
+import { getToken, setToken, removeToken, setPer, getPer, removePer } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -43,10 +43,11 @@ const actions = {
         // console.log('data:' + data.token.token)
         // console.log('roles:' + data.roles)
         localStorage.setItem('user_Id', username)
+        localStorage.setItem('user_Name', data.userName)
         commit('SET_TOKEN', data.token.token)
-        commit('SET_PER', data.roles)
+        commit('SET_PER', data.permission)
         setToken(data.token.token)
-        setPer(data.roles)
+        setPer(data.permission)
         resolve()
       }).catch(error => {
         reject(error)
@@ -90,6 +91,7 @@ const actions = {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         removeToken()
+        removePer()
         resetRouter()
         resolve()
       }).catch(error => {
