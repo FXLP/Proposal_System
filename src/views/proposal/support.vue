@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-col :span="12">
-        <h3>我提出的提案</h3>
-        <div class="mypro">
+      <el-tabs>
+
+        <el-tab-pane label="我提出的提案">
           <el-row :gutter="20">
-            <el-col v-for="(item,i) in mylist" :key="item" :span="12">
+            <el-col v-for="(item,i) in mylist" :key="item" :span="6">
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
@@ -38,76 +38,132 @@
             <br>
             <invite-component @transfer="getState" />
           </el-dialog>
-        </div>
-      </el-col>
 
-      <el-col :span="12">
-        <h3>待附议的提案</h3>
-        <el-table
-          :data="tableData"
-          style="width: 100%"
-          max-height="450"
-          :row-class-name="tableRowClassName"
-        >
-          <el-table-column
-            prop="date"
-            label="日期"
-            width="90"
-          />
-          <el-table-column
-            prop="name"
-            label="姓名"
-            width="90"
-          />
-          <el-table-column
-            prop="proponame"
-            label="提案名"
-            width="180"
-          />
-          <el-table-column
-            prop="proponum"
-            label="已附议人数"
-            width="60"
-          />
-          <el-table-column
-            fixed="right"
-            label="操作"
-            width="180"
+        </el-tab-pane>
+        <el-tab-pane label="待附议的提案">
+
+          <el-table
+            :data="notPassedList"
+            style="width: 100%"
+            max-height="450"
+            :row-class-name="tableRowClassName"
           >
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                @click="goToDetail(scope.$index, scope.row)"
-              >详情</el-button>
-              <el-button
-                v-if="!tableData[scope.$index].checked"
-                size="mini"
-                type="danger"
-                @click="supportProp(scope.$index, scope.row)"
-              >附议</el-button>
-              <el-button
-                v-if="tableData[scope.$index].checked"
-                disabled="true"
-                size="mini"
-                type="info"
-              >已附议</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-col>
+            <el-table-column
+              prop="id"
+              label="提案编号"
+              width="120"
+            />
+            <el-table-column
+              prop="proposalTitle"
+              label="提案名"
+              width="180"
+            />
+            <el-table-column
+              prop="proposalType"
+              label="提案类型"
+              width="120"
+            />
+            <el-table-column
+              prop="proposerName"
+              label="发起人"
+              width="120"
+            />
+            <el-table-column
+              label="操作"
+              width="180"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  @click="goToDetail(scope.$index, scope.row)"
+                >详情</el-button>
+                <el-button
+                  v-if="!notPassedList[scope.$index].checked"
+                  size="mini"
+                  type="danger"
+                  @click="supportProp(scope.$index, scope.row)"
+                >附议</el-button>
+                <el-button
+                  v-if="notPassedList[scope.$index].checked"
+                  disabled="true"
+                  size="mini"
+                  type="info"
+                >已附议</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-dialog
+            title="确认附议"
+            :visible.sync="confirmDialog"
+            width="30%"
+            :before-close="handleClose"
+          >
+            <span>您确定要附议该提案吗，提交不可修改！</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="confirmDialog = false">取 消</el-button>
+              <el-button type="primary" @click="tableData[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
+            </span>
+          </el-dialog>
 
-      <el-dialog
-        title="确认附议"
-        :visible.sync="confirmDialog"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <span>您确定要附议该提案吗，提交不可修改！</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="confirmDialog = false">取 消</el-button>
-          <el-button type="primary" @click="tableData[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
-        </span>
-      </el-dialog>
+        </el-tab-pane>
+        <el-tab-pane label="我附议过的提案">
+          <el-col span="18">
+            <el-table
+              :data="mySupportList"
+              style="width: 100%"
+              max-height="250"
+            >
+              <el-table-column
+                fixed
+                prop="id"
+                label="提案id"
+                width="150"
+              />
+              <el-table-column
+                prop="proposalTitle"
+                label="提案名称"
+                width="120"
+              />
+              <el-table-column
+                prop="proposalReason"
+                label="提案事由"
+                width="120"
+              />
+              <el-table-column
+                prop="proposerName"
+                label="提案人姓名"
+                width="120"
+              />
+              <el-table-column
+                prop="proposalType"
+                label="提案类型"
+                width="300"
+              />
+              <el-table-column
+                prop="proposerDelegation"
+                label="提案人所属代表团"
+                width="120"
+              />
+              <el-table-column
+                fixed="right"
+                label="操作"
+                width="120"
+              >
+                <template slot-scope="scope">
+                  <el-button
+                    type="text"
+                    size="small"
+                    @click.native.prevent="deleteRow(scope.$index, tableData)"
+                  >
+                    详情
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-col>
+
+        </el-tab-pane>
+      </el-tabs>
 
     </el-row>
     <el-row class="support-footer" />
@@ -134,58 +190,9 @@ export default {
   data() {
     return {
       driver: null,
-      tableData: [{
-        propoId: '009',
-        date: '2016-05-02',
-        name: '冯伟横',
-        proponame: '关于奉贤食堂会议',
-        proponum: '7',
-        checked: false
-      }, {
-        propoId: '008',
-        date: '2016-05-04',
-        name: '王小虎',
-        proponame: '关于徐汇住宿问题',
-        proponum: '6',
-        checked: true
-      }, {
-        propoId: '007',
-        date: '2016-05-01',
-        name: '冯伟狠',
-        proponame: '垃圾分类注意',
-        proponum: '4',
-        checked: false
-      }, {
-        propoId: '006',
-        date: '2016-05-03',
-        name: '王小虎',
-        proponame: '教工调整',
-        proponum: '2',
-        checked: false
-      },
-      {
-        propoId: '005',
-        date: '2016-05-01',
-        name: '冯伟很',
-        proponame: '垃圾分类注意',
-        proponum: '4',
-        checked: true
-      },
-      {
-        propoId: '004',
-        date: '2016-05-02',
-        name: '王小虎',
-        proponame: '关于奉贤食堂会议',
-        proponum: '7',
-        checked: false
-      }],
-      list: [
-        { name: '提案1', progress: '审核中', pdate: '2019-06', num: '3' },
-        { name: '提案2', progress: '已通过', pdate: '2019-06', num: '5' },
-        { name: '提案3', progress: '已提交', pdate: '2019-06', num: '2' },
-        { name: '提案4', progress: '已提交', pdate: '2019-06', num: '1' }
-      ],
       mylist: [],
+      notPassedList: [],
+      mySupportList: [],
       userId: '',
       formLabelWidth: '80px',
       dialogVisible: false,
@@ -231,28 +238,28 @@ export default {
             }
           })
         })
+        .then(() => {
+          return this.getNpassedList().then((res) => {
+            this.notPassedList = res.proposalDraftQueryArrayList
+            for (var i = 0; i < this.notPassedList.length; i++) {
+              this.notPassedList[i].checked = false
+            }
+            if (res.code === 0) {
+              this.$message({
+                message: 'NotPassLis got',
+                type: 'success'
+              })
+            }
+          })
+        })
+        .then(() => {
+          return this.getSupportList().then((res) => {
+            if (res.code === 0) {
+              this.mySupportList = res.proposalDraftQueryArrayList
+            }
+          })
+        })
     }
-    // return this.request({
-    //   url: this.serverUrl + '/proposalDraft/getAllByNotSeconded',
-    //   method: 'post',
-    //   data: {
-    //     id: this.userId,
-    //     已提交: '已提交'
-    //   }
-    // }).then(res => {
-    //   if(res.code !== 0 ){
-    //     this.$message({
-    //       message: '系统暂忙',
-    //       type: 'warning'
-    //     })
-    //   }
-    //   else{
-    //     this.$message({
-    //       message: 'success',
-    //       type: 'success'
-    //     })
-    //   }
-    // })
   },
   mounted() {
     this.driver = new Driver()
@@ -290,17 +297,14 @@ export default {
           id: this.userId,
           已提交: '已提交'
         }
-      }).then(res => {
-        if (res.code !== 0) {
-          this.$message({
-            message: '系统暂忙',
-            type: 'warning'
-          })
-        } else {
-          this.$message({
-            message: 'success',
-            type: 'success'
-          })
+      })
+    },
+    getSupportList() {
+      return this.request({
+        url: this.serverUrl + '/proposalDraft/getAllByHaveSeconded',
+        method: 'post',
+        data: {
+          id: this.userId
         }
       })
     }
