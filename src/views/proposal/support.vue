@@ -101,7 +101,7 @@
             <span>您确定要附议该提案吗，提交不可修改！</span>
             <span slot="footer" class="dialog-footer">
               <el-button @click="confirmDialog = false">取 消</el-button>
-              <el-button type="primary" @click="tableData[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
+              <el-button type="primary" @click="notPassedList[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
             </span>
           </el-dialog>
 
@@ -258,6 +258,9 @@ export default {
               this.mySupportList = res.proposalDraftQueryArrayList
             }
           })
+        })
+        .catch((err) => {
+          this.$message.error(err)
         })
     }
   },
