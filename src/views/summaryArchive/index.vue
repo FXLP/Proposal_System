@@ -71,7 +71,7 @@ export default {
       return this.request({
       url: this.serverUrl + '/proposalFormal/getAllByStage',
       method: 'post',
-      params: {stage: '待提案组总结归档'}
+      params: {Stage: '待提案组总结归档'}
      }).then(res => {
       console.log(res)
       if (res.code !== 0) {

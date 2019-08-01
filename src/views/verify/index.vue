@@ -72,7 +72,7 @@ export default {
       return this.request({
       url: this.serverUrl + '/proposalFormal/getAllByStage',
       method: 'post',
-      params: {stage: '待部门分派负责人'}
+      params: {Stage: '待部门分派负责人'}
      }).then(res => {
       console.log(res)
       if (res.code !== 0) {

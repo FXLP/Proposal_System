@@ -108,7 +108,7 @@
             <span>您确定要附议该提案吗，提交不可修改！</span>
             <span slot="footer" class="dialog-footer">
               <el-button @click="confirmDialog = false">取 消</el-button>
-              <el-button type="primary" @click="notPassedList[tableIndex].checked=true;confirmDialog = false">确 定</el-button>
+              <el-button type="primary" @click="supportProposal(notPassedList[tableIndex].id,notPassedList[tableIndex].proposerNumber,tableIndex)">确 定</el-button>
             </span>
           </el-dialog>
 
@@ -118,10 +118,9 @@
             <el-table
               :data="mySupportList"
               style="width: 100%"
-              max-height="250"
+              max-height="1250"
             >
               <el-table-column
-                fixed
                 prop="id"
                 label="提案id"
                 width="150"
@@ -129,38 +128,32 @@
               <el-table-column
                 prop="proposalTitle"
                 label="提案名称"
-                width="120"
               />
               <el-table-column
                 prop="proposalReason"
                 label="提案事由"
-                width="120"
               />
               <el-table-column
                 prop="proposerName"
                 label="提案人姓名"
-                width="120"
               />
               <el-table-column
                 prop="proposalType"
                 label="提案类型"
-                width="300"
               />
               <el-table-column
                 prop="proposerDelegation"
                 label="提案人所属代表团"
-                width="120"
               />
               <el-table-column
-                fixed="right"
                 label="操作"
-                width="120"
               >
-                <template slot-scope="scope">
+                <template slot-scope="scope1">
                   <el-button
                     type="text"
                     size="small"
-                    @click.native.prevent="deleteRow(scope.$index, tableData)"
+                    disabled="disable"
+                    @click.native.prevent="deleteRow(scope1.$index, tableData)"
                   >
                     详情
                   </el-button>
@@ -200,7 +193,7 @@ export default {
       mylist: [],
       notPassedList: [],
       mySupportList: [],
-      userId: '',
+      user: {},
       formLabelWidth: '80px',
       dialogVisible: false,
       confirmDialog: false,
@@ -209,8 +202,9 @@ export default {
     }
   },
   created() {
-    this.userId = localStorage.getItem('user_Id')
-    if (this.userId === null) {
+    this.user = JSON.parse(localStorage.getItem('user'))
+    console.log('uuuu:' + this.user.id)
+    if (this.user.id === null) {
       this.$message({
         message: '登陆过期，请您重新登陆',
         type: 'warning'
@@ -220,7 +214,7 @@ export default {
         url: this.serverUrl + '/proposalDraft/getProposalDraftListByNumber',
         methods: 'get',
         params: {
-          proposerNumber: this.userId
+          proposerNumber: this.user.id
         }
       }).then((res) => {
         if (res.code !== 0) {
@@ -237,7 +231,7 @@ export default {
             url: this.serverUrl + '/proposalFormal/getProposalFormalListByNumber',
             methods: 'get',
             params: {
-              proposerNumber: this.userId
+              proposerNumber: this.user.id
             }
           }).then((res) => {
             if (res.code === 0) {
@@ -253,7 +247,7 @@ export default {
             }
             if (res.code === 0) {
               this.$message({
-                message: 'NotPassLis got',
+                message: 'All list get',
                 type: 'success'
               })
             }
@@ -285,7 +279,7 @@ export default {
     },
     inviteForprop(i) {
       this.dialogVisible = true
-      this.detail_con = this.list[i].name
+      this.detail_con = this.mylist[i].proposalTitle
     },
     supportProp(index, row) {
       this.tableIndex = index
@@ -294,6 +288,10 @@ export default {
     jumpToDetail(id, formal) {
       const p = '/proposal/propodetail/' + id
       this.$router.push({ path: p, query: { 'isFormal': formal }})
+    },
+    goToDetail(index, row) {
+      const p = '/proposal/propodetail/' + this.notPassedList[index].id
+      this.$router.push({ path: p, query: { 'isFormal': false }})
     },
     getState(msg) {
       // console.log('msg: ${ msg }')
@@ -304,7 +302,7 @@ export default {
         url: this.serverUrl + '/proposalDraft/getAllByNotSeconded',
         method: 'post',
         data: {
-          id: this.userId,
+          id: this.user.id,
           已提交: '已提交'
         }
       })
@@ -314,9 +312,34 @@ export default {
         url: this.serverUrl + '/proposalDraft/getAllByHaveSeconded',
         method: 'post',
         data: {
-          id: this.userId
+          id: this.user.id
         }
       })
+    },
+    supportProposal(proposalid, proposername, tableIndex) {
+      console.log('id:' + proposalid + 'name:${' + proposername + '},tableindex:${' + tableIndex + '}')
+      // return this.request({
+      //   url: this.serverUrl + '/seconded/createSeconded',
+      //   method: 'post',
+      //   data: {
+      //     secondedQuery: {
+      //       proposalId: proposalid,
+      //       proposerNumber: proposername,
+      //       seconderName: '',
+      //       seconderNumber: this.userId,
+      //       seconderTime: new Date()
+      //     }
+      //   }
+      // })
+      this.notPassedList[tableIndex].checked = true
+      this.confirmDialog = false
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
     }
   }
 }

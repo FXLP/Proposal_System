@@ -56,12 +56,12 @@ export default {
         desc: ''
       },
       name1: '',
-      userId: ''
+      user: {}
     }
   },
   created() {
-    this.userId = localStorage.getItem('user_Id')
-    if (this.userId === null) {
+    this.user = JSON.parse(localStorage.getItem('user'))
+    if (this.user.id === null) {
       this.$message({
         message: '登陆过期，请您重新登陆',
         type: 'warning'
@@ -84,7 +84,7 @@ export default {
         // 注意：post方式提交 参数这里可以写data get方式提交用params
         data: {
           id: get_uuid(),
-          fromTo: this.userId,
+          fromTo: this.user.id,
           toNumber: this.form.id1,
           toName: this.name1,
           sendTime: new Date(),
