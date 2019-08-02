@@ -62,10 +62,16 @@
                     <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id)">提案详情</el-button>
                   </div>
                   <div class="text item">
+                    <span>提案人:{{ item.proposerName }}</span>
+                    <br>
+                    <br>
                     <span>所属代表团:{{ item.proposalDelegation }}</span>
                     <br>
                     <br>
-                    <span>提出日期:{{ item.proposalTime | parseTime('{y}-{m}-{d}') }}</span>
+                    <span>类型:{{ item.proposalType }}</span>
+                    <br>
+                    <br>
+                    <span>{{ item.proposalTime | parseTime('{y}-{m}-{d}') }}</span>
                   </div>
                 </el-card>
               </div>
@@ -283,5 +289,9 @@ export default {
   .pagination-box{
     float:right;
     margin-top:5%;
+  }
+
+  .text{
+    width: 100%;
   }
 </style>
