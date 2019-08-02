@@ -8,7 +8,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { fetchWaitImplementList } from '@/api/proposal'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -70,25 +69,25 @@ export default {
   methods: {
     getList() {
       return this.request({
-      url: this.serverUrl + '/proposalFormal/getAllByStage',
-      method: 'post',
-      params: {Stage: '待部门分派负责人'}
-     }).then(res => {
-      console.log(res)
-      if (res.code !== 0) {
-        this.$message({
-          type: 'warning',
-          message: '更新列表失败'
-        })
-      } else {
-        this.list = res.data
-        this.total = res.data.length
-        this.$message({
-          type: 'success',
-          message: '更新列表成功'
-        })
-      }
-    })
+        url: this.serverUrl + '/proposalFormal/getAllByStage',
+        method: 'post',
+        params: { Stage: '待部门分派负责人' }
+      }).then(res => {
+        console.log(res)
+        if (res.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+        } else {
+          this.list = res.data
+          this.total = res.data.length
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+        }
+      })
     // var _this = this
     // this.$http.post('http://localhost:7788/api/proposalFormal/getAllByStage', this.$qs.stringify({stage: '待部门分派负责人'}) )
     // .then(res => {
@@ -100,7 +99,7 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleVerify(index){
+    handleVerify(index) {
       this.list.splice(index, 1)
     }
   }

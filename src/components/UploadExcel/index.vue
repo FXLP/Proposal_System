@@ -3,7 +3,7 @@
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick">
     <div class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       拖放Excel文件到这里 或者
-      <el-button :loading="loading" style="margin-left:16px;"  type="primary" @click="handleUpload">
+      <el-button :loading="loading" style="margin-left:16px;" type="primary" @click="handleUpload">
         选择文件
       </el-button>
     </div>
