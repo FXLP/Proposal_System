@@ -9,7 +9,7 @@
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
-                    <span>标题:{{ item.proposalTitle }}</span>
+                    <span>标题:{{ item.proposalTitle | titleFilter }}</span>
                     <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id, item.proposalSeconder?true:false)">详情</el-button>
                   </div>
                   <div class="text item">
@@ -184,6 +184,10 @@ export default {
   filters: {
     compFilter: function(value) {
       if (value && value.length > 10) { value = value.substr(0, 10) }
+      return value
+    },
+    titleFilter: function(value) {
+      if (value && value.length > 10) { value = value.substr(0, 10) + '...' }
       return value
     }
   },
@@ -378,5 +382,9 @@ export default {
 
   .el-table .success-row {
     background: #f0f9eb;
+  }
+
+  .text{
+    width: 100%;
   }
 </style>

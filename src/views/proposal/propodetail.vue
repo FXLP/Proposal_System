@@ -8,13 +8,6 @@
         </el-row>
         <el-row>
           <div class="propobox">
-            <div class="carouselBox">
-              <el-carousel trigger="click" height="150px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <h3 class="small">{{ item }}</h3>
-                </el-carousel-item>
-              </el-carousel>
-            </div>
             <el-collapse v-model="activeNames">
               <el-collapse-item name="1">
                 <template slot="title">
@@ -154,8 +147,9 @@
                   {{ person }}
                 </div>
               </el-collapse-item>
-              <el-collapse-item title="协办部门" name="2">
-                <div>审计部</div>
+              <el-collapse-item title="主办部门 & 协办部门" name="2">
+                <h3 class="inlineh">主办部门：</h3><div>教务处</div>
+                <h3 class="inlineh">协办部门：</h3><div>审计处</div>
               </el-collapse-item>
               <el-collapse-item title="实施意见" name="3">
                 <div>简化流程：设计简洁直观的操作流程；</div>
@@ -287,11 +281,8 @@ export default {
     width:50%;
   }
 
-  .carouselBox{
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 4%;
-    background-color: #9aaabf;
+  .inlineh{
+    display: inline;
   }
 
 </style>

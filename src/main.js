@@ -63,7 +63,7 @@ Vue.prototype.request = request
 Vue.prototype.headconfig = {
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
-    // {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+    // 'Content-Type': 'application/x-www-form-urlencoded'
   }
 }
 // register global utility filters
