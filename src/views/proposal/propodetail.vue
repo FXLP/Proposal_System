@@ -4,12 +4,19 @@
       <el-col :span="16">
         <el-row>
           <h3 class="inlineh">提案编号:{{ proposal.id }}</h3>   <el-tag type="success">已完成</el-tag>
-          <h2>提案{{ proposal.propoName }}</h2>
+          <h2>提案名:{{ proposal.proposalTitle }}</h2>
         </el-row>
         <el-row>
           <div class="propobox">
-            <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item>
+            <div class="carouselBox">
+              <el-carousel trigger="click" height="150px">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3 class="small">{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+            <el-collapse v-model="activeNames">
+              <el-collapse-item name="1">
                 <template slot="title">
                   <i class="el-icon-tickets" /> &nbsp;提案内容
                 </template>
@@ -19,7 +26,7 @@
                   </p>
                 </div>
               </el-collapse-item>
-              <el-collapse-item v-if="isFormal">
+              <el-collapse-item v-if="isFormal" name="2">
                 <template slot="title">
                   <i class="el-icon-service" /> &nbsp;提案人及附议人
                 </template>
@@ -37,7 +44,7 @@
                   <div>{{ proposal.proposalSeconder }}</div>
                 </div>
               </el-collapse-item>
-              <el-collapse-item v-if="!isFormal">
+              <el-collapse-item v-if="!isFormal" name="2">
                 <template slot="title">
                   <i class="el-icon-service" /> &nbsp;提案理由及提案状态
                 </template>
@@ -55,13 +62,13 @@
                   <div>{{ proposal.proposerDelegation }}</div>
                 </div>
               </el-collapse-item>
-              <el-collapse-item>
+              <el-collapse-item name="3">
                 <template slot="title">
                   <i class="el-icon-sort" /> &nbsp;办理意见
                 </template>
                 <div>{{ proposal.proposalHandleOpinions }}</div>
               </el-collapse-item>
-              <el-collapse-item>
+              <el-collapse-item name="4">
                 <template slot="title">
                   <i class="el-icon-circle-check-outline" /> &nbsp;校领导意见
                 </template>
@@ -72,6 +79,7 @@
           </div>
         </el-row>
         <br>
+
         <el-row>
           <div class="propobox">
             <el-row :gutter="20">
@@ -191,6 +199,7 @@ export default {
         content: '创建成功',
         timestamp: '2018-04-11'
       }],
+      activeNames: ['1'],
       supportNum: 3,
       approveList: [
         '林宇翩', '王青', '分为恒'
@@ -276,6 +285,13 @@ export default {
     margin-bottom:4%;
     float:left;
     width:50%;
+  }
+
+  .carouselBox{
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 4%;
+    background-color: #9aaabf;
   }
 
 </style>
