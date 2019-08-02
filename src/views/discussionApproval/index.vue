@@ -4,27 +4,58 @@
     <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
-        width="180"
+        width="120"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d}')}}</span>
         </template>
       </el-table-column>
+      <!-- <el-table-column
+        label="序号"
+        width="80"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.id }}</span>
+      </template>
+      </el-table-column> -->
       <el-table-column
         label="提案名"
         width="360"
       >
         <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <p>提案发起者: {{ scope.row.proposerName }}</p>
-            <p>附议人数: {{ scope.row.proposalSeconderCount }}</p>
-            <p>提案状态: {{ scope.row.proposalStage }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag type="primary">{{ scope.row.proposalTitle }}</el-tag>
-            </div>
-          </el-popover>
+          <span >{{ scope.row.proposalTitle }}</span>
         </template>
+      </el-table-column>
+      <el-table-column
+        label="提案人"
+        width="120"
+      >
+      <template slot-scope="scope">
+        <el-popover trigger="hover" placement="top">
+          <p>所属代表团: {{ scope.row.proposerDelegation }}</p>
+          <div slot="reference" class="name-wrapper">
+            <span >{{ scope.row.proposerName }}</span>
+          </div>
+          </el-popover>
+      </template>
+      </el-table-column>
+
+     <el-table-column
+        label="提案状态"
+        width="180"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.proposalStage }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="附议人数"
+        width="180"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.proposalSeconderCount }}</span>
+      </template>
       </el-table-column>
       <el-table-column
         align="right"
@@ -43,6 +74,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+      title="填写审定意见"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+    <el-form :model="form">
+      <div>
+        <el-input v-model="form.proposalApprovalComments" autocomplete="off" size="small" placeholder="审定意见" />
+      </div>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitComments()">提交意见</el-button>
+      </span>
+    </el-dialog>
     <pagination v-show="total>0" :total="total" @pagination="getList" />
   </div>
 </template>
@@ -60,7 +107,11 @@ export default {
       listLoading: true,
       page: 1,
       limit: 10,
-      search: ''
+      search: '',
+      form:{
+        proposalApprovalComments: ''
+      },
+      dialogVisible: false
     }
   },
   created() {
@@ -93,8 +144,23 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleApproval(index) {
-      this.list.splice(index, 1)
+    handleApproval(index, row) {
+      this.dialogVisible = true
+      //this.list.splice(index, 1)
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+    submitComments(){
+      console.log('提交审定意见')
+      this.$message({
+        message: '审定成功',
+        type: 'success'
+      })
     }
   }
 }
