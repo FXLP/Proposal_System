@@ -17,7 +17,7 @@
       >
       <template slot-scope="scope">
       <span >{{ scope.row.id }}</span>
-      </template>
+        </template>
       </el-table-column> -->
       <el-table-column
         label="提案名"
