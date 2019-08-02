@@ -1,29 +1,60 @@
 <template>
   <div class="app-container">
     <el-button size="mini" type="success">已完成提案</el-button>
-    <el-table :data="list" style="width: 98%">
+    <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
       <el-table-column
         label="日期"
-        width="180"
+        width="120"
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <!-- <el-table-column
+        label="序号"
+        width="80"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.id }}</span>
+        </template>
+      </el-table-column> -->
       <el-table-column
         label="提案名"
         width="360"
       >
         <template slot-scope="scope">
+          <span>{{ scope.row.proposalTitle }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="提案人"
+        width="120"
+      >
+        <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
-            <p>提案发起者: {{ scope.row.proposerName }}</p>
-            <p>附议人数: {{ scope.row.proposalSeconderCount }}</p>
-            <p>提案状态: {{ scope.row.proposalStage }}</p>
+            <p>所属代表团: {{ scope.row.proposerDelegation }}</p>
             <div slot="reference" class="name-wrapper">
-              <el-tag type="primary">{{ scope.row.proposalTitle }}</el-tag>
+              <span>{{ scope.row.proposerName }}</span>
             </div>
           </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="提案状态"
+        width="180"
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.proposalStage }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="附议人数"
+        width="180"
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.proposalSeconderCount }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -69,24 +100,24 @@ export default {
   methods: {
     getList() {
       return this.request({
-      url: this.serverUrl + '/proposalFormal/getAllByStage',
-      method: 'post',
-      params: {Stage: '已完成'}
-     }).then(res => {
-      console.log(res)
-      if (res.code !== 0) {
-        this.$message({
-          type: 'warning',
-          message: '更新列表失败'
-        })
-      } else {
-        this.list = res.data
-        this.total = res.data.length
-        this.$message({
-          type: 'success',
-          message: '更新列表成功'
-        })
-      }
+        url: this.serverUrl + '/proposalFormal/getAllByStage',
+        method: 'post',
+        params: { Stage: '已完成' }
+      }).then(res => {
+        console.log(res)
+        if (res.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+        } else {
+          this.list = res.data
+          this.total = res.data.length
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+        }
       })
     },
     goToDetail(index, row) {
@@ -98,11 +129,11 @@ export default {
         message: '操作成功',
         type: 'success'
       })
-      row.propostate = status 
+      row.propostate = status
       console.log(row.propostate)
     },
-    handleDelete(index){
-      this.list.splice(index,1)
+    handleDelete(index) {
+      this.list.splice(index, 1)
     }
   }
 }

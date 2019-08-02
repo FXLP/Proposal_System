@@ -1,10 +1,5 @@
 <template>
   <div class="app-container">
-    <aside>
-      supportDetail 提案详情---------
-      代表通过在其他页面点击详情按钮跳转到该页面显示 提案的详情 包括已审核和未审核两种
-    </aside>
-
     <el-row>
       <el-col :span="16">
         <el-row>

@@ -328,7 +328,7 @@ export default {
             seconderName: this.user.userName,
             seconderNumber: this.user.id,
             seconderTime: new Date(),
-            proposalDraftId: '1',
+            proposalDraftId: proposalid,
             proposalFormalId: '0'
           }
           , { headers: {

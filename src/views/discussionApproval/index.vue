@@ -8,7 +8,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -69,31 +69,31 @@ export default {
   methods: {
     getList() {
       return this.request({
-      url: this.serverUrl + '/proposalFormal/getAllByStage',
-      method: 'post',
-      params: {Stage: '待提案组讨论审定'}
-     }).then(res => {
-      console.log(res)
-      if (res.code !== 0) {
-        this.$message({
-          type: 'warning',
-          message: '更新列表失败'
-        })
-      } else {
-        this.list = res.data
-        this.total = res.data.length
-        this.$message({
-          type: 'success',
-          message: '更新列表成功'
-        })
-      }
-    })
+        url: this.serverUrl + '/proposalFormal/getAllByStage',
+        method: 'post',
+        params: { Stage: '待提案组讨论审定' }
+      }).then(res => {
+        console.log(res)
+        if (res.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+        } else {
+          this.list = res.data
+          this.total = res.data.length
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+        }
+      })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleApproval(index){
+    handleApproval(index) {
       this.list.splice(index, 1)
     }
   }
