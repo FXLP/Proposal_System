@@ -69,11 +69,29 @@
           <el-button
             size="mini"
             type="success"
-            @click="handleModifyStatus(scope.row,'已完成')"
+            @click="handleModifyStatus(scope.$index, scope.row,'已完成')"
           >完结</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      title="填写办理意见"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+    <el-form :model="form">
+      <div>
+        <el-input v-model="form.proposalHandleOpinions" autocomplete="off" size="small" placeholder="办理意见" />
+      </div>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitComments()">提交意见</el-button>
+      </span>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="page" :limit.sync="limit" @pagination="getList" />
   </div>
 </template>
@@ -91,7 +109,11 @@ export default {
       listLoading: true,
       page: 1,
       limit: 10,
-      search: ''
+      search: '',
+      form:{
+        proposalHandleOpinions: ''
+      },
+      dialogVisible: false,
     }
   },
   created() {
@@ -124,13 +146,24 @@ export default {
       const p = '/proposal/propodetail/' + this.list[index].propoId
       this.$router.push({ path: p })
     },
-    handleModifyStatus(row, status) {
+    handleModifyStatus(index, row, status) {
+      row.propostate = status
+      console.log(row.propostate)
+      this.dialogVisible = true
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+    submitComments(){
+      console.log('提交办理意见')
       this.$message({
         message: '操作成功',
         type: 'success'
       })
-      row.propostate = status
-      console.log(row.propostate)
     }
   }
 }
