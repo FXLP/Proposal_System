@@ -71,12 +71,14 @@ export default {
     return {
       total: 100, // 默认数据总数
       pagesize: 8, // 每页的数据条数
+      user: {},
       currentPage: 1, // 默认开始页面
       multipleSelection: [],
       tableData: []
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
       this.request({
         url: this.serverUrl + '/message/getMessageListByToNumber',
         method: 'get',
-        params: { toNumber: '1' }
+        params: { toNumber: this.user.id }
       }).then(res => {
         console.log(res)
         this.tableData = res.data

@@ -62,12 +62,14 @@ export default {
   data() {
     return {
       total: 100, // 默认数据总数
+      user: {},
       pagesize: 9, // 每页的数据条数
       currentPage: 1, // 默认开始页面
       tableData: []
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
   },
   methods: {
@@ -84,7 +86,7 @@ export default {
       this.request({
         url: this.serverUrl + '/message/getMessageListByFromTo',
         methods: 'get',
-        params: { fromTo: '1' }
+        params: { fromTo: this.user.id }
       }).then(res => {
         console.log(res)
         this.tableData = res.data

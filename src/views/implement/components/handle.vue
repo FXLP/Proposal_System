@@ -86,7 +86,7 @@ export default {
       total: 50,
       page: 1,
       limit: 10,
-
+      user: {},
       dialogVisible: false,
       detail_con: '',
       options: [
@@ -110,6 +110,7 @@ export default {
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
   },
   methods: {
@@ -122,10 +123,11 @@ export default {
       //     // _this.tableData = res.data.data
       //     // _this.total = res.data.data.length
       //   })
+
       this.request({
         url: this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId',
         method: 'get',
-        params: { stage: '待部门分派负责人', id: '0' }
+        params: { stage: '待部门分派负责人', id: this.user.departmentId }
       }).then(res => {
         console.log(res.data)
         this.tableData = res.data

@@ -52,7 +52,8 @@ export default {
   components: { Pagination },
   data() {
     return {
-      tableData: null,
+      tableData: [],
+      user: {},
       total: 50,
       page: 1,
       limit: 10
@@ -60,6 +61,7 @@ export default {
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
   },
   methods: {
@@ -67,7 +69,7 @@ export default {
       this.request({
         url: this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId',
         method: 'get',
-        params: { stage: '待部门分派负责人', id: '0' }
+        params: { stage: '待部门分派负责人', id: this.user.departmentId }
       }).then(res => {
         console.log(res)
         this.tableData = res.data
