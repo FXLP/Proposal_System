@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h3>部门协办消息</h3>
+    <el-button  type="warning">本部门协办的提案 :</el-button><br><br>
     <div class="table">
       <el-table
         ref="multipleTable"

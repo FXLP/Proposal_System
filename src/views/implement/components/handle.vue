@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h3>部门承办消息</h3>
+    <el-button  type="success">本部门承办的提案 :</el-button><br><br>
     <el-table
       ref="multipleTable"
       :data="tableData.slice((page-1)*limit,page*limit)"
