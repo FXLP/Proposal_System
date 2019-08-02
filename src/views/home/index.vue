@@ -58,14 +58,14 @@
               <div class="grid-content">
                 <el-card class="box-card">
                   <div slot="header" class="clearfix">
-                    <span>标题:{{ item.proposalTitle }}</span>
+                    <span>{{ item.proposalTitle | compFilter }}</span>
                     <el-button style="float: right; padding: 3px 0" type="text" @click="jumpToDetail(item.id)">提案详情</el-button>
                   </div>
                   <div class="text item">
                     <span>所属代表团:{{ item.proposalDelegation }}</span>
                     <br>
                     <br>
-                    <span>提出日期:{{ item.proposalTime }}</span>
+                    <span>提出日期:{{ item.proposalTime | parseTime('{y}-{m}-{d}') }}</span>
                   </div>
                 </el-card>
               </div>
@@ -111,6 +111,12 @@ export default {
   components: {
     PieChart,
     BarChart
+  },
+  filters: {
+    compFilter: function(value) {
+      if (value && value.length > 10) { value = value.substr(0, 10) + '...' }
+      return value
+    }
   },
   data() {
     return {
