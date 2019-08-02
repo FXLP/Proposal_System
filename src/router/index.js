@@ -389,6 +389,7 @@ export const asyncRoutes = [
     path: '/documentation',
     name: '文档',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -431,7 +432,7 @@ export const asyncRoutes = [
     path: '/icon',
     name: '图标',
     component: Layout,
-    hidden: true,
+    hidden: false,
     children: [
       {
         path: 'index',
