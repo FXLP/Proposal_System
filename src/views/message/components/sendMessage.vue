@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="13" class="col2">
+    <el-col :span="12" class="col2">
       <h3>已发送的消息</h3>
       <el-table
         ref="multipleTable"
@@ -12,7 +12,7 @@
       >
         <el-table-column
           type="selection"
-          width="42"
+          width="36"
         />
 
         <el-table-column label="日期" sortable prop="timestamp" width="200px">
@@ -33,7 +33,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column label="操作" width="250">
+        <el-table-column label="操作" width="205">
           <template slot-scope="scope">
             <el-button type="info" @click="open(scope.$index, scope.row)">
               详情
@@ -74,25 +74,26 @@ export default {
   },
   methods: {
     getTableData() {
-      var _this = this
-      const param = new URLSearchParams()
-      param.append('fromTo', _this.user.id)
-      var url = _this.serverUrl + '/message/getMessageListByFromTo'
-      this.$http.get(url, param)
-        .then(res => {
-          console.log(res)
-          _this.tableData = res.data.data
-          _this.total = res.data.data.length
-        })
-      // this.request({
-      //   url: this.serverUrl + '/message/getMessageListByFromTo',
-      //   methods: 'get',
-      //   params: { fromTo: this.user.id }
-      // }).then(res => {
-      //   console.log(res)
-      //   this.tableData = res.data
-      //   this.total = res.data.length
-      // })
+      // var _this = this
+      // const param = new URLSearchParams()
+      // param.append('fromTo', _this.user.id)
+      // var url = _this.serverUrl + '/message/getMessageListByFromTo'
+      // this.$http.get(url, param)
+      //   .then(res => {
+      //     console.log(res)
+      //     _this.tableData = res.data.data
+      //     _this.total = res.data.data.length
+      //   })
+      this.request({
+        url: this.serverUrl + '/message/getMessageListByFromTo',
+        methods: 'get',
+        // params: { fromTo: this.user.id }
+        params: { fromTo: '1' }
+      }).then(res => {
+        console.log(res)
+        this.tableData = res.data
+        this.total = res.data.length
+      })
     },
     current_change: function(currentPage) {
       this.currentPage = currentPage
@@ -111,40 +112,41 @@ export default {
     },
     // 删除单行
     handleDelete(index) {
-      // console.log(this.tableData[index].id)
-      // this.request({
-      //   url: this.serverUrl + '/message/deleteMessage',
-      //   methods: 'post',
-      //   params: { id: this.tableData[index].id }
-      // }).then(res => {
-      //   console.log(res)
-      //   this.tableData = res.data
-      //   this.total = res.data.length
-      // })
-      const data = {
-        id: this.tableData[index].id
-      }
-      this.$http({
-        method: 'post',
-        url: this.serverUrl + '/message/deleteMessage',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        params: data
-      }).then(res => {})
+      // var _this = this
+      // 后台用@RequestParam接收，所以先转换为param
+      const param = new URLSearchParams()
+      param.append('id', this.tableData[index].id)
+      var url = this.serverUrl + '/message/deleteMessage'
+      this.$http.post(url, param)
+        .then(res => {
+          // _this.tableData = res.data.data
+          // _this.total = res.data.data.length
+        })
     },
+    // 批量删除
     batchDelete() {
-      const multData = this.multipleSelection
-      const tableData1 = this.tableData
-      const multDataLen = multData.length
-      const tableDataLen = tableData1.length
-      for (let i = 0; i < multDataLen; i++) {
-        for (let y = 0; y < tableDataLen; y++) {
-          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-            this.tableData.splice(y, 1)
-          }
-        }
-      }
+      // var _this = this
+      // const multData = this.multipleSelection
+      // const tableData1 = this.tableData
+      // const multDataLen = multData.length
+      // const tableDataLen = tableData1.length
+      // //后台用@RequestParam接收，所以先转换为param
+      // const param = new URLSearchParams()
+      // param.append('id', ['this.tableData[index].id']this.tableData[index].id )
+      // var url = this.serverUrl + '/message/deleteMessage'
+      // this.$http.post(url, param )
+      //   .then(res => {
+      //     // _this.tableData = res.data.data
+      //     // _this.total = res.data.data.length
+      //   })
+
+      // for (let i = 0; i < multDataLen; i++) {
+      //   for (let y = 0; y < tableDataLen; y++) {
+      //     if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+      //       this.tableData.splice(y, 1)
+      //     }
+      //   }
+      // }
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
@@ -161,7 +163,7 @@ export default {
   }
   .btnDel {
     position:absolute;
-    right:660px;
+    right:600px;
     top:600px
   }
 </style>

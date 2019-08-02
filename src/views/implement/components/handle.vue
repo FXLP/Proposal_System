@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button  type="success">本部门承办的提案 :</el-button><br><br>
+    <el-button type="success">本部门承办的提案 :</el-button><br><br>
     <el-table
       ref="multipleTable"
       :data="tableData.slice((page-1)*limit,page*limit)"
@@ -116,12 +116,12 @@ export default {
   methods: {
     getTableData() {
       // var _this = this
-      // var url = _this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId'
-      // this.$http.get(url, this.$qs.stringify({ stage: '待部门分派负责人',id: '0' }) )
+      // var url = this.serverUrl + '/proposalFormal/findProposalFormalByDepartmentId'
+      // this.$http.get(url, params: {'Stage', '待部门分派负责人', 'id', this.user.departmentId } )
       //   .then(res => {
       //     console.log(res.data.data)
-      //     // _this.tableData = res.data.data
-      //     // _this.total = res.data.data.length
+      //     _this.tableData = res.data.data
+      //     _this.total = res.data.data.length
       //   })
 
       this.request({

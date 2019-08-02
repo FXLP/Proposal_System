@@ -154,23 +154,26 @@ export default {
   },
   methods: {
     getTableData() {
-      // var _this = this
-      // var url = _this.serverUrl + '/proposalFormal/getAllByStage'
-      // this.$http.get(url, { Stage: '待校办分派部门' } )
-      //   .then(res => {
-      //     console.log(res.data)
-      // _this.tableData = res.data.data
-      // _this.total = res.data.data.length
-      //   })
-      this.request({
-        url: this.serverUrl + '/proposalFormal/getAllByStage',
-        method: 'post',
-        params: { Stage: '待校办分派部门' }
-      }).then(res => {
-        console.log(res)
-        this.tableData = res.data
-        this.total = res.data.length
-      })
+      var _this = this
+      // 后台用@RequestParam接收，所以先转换为param
+      const param = new URLSearchParams()
+      param.append('Stage', '待校办分派部门')
+      var url = _this.serverUrl + '/proposalFormal/getAllByStage'
+      this.$http.post(url, param)
+        .then(res => {
+          console.log(res.data)
+          _this.tableData = res.data.data
+          _this.total = res.data.data.length
+        })
+      // this.request({
+      //   url: this.serverUrl + '/proposalFormal/getAllByStage',
+      //   method: 'post',
+      //   params: { Stage: '待校办分派部门' }
+      // }).then(res => {
+      //   console.log(res)
+      //   this.tableData = res.data
+      //   this.total = res.data.length
+      // })
     },
     // 打开详情页
     goToDetail(index, row) {
