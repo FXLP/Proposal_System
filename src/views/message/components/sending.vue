@@ -33,28 +33,74 @@ export default {
         content: [
           { required: true, message: '请填写信息内容', trigger: 'blur' }
         ]
-      }
+      },
+      user: {},
+      currentdate: ''
     }
+  },
+  create() {
+    this.user = JSON.parse(localStorage.getItem('user'))
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.request({
-            url: this.serverUrl + '/message/createMessage',
-            method: 'post',
-            params: { id: get_uuid(), from_to: this.user.id, content: this.ruleForm.content, to_name: this.ruleForm.name }
-          }).then(res => {
-            // console.log(res)
-            // this.tableData = res.data
-            // this.total = res.data.length
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     // this.request({
+      //     //   url: this.serverUrl + '/message/createMessage',
+      //     //   method: 'post',
+      //     //   params: { id: get_uuid(), from_to: this.user.id, content: this.ruleForm.content, to_name: this.ruleForm.name }
+      //     // }).then(res => {
+      //     //   // console.log(res)
+      //     //   // this.tableData = res.data
+      //     //   // this.total = res.data.length
+      //     // })
+      //     var _this = this
+      //     // 后台用@Requestbody接收，所以不先转换为param
+      //     var url = _this.serverUrl + '/message/createMessage',
+      //     this.$http.post(url, { 'id': get_uuid(), 'from_to': _this.user.id, 'content': _this.ruleForm.content, 'to_name': _this.ruleForm.name, 'to_number': '345'} )
+      //       .then(res => {
+      //         // console.log(res.data)
+      //         // _this.tableData = res.data.data
+      //         // _this.total = res.data.data.length
+      //       })
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
+      this.getNowFormatDate()
+      var url = this.serverUrl + '/message/createMessage'
+      this.$http.post(url, { 'id': get_uuid(),
+        'from_to': this.user.id,
+        'content': this.ruleForm.content,
+        'to_name': this.ruleForm.name,
+        'to_number': '345',
+        'send_time': this.currentdate,
+        'is_read': '0'
       })
+        .then(res => {
+          // console.log(res.data)
+          // _this.tableData = res.data.data
+          // _this.total = res.data.data.length
+        })
     },
+    // 获取当前时间
+    getNowFormatDate() {
+      var date = new Date()
+      var seperator1 = '-'
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate
+      return currentdate
+    },
+
     resetForm(formName) {
       this.$refs[formName].resetFields()
     }
