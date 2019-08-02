@@ -74,24 +74,25 @@ export default {
   },
   methods: {
     getTableData() {
-      // var _this = this
-      // var number = localStorage.getItem('user_Id')
-      // var url = _this.serverUrl + '/message/getMessageListByToNumber'
-      // this.$http.get(url, this.$qs.stringify({ toNumber: 'number'}))
-      //   .then(res => {
-      //     console.log(res)
-      //     // _this.tableData = res.data.data
-      //     // _this.total = res.data.data.length
-      //   })
-      this.request({
-        url: this.serverUrl + '/message/getMessageListByFromTo',
-        methods: 'get',
-        params: { fromTo: this.user.id }
-      }).then(res => {
-        console.log(res)
-        this.tableData = res.data
-        this.total = res.data.length
-      })
+      var _this = this
+      const param = new URLSearchParams()
+      param.append('fromTo', _this.user.id)
+      var url = _this.serverUrl + '/message/getMessageListByFromTo'
+      this.$http.get(url, param)
+        .then(res => {
+          console.log(res)
+          _this.tableData = res.data.data
+          _this.total = res.data.data.length
+        })
+      // this.request({
+      //   url: this.serverUrl + '/message/getMessageListByFromTo',
+      //   methods: 'get',
+      //   params: { fromTo: this.user.id }
+      // }).then(res => {
+      //   console.log(res)
+      //   this.tableData = res.data
+      //   this.total = res.data.length
+      // })
     },
     current_change: function(currentPage) {
       this.currentPage = currentPage
@@ -110,7 +111,27 @@ export default {
     },
     // 删除单行
     handleDelete(index) {
-      this.tableData.splice(index, 1)
+      // console.log(this.tableData[index].id)
+      // this.request({
+      //   url: this.serverUrl + '/message/deleteMessage',
+      //   methods: 'post',
+      //   params: { id: this.tableData[index].id }
+      // }).then(res => {
+      //   console.log(res)
+      //   this.tableData = res.data
+      //   this.total = res.data.length
+      // })
+      const data = {
+        id: this.tableData[index].id
+      }
+      this.$http({
+        method: 'post',
+        url: this.serverUrl + '/message/deleteMessage',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: data
+      }).then(res => {})
     },
     batchDelete() {
       const multData = this.multipleSelection
