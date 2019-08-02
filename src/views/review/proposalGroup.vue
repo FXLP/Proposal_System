@@ -9,7 +9,7 @@
       >
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d}')}}</span>
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -25,38 +25,38 @@
         width="360"
       >
         <template slot-scope="scope">
-          <span >{{ scope.row.proposalTitle }}</span>
+          <span>{{ scope.row.proposalTitle }}</span>
         </template>
       </el-table-column>
       <el-table-column
         label="提案人"
         width="120"
       >
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>所属代表团: {{ scope.row.proposerDelegation }}</p>
-          <div slot="reference" class="name-wrapper">
-            <span >{{ scope.row.proposerName }}</span>
-          </div>
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+            <p>所属代表团: {{ scope.row.proposerDelegation }}</p>
+            <div slot="reference" class="name-wrapper">
+              <span>{{ scope.row.proposerName }}</span>
+            </div>
           </el-popover>
-      </template>
+        </template>
       </el-table-column>
 
-     <el-table-column
+      <el-table-column
         label="提案状态"
         width="180"
       >
-      <template slot-scope="scope">
-      <span >{{ scope.row.proposalStage }}</span>
+        <template slot-scope="scope">
+          <span>{{ scope.row.proposalStage }}</span>
         </template>
       </el-table-column>
       <el-table-column
         label="附议人数"
         width="180"
       >
-      <template slot-scope="scope">
-      <span >{{ scope.row.proposalSeconderCount }}</span>
-      </template>
+        <template slot-scope="scope">
+          <span>{{ scope.row.proposalSeconderCount }}</span>
+        </template>
       </el-table-column>
       <el-table-column
         align="right"
@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total"  @pagination="getList" />
+    <pagination v-show="total>0" :total="total" @pagination="getList" />
   </div>
 </template>
 
@@ -106,25 +106,25 @@ export default {
   methods: {
     getList() {
       return this.request({
-      url: this.serverUrl + '/proposalFormal/getAllByStage',
-      method: 'post',
-      params: {Stage: '待提案组审核'}
-     }).then(res => {
-      console.log(res)
-      if (res.code !== 0) {
-        this.$message({
-          type: 'warning',
-          message: '更新列表失败'
-        })
-      } else {
-        this.list = res.data
-        this.total = res.data.length
-        this.$message({
-          type: 'success',
-          message: '更新列表成功'
-        })
-      }
-    })
+        url: this.serverUrl + '/proposalFormal/getAllByStage',
+        method: 'post',
+        params: { Stage: '待提案组审核' }
+      }).then(res => {
+        console.log(res)
+        if (res.code !== 0) {
+          this.$message({
+            type: 'warning',
+            message: '更新列表失败'
+          })
+        } else {
+          this.list = res.data
+          this.total = res.data.length
+          this.$message({
+            type: 'success',
+            message: '更新列表成功'
+          })
+        }
+      })
     },
     goToDetail(index, row) {
       const p = '/proposal/propodetail/' + this.list[index].propoId
