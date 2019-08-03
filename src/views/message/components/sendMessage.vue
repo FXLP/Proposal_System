@@ -33,7 +33,7 @@
           </template>
         </el-table-column> -->
 
-        <el-table-column label="操作" width="195">
+        <el-table-column label="操作" width="204">
           <template slot-scope="scope">
             <el-button type="info" @click="open(scope.$index, scope.row)">
               详情
@@ -62,39 +62,24 @@ export default {
   data() {
     return {
       total: 100, // 默认数据总数
-      user: {},
       pagesize: 9, // 每页的数据条数
       currentPage: 1, // 默认开始页面
       tableData: []
     }
   },
   created() {
-    // this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
-    // console.log(this.user)
   },
   methods: {
     getTableData() {
-      // var _this = this
-      // const param = new URLSearchParams()
-      // param.append('fromTo', _this.user.id)
-      // var url = _this.serverUrl + '/message/getMessageListByFromTo'
-      // this.$http.get(url, param)
-      //   .then(res => {
-      //     console.log(res)
-      //     _this.tableData = res.data.data
-      //     _this.total = res.data.data.length
-      //   })
+      var _this = this
       this.request({
-        url: this.serverUrl + '/message/getMessageListByFromTo',
+        url: _this.serverUrl + '/message/getMessageListByFromTo',
         methods: 'get',
-        // params: { fromTo: this.user.id }
-        params: { fromTo: '1' }
+        params: { fromTo: JSON.parse(localStorage.getItem('user')).id }
       }).then(res => {
-        // console.log(res)
-        // console.log(this.user.id)
-        this.tableData = res.data
-        this.total = res.data.length
+        _this.tableData = res.data
+        _this.total = res.data.length
       })
     },
     current_change: function(currentPage) {
@@ -121,8 +106,13 @@ export default {
       var url = this.serverUrl + '/message/deleteMessage'
       this.$http.post(url, param)
         .then(res => {
-          // _this.tableData = res.data.data
-          // _this.total = res.data.data.length
+          if (res.data.code === 0) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.tableData()
+          }
         })
     },
     // 批量删除

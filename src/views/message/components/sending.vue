@@ -39,16 +39,8 @@ export default {
     }
   },
   create() {
-    this.user = JSON.parse(localStorage.getItem('user'))
-    if (this.user.id === null) {
-      this.$message({
-        message: '登陆过期，请您重新登陆',
-        type: 'warning'
-      })
-      this.$router.push({
-        path: `/`
-      })
-    }
+    // this.user = JSON.parse(localStorage.getItem('user'))
+    // console.log(localStorage.getItem('user'))
   },
   methods: {
     submitForm(formName) {
@@ -77,16 +69,14 @@ export default {
       //     return false
       //   }
       // })
-      // this.getNowFormatDate()
-      console.log(this.user)
+
       var url = this.serverUrl + '/message/createMessage'
       this.$http.post(url, { 'id': get_uuid(),
-        'from_to': this.user.id,
+        'fromTo': JSON.parse(localStorage.getItem('user')).id,
         'content': this.ruleForm.content,
-        'to_name': this.ruleForm.name,
-        'to_number': '345',
-        'send_time': '2019-8-3',
-        'is_read': '0'
+        'toName': this.ruleForm.name,
+        'toNumber': '1',
+        'sendTime': new Date()
       })
         .then(res => {
           // console.log(res.data)
@@ -94,23 +84,6 @@ export default {
           // _this.total = res.data.data.length
         })
     },
-    // 获取当前时间
-    getNowFormatDate() {
-      var date = new Date()
-      var seperator1 = '-'
-      var year = date.getFullYear()
-      var month = date.getMonth() + 1
-      var strDate = date.getDate()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      var currentdate = year + seperator1 + month + seperator1 + strDate
-      return currentdate
-    },
-
     resetForm(formName) {
       this.$refs[formName].resetFields()
     }
