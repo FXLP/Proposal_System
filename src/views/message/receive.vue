@@ -17,25 +17,25 @@
           type="selection"
           width="45"
         />
-        <el-table-column label="日期" sortable prop="timestamp" width="180px">
+        <el-table-column label="日期" sortable width="180px">
           <template slot-scope="scope">
             <span>{{ scope.row.sendTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="发送者" prop="timestamp" width="150px">
+        <el-table-column label="发送者" width="150px">
           <template slot-scope="scope">
             <span>{{ scope.row.fromTo }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="消息内容" prop="timestamp" width="650px">
+        <el-table-column label="消息内容" width="650px">
           <template slot-scope="scope">
             <span>{{ scope.row.content }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="状态" prop="timestamp" width="150px">
+        <el-table-column label="状态" width="150px">
           <template slot-scope="scope">
             <span>{{ scope.row.read }}</span>
           </template>
@@ -94,7 +94,7 @@ export default {
         method: 'get',
         params: { toNumber: this.user.id }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         this.tableData = res.data
         this.total = res.data.length
       })

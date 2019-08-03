@@ -3,10 +3,13 @@
     <el-col :span="9" class="col1">
       <h3>发送消息</h3>
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="收信人" prop="name">
-          <el-input v-model="ruleForm.name" />
+        <el-form-item label="收信人">
+          <el-input v-model="ruleForm.toName" />
         </el-form-item>
-        <el-form-item label="信息内容" prop="content">
+        <el-form-item label="收信人工号">
+          <el-input v-model="ruleForm.toNumber" />
+        </el-form-item>
+        <el-form-item label="信息内容">
           <el-input v-model="ruleForm.content" type="textarea" :rows="14" />
         </el-form-item>
         <el-form-item>
@@ -23,8 +26,9 @@ export default {
   data() {
     return {
       ruleForm: {
-        name: '',
-        content: ''
+        toName: '',
+        content: '',
+        toNumber: ''
       },
       rules: {
         name: [
@@ -74,8 +78,8 @@ export default {
       this.$http.post(url, { 'id': get_uuid(),
         'fromTo': JSON.parse(localStorage.getItem('user')).id,
         'content': this.ruleForm.content,
-        'toName': this.ruleForm.name,
-        'toNumber': '3',
+        'toName': this.ruleForm.toName,
+        'toNumber': this.ruleForm.toNumber,
         'sendTime': new Date()
       })
         .then(res => {

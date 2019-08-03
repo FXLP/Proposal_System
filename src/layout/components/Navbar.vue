@@ -72,7 +72,9 @@ export default {
   data() {
     return {
       countsum: 5,
-      isactive: 'true'
+      isactive: 'true',
+      total: '',
+      taleData: []
     }
   },
   computed: {
@@ -82,7 +84,30 @@ export default {
       'device'
     ])
   },
+  create() {
+    // this.getTableData()
+  },
   methods: {
+    // getTableData() {
+    //   this.request({
+    //     url: this.serverUrl + '/message/getMessageListByToNumber',
+    //     method: 'get',
+    //     params: { toNumber: JSON.parse(localStorage.getItem('user')).id }
+    //   }).then(res => {
+    //     console.log(res,data)
+    //   //   this.tableData = res.data
+    //   //   this.total = res.data.length
+    //   //   console.log(this.total)
+    //   //   this.countsum = 0
+    //   //   while(this.total) {
+    //   //     if(res.data.read === false) {
+    //   //       this.countsum ++
+    //   //       console.log(this.countsum)
+    //   //     }
+    //   //     this.total --
+    //   //   }
+    //   })
+    // },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
