@@ -75,7 +75,7 @@ export default {
         'fromTo': JSON.parse(localStorage.getItem('user')).id,
         'content': this.ruleForm.content,
         'toName': this.ruleForm.name,
-        'toNumber': '1',
+        'toNumber': '3',
         'sendTime': new Date()
       })
         .then(res => {

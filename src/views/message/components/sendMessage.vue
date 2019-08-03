@@ -27,7 +27,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="204">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="info" @click="open(scope.$index, scope.row)">
               详情

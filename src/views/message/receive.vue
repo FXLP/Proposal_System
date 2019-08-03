@@ -15,27 +15,27 @@
       >
         <el-table-column
           type="selection"
-          width="40"
+          width="45"
         />
-        <el-table-column label="日期" sortable prop="timestamp" width="200px">
+        <el-table-column label="日期" sortable prop="timestamp" width="180px">
           <template slot-scope="scope">
             <span>{{ scope.row.sendTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="发送者" prop="timestamp" width="200px">
+        <el-table-column label="发送者" prop="timestamp" width="150px">
           <template slot-scope="scope">
             <span>{{ scope.row.fromTo }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="消息内容" prop="timestamp" width="200px">
+        <el-table-column label="消息内容" prop="timestamp" width="650px">
           <template slot-scope="scope">
             <span>{{ scope.row.content }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="状态" prop="timestamp" width="200px">
+        <el-table-column label="状态" prop="timestamp" width="150px">
           <template slot-scope="scope">
             <span>{{ scope.row.read }}</span>
           </template>
@@ -43,9 +43,6 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="info" @click="open(scope.$index, scope.row)">
-              详情
-            </el-button>
             <el-button type="danger" icon="el-icon-delete" round @click="handleDelete(scope.$index, scope.row)" />
           </template>
         </el-table-column>
@@ -110,24 +107,26 @@ export default {
     ToSendMessage() {
       this.$router.push('/message/send')
     },
-    // 查看消息详情内容页
-    open(index, row) {
-      const p = this.tableData[index].内容
-      this.$alert(p, '消息的具体内容', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
-    },
     // 删除单行
     handleDelete(index) {
-      this.tableData.splice(index, 1)
+      // var _this = this
+      // 后台用@RequestParam接收，所以先转换为param
+      const param = new URLSearchParams()
+      param.append('id', this.tableData[index].id)
+      var url = this.serverUrl + '/message/deleteMessage'
+      this.$http.post(url, param)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+          }
+        })
     },
+    // 批量删除
     batchDelete() {
+      // var _this = this
       const multData = this.multipleSelection
       const tableData1 = this.tableData
       const multDataLen = multData.length
@@ -135,7 +134,7 @@ export default {
       for (let i = 0; i < multDataLen; i++) {
         for (let y = 0; y < tableDataLen; y++) {
           if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-            this.tableData.splice(y, 1)
+            this.handleDelete(i)
           }
         }
       }
