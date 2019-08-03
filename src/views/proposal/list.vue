@@ -100,10 +100,9 @@ export default {
   methods: {
     getList() {
       return this.request({
-      url: this.serverUrl + '/proposalDraft/getProposalDraftListByNumber',
-      method: 'get',
-      params: { proposerNumber: this.user.id }
-      // params: { Stage: '草稿' }
+      url: this.serverUrl + '/proposalDraft/getProposalDraftListByNumberAndStage',
+      method: 'post',
+      params: { proposerNumber: this.user.id, stage: '草稿' }
      }).then(res => {
       console.log(res)
       if (res.code !== 0) {
