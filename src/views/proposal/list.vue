@@ -1,67 +1,76 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+    <el-table :data="list.slice((page-1)*limit,page*limit)" style="width: 98%">
+      <el-table-column
+        label="日期"
+        width="120"
+      >
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <i class="el-icon-time" />
+          <span style="margin-left: 10px">{{ scope.row.proposalTime | parseTime('{y}-{m}-{d}')}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="180px" align="center" label="Date">
+      <!-- <el-table-column
+        label="序号"
+        width="80"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.id }}</span>
+      </template>
+      </el-table-column> -->
+      <el-table-column
+        label="提案名"
+        width="360"
+      >
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span >{{ scope.row.proposalTitle }}</span>
         </template>
       </el-table-column>
+      <el-table-column
+        label="提案人"
+        width="120"
+      >
+      <template slot-scope="scope">
+        <el-popover trigger="hover" placement="top">
+          <p>所属代表团: {{ scope.row.proposerDelegation }}</p>
+          <div slot="reference" class="name-wrapper">
+            <span >{{ scope.row.proposerName }}</span>
+          </div>
+          </el-popover>
+      </template>
+      </el-table-column>
 
-      <el-table-column width="120px" align="center" label="Author">
+     <el-table-column
+        label="提案状态"
+        width="180"
+      >
+      <template slot-scope="scope">
+      <span >{{ scope.row.proposalStage }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="right"
+      >
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="100px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
-
-      <el-table-column class-name="status-col" label="Status" width="110">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column min-width="300px" label="Title">
-        <template slot-scope="{row}">
-          <router-link :to="'/example/edit/'+row.id" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
-          <router-link :to="'/example/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
-            </el-button>
-          </router-link>
+          <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+          >编辑</el-button>
+          
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="page" :limit.sync="limit" @pagination="getList" />
   </div>
 </template>
 
 <script>
-import { fetchList } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'ArticleList',
+  name: 'ProposalDraftList',
   components: { Pagination },
   filters: {
     statusFilter(status) {
@@ -78,23 +87,42 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 20
-      }
+      page: 1,
+      limit: 10,
+      user: {}
     }
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
+    console.log(this.user)
     this.getList()
   },
   methods: {
     getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
+      return this.request({
+      url: this.serverUrl + '/proposalDraft/getProposalDraftListByNumber',
+      method: 'get',
+      params: { proposerNumber: this.user.id }
+      // params: { Stage: '草稿' }
+     }).then(res => {
+      console.log(res)
+      if (res.code !== 0) {
+        this.$message({
+          type: 'warning',
+          message: '更新列表失败'
+        })
+      } else {
+        this.list = res.data
+        this.total = res.data.length
+        this.$message({
+          type: 'success',
+          message: '更新列表成功'
+        })
+      }
       })
+    },
+    handleEdit(){
+      console.log('edit draft')
     }
   }
 }

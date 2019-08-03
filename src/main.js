@@ -62,7 +62,7 @@ Vue.prototype.$qs = Qs
 Vue.prototype.request = request
 Vue.prototype.headconfig = {
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
     // 'Content-Type': 'application/x-www-form-urlencoded'
   }
 }
