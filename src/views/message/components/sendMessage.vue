@@ -69,8 +69,9 @@ export default {
     }
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem('user'))
+    // this.user = JSON.parse(localStorage.getItem('user'))
     this.getTableData()
+    // console.log(this.user)
   },
   methods: {
     getTableData() {
@@ -90,7 +91,8 @@ export default {
         // params: { fromTo: this.user.id }
         params: { fromTo: '1' }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
+        // console.log(this.user.id)
         this.tableData = res.data
         this.total = res.data.length
       })

@@ -40,6 +40,15 @@ export default {
   },
   create() {
     this.user = JSON.parse(localStorage.getItem('user'))
+    if (this.user.id === null) {
+      this.$message({
+        message: '登陆过期，请您重新登陆',
+        type: 'warning'
+      })
+      this.$router.push({
+        path: `/`
+      })
+    }
   },
   methods: {
     submitForm(formName) {
@@ -68,14 +77,15 @@ export default {
       //     return false
       //   }
       // })
-      this.getNowFormatDate()
+      // this.getNowFormatDate()
+      console.log(this.user)
       var url = this.serverUrl + '/message/createMessage'
       this.$http.post(url, { 'id': get_uuid(),
         'from_to': this.user.id,
         'content': this.ruleForm.content,
         'to_name': this.ruleForm.name,
         'to_number': '345',
-        'send_time': this.currentdate,
+        'send_time': '2019-8-3',
         'is_read': '0'
       })
         .then(res => {
