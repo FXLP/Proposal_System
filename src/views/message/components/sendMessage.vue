@@ -27,12 +27,6 @@
           </template>
         </el-table-column>
 
-        <!-- <el-table-column label="消息内容" prop="timestamp" width="200px">
-          <template slot-scope="scope">
-            <span>{{ scope.row.content }}</span>
-          </template>
-        </el-table-column> -->
-
         <el-table-column label="操作" width="204">
           <template slot-scope="scope">
             <el-button type="info" @click="open(scope.$index, scope.row)">
@@ -111,34 +105,23 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            this.tableData()
           }
         })
     },
     // 批量删除
     batchDelete() {
       // var _this = this
-      // const multData = this.multipleSelection
-      // const tableData1 = this.tableData
-      // const multDataLen = multData.length
-      // const tableDataLen = tableData1.length
-      // //后台用@RequestParam接收，所以先转换为param
-      // const param = new URLSearchParams()
-      // param.append('id', ['this.tableData[index].id']this.tableData[index].id )
-      // var url = this.serverUrl + '/message/deleteMessage'
-      // this.$http.post(url, param )
-      //   .then(res => {
-      //     // _this.tableData = res.data.data
-      //     // _this.total = res.data.data.length
-      //   })
-
-      // for (let i = 0; i < multDataLen; i++) {
-      //   for (let y = 0; y < tableDataLen; y++) {
-      //     if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
-      //       this.tableData.splice(y, 1)
-      //     }
-      //   }
-      // }
+      const multData = this.multipleSelection
+      const tableData1 = this.tableData
+      const multDataLen = multData.length
+      const tableDataLen = tableData1.length
+      for (let i = 0; i < multDataLen; i++) {
+        for (let y = 0; y < tableDataLen; y++) {
+          if (JSON.stringify(tableData1[y]) === JSON.stringify(multData[i])) { // 判断是否相等，相等就删除
+            this.handleDelete(i)
+          }
+        }
+      }
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
